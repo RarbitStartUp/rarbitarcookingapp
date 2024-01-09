@@ -33,6 +33,11 @@ export default function RootLayout({ children }) {
           style={{
             backgroundImage: 'url("/cooking.jpg")',
             minHeight: "calc(100% + env(safe-area-inset-top))",
+            padding:
+              "env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
           }}
         >
           <div className="p-5 z-20">

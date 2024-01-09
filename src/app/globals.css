@@ -86,9 +86,6 @@ a {
 }
 
 body {
-  min-height: calc(100% + env(safe-area-inset-top));
-  margin: 0;
-  padding: 0;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -96,16 +93,4 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-}
-
-html {
-  min-height: calc(100% + env(safe-area-inset-top));
-  /* min-height: 100vh; */
-  padding: env(safe-area-inset-top) env(safe-area-inset-right)
-    env(safe-area-inset-bottom) env(safe-area-inset-left);
-  background-attachment: fixed;
-  background-image: url("/cooking.jpg"); /* Update the path to your background image */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
