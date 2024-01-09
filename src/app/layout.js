@@ -30,7 +30,10 @@ export default function RootLayout({ children }) {
         <div className="absolute inset-0 z-20 bg-black opacity-50"></div>
         <div
           className=" bg-cover bg-center relative h-screen flex flex-col"
-          style={{ backgroundImage: 'url("/cooking.jpg")' }}
+          style={{
+            backgroundImage: 'url("/cooking.jpg")',
+            minHeight: "calc(100% + env(safe-area-inset-top))",
+          }}
         >
           <div className="p-5 z-20">
             <Navbar />
