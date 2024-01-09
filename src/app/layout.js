@@ -6,6 +6,7 @@ import Footer from "@/components/footer/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
+  manifest: "/manifest.json",
   title: "Rarbit Cooking App",
   description: "AR Cooking app that make your life easier",
 };
