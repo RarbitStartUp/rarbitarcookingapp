@@ -1,5 +1,7 @@
 const Footer = () => {
-  return <div>©Rarbit Reserved</div>;
+  return (
+    <div className="text-white text-xs">© Rarbit all rights reserved </div>
+  );
 };
 
 export default Footer;
