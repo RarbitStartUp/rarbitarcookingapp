@@ -2,16 +2,7 @@ import Links from "./links/Links";
 import styles from "./navbar.module.css";
 
 const Navbar = () => {
-  return (
-    <div>
-      <div className={styles.container}>
-        <div className={styles.logo}>Rarbit</div>
-        {/* <div>
-          <Links />
-        </div> */}
-      </div>
-    </div>
-  );
+  return <div className="p-2 font-bold text-xl">Rarbit</div>;
 };
 
 export default Navbar;
