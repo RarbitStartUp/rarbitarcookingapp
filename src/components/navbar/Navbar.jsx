@@ -6,9 +6,9 @@ const Navbar = () => {
     <div>
       <div className={styles.container}>
         <div className={styles.logo}>Rarbit</div>
-        <div>
+        {/* <div>
           <Links />
-        </div>
+        </div> */}
       </div>
     </div>
   );
