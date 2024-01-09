@@ -1,5 +1,5 @@
 import { Storage } from "@google-cloud/storage";
-// import { checkbox } from "./checkbox.js";
+import { checkboxAI } from "./checkboxAI.js";
 import ytdl from "ytdl-core";
 
 export const uploadVideoGS = async (formData) => {
@@ -36,15 +36,16 @@ export const uploadVideoGS = async (formData) => {
     // Construct the file URI for the uploaded video
     const fileUri = `gs://${bucketName}/${filename}`;
 
-    // Call checkbox function with the fileUri
-    // const result = await checkbox(fileUri);
-
-    // console.log("upload Video result :", result);
     console.log("successfully uploaded");
     console.log("fileUri :", fileUri);
+    // Call checkbox function with the fileUri
+    const result = await checkboxAI(fileUri);
+
+    console.log("upload Video result :", result);
 
     // You can return the file URI if needed
     // res.json({ result });
+    return result;
   } catch (error) {
     console.error("Error uploading video:", error);
     res.status(500).json({ error: "Internal Server Error" });

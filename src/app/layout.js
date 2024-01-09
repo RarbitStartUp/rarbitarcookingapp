@@ -26,7 +26,13 @@ export default function RootLayout({ children }) {
           content="black-translucent"
         />
       </Head>
-      <body className="font-inter min-h-screen relative">
+      <body
+        className="font-inter relative"
+        style={{
+          minHeight: "calc(100vh + env(safe-area-inset-top))",
+          padding: "env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0",
+        }}
+      >
         <div className="absolute inset-0 z-20 bg-black opacity-50"></div>
         <div
           className=" bg-cover bg-center relative h-screen flex flex-col"
