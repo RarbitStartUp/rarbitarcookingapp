@@ -44,6 +44,10 @@ export default function RootLayout({ children }) {
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
+            /* Special fix for iOS Safari 15+ */
+            "@supports (WebkitTouchCallout: none)": {
+              height: "-webkit-fill-available",
+            },
           }}
         >
           <div className="p-5 z-20">
