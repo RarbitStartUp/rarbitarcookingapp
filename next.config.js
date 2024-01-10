@@ -1,6 +1,6 @@
-const withPWA = require("@ducanh2912/next-pwa").default;
+import withPWA from "@ducanh2912/next-pwa";
 
-module.exports = withPWA({
+export default withPWA({
   pwa: {
     dest: "public",
     cacheOnFrontEndNav: true,
