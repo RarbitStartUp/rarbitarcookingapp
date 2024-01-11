@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 
 let video;
@@ -123,10 +125,10 @@ const Camera = () => {
     isCapturing = false;
   };
 
-  const startCaptureFrames = () => {
+  const startCaptureFrames = (socketRef) => {
     if (!socketRef.current) {
       socketRef.current = new WebSocket(
-        "wss://9324-156-146-51-130.ngrok-free.app"
+        "wss://9e07-89-187-185-171.ngrok-free.app"
       );
 
       socketRef.current.addEventListener("error", (error) => {
@@ -170,13 +172,6 @@ const Camera = () => {
       console.error("Error starting capture:", error);
     }
   };
-
-  return (
-    <div>
-      {/* You can render additional UI components here if needed */}
-      <button onClick={startCaptureFrames}>Start Capture</button>
-    </div>
-  );
 };
 
 export default Camera;

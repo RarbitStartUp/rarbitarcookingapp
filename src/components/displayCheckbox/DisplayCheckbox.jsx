@@ -1,6 +1,7 @@
+"use client";
 // displayCheckbox.js
 import { useEffect, useState } from "react";
-import Camera from "./Camera";
+import { useRouter } from "next/navigation";
 import { displayCheckedList } from "./displayCheckedList";
 
 // A helper function for safely parsing JSON
@@ -17,10 +18,16 @@ function safeJsonParse(jsonString) {
 const DisplayCheckbox = ({ apiResponse, onAddItem }) => {
   const [addedItems, setAddedItems] = useState([]);
   const [jsonData, setJsonData] = useState(null); // Added state for jsonData
-  const isCapturingRef = useRef(false);
+
+  const router = useRouter();
+  function pageRoute() {
+    console.log("upload button clicked");
+    router.push("/src/app/(livestream)");
+  }
 
   const socketRef = useRef(
-    new WebSocket("wss://rarbitarcookingapp.vercel.app")
+    // new WebSocket("wss://9e07-89-187-185-171.ngrok-free.app")
+    new WebSocket("ws://localhost:3001")
   );
   useEffect(() => {
     const socket = socketRef.current;
@@ -30,7 +37,7 @@ const DisplayCheckbox = ({ apiResponse, onAddItem }) => {
     });
 
     socket.addEventListener("message", (event) => {
-      if (isCapturing) {
+      if (isCapturingRef) {
         const aiResult = JSON.parse(event.data);
         console.log("Received AI result during capturing frames:", aiResult);
         displayCheckedList(aiResult);
@@ -203,7 +210,7 @@ const DisplayCheckbox = ({ apiResponse, onAddItem }) => {
     }
   };
 
-  const submitChecklist = async () => {
+  async function submitChecklist() {
     try {
       const wsMessage = JSON.stringify({
         type: "ping",
@@ -214,75 +221,14 @@ const DisplayCheckbox = ({ apiResponse, onAddItem }) => {
       // Example: const socket = new WebSocket('ws://example.com/socket');
       socket.send(wsMessage);
 
-      const { startCaptureFrames, captureFrames, displayFrames, initCamera } =
-        Camera;
-
-      // Initialize the camera before capturing frames
-      await initCamera();
-
-      // Pause briefly to ensure the camera is initialized before capturing frames
-      await new Promise((resolve) => setTimeout(resolve, 500));
-
-      // Initialize frames as an empty array
-      let frames = [];
-
-      // Capture frames
-      frames = await captureFrames(frames);
-      // Display frames
-      displayFrames(frames);
-
-      // Remove the submit button if it's still in the DOM
-      const submitButton = document.getElementById("submitBtn");
-      if (submitButton && submitButton.parentNode) {
-        submitButton.parentNode.removeChild(submitButton);
-      }
-
-      // Add a "Start Capturing" button
-      const startCaptureButton = document.createElement("button");
-      startCaptureButton.textContent = "Start Capturing Frames";
-      startCaptureButton.onclick = async () => {
-        try {
-          // Initialize the camera before capturing frames
-          await initCamera();
-
-          // Pause briefly to ensure the camera is initialized before capturing frames
-          await new Promise((resolve) => setTimeout(resolve, 500));
-
-          // Initialize frames as an empty array
-          let frames = [];
-
-          // Capture frames
-          frames = await captureFrames(frames);
-
-          // Display frames
-          displayFrames(frames);
-
-          // Call startCaptureFrames to start capturing frames
-          isCapturing = true;
-          startCaptureFrames(socket);
-        } catch (error) {
-          console.error("Error starting capture:", error);
-        }
-      };
-
-      resultContainer.appendChild(startCaptureButton);
-
-      // Add a "Stop Capturing" button
-      const stopCaptureButton = document.createElement("button");
-      stopCaptureButton.textContent = "Stop Capturing Frames";
-      stopCaptureButton.onclick = async () => {
-        // Call stopCaptureFrames to stop capturing frames
-        isCapturing = false;
-      };
-
-      resultContainer.appendChild(stopCaptureButton);
+      pageRoute();
     } catch (error) {
       console.error("Error updating checklist:", error);
       // Handle the error, e.g., display an error message to the user
       document.getElementById("result-container").textContent =
         "Error updating checklist. Please try again.";
     }
-  };
+  }
 
   return (
     <div>
