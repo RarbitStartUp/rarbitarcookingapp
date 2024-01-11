@@ -1,4 +1,4 @@
-import { DisplayCheckbox } from "@/components/displayCheckbox/DisplayCheckbox.jsx";
+import { DisplayCheckbox } from "@/components/displayCheckbox/DisplayCheckbox";
 
 const getData = async () => {
   const res = await fetch("../../api/uploadVideoGS.js");
