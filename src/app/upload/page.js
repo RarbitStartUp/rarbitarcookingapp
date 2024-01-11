@@ -1,4 +1,4 @@
-import { uploadVideoGS } from "@/lib/uploadVideoGS";
+import { uploadVideoGS } from "@/api/uploadVideoGS";
 import { useRouter } from "next/navigation";
 
 export function UploadVideo() {
