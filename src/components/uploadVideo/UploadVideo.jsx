@@ -1,3 +1,4 @@
+"use client";
 import { uploadVideoGS } from "@/api/uploadVideoGS";
 import { useRouter } from "next/navigation";
 

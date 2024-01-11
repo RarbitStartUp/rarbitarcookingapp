@@ -2,7 +2,6 @@
 // displayCheckbox.js
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { displayCheckedList } from "./displayCheckedList";
 
 // A helper function for safely parsing JSON
 function safeJsonParse(jsonString) {
@@ -29,28 +28,6 @@ const DisplayCheckbox = ({ apiResponse, onAddItem }) => {
     // new WebSocket("wss://9e07-89-187-185-171.ngrok-free.app")
     new WebSocket("ws://localhost:3001")
   );
-  useEffect(() => {
-    const socket = socketRef.current;
-
-    socket.addEventListener("error", (error) => {
-      console.error("WebSocket error:", error);
-    });
-
-    socket.addEventListener("message", (event) => {
-      if (isCapturingRef) {
-        const aiResult = JSON.parse(event.data);
-        console.log("Received AI result during capturing frames:", aiResult);
-        displayCheckedList(aiResult);
-      } else {
-        console.log("Received WebSocket message:", event.data);
-      }
-    });
-
-    // Cleanup function
-    return () => {
-      socket.close();
-    };
-  }, []);
 
   useEffect(() => {
     // Parse and set jsonData when apiResponse changes

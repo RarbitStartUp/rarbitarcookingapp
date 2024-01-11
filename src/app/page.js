@@ -1,5 +1,5 @@
 // import Image from "next/image";
-import UploadVideo from "./uploadVideo/page";
+import { UploadVideo } from "@/components/uploadVideo/UploadVideo";
 
 export default function Home() {
   return (

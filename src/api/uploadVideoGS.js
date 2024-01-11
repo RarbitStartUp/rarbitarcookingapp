@@ -1,10 +1,10 @@
+"use server";
 import { Storage } from "@google-cloud/storage";
 import { checkboxAI } from "./checkboxAI.js";
 import ytdl from "ytdl-core";
 import DisplayCheckbox from "@/components/displayCheckbox/displayCheckbox.jsx";
 
-export const uploadVideoGS = async (formData) => {
-  "use server";
+export async function uploadVideoGS(formData) {
   const inputLink = formData.get("inputLink");
   const storage = new Storage();
   const bucketName = "users_uploads";
@@ -51,4 +51,4 @@ export const uploadVideoGS = async (formData) => {
     console.error("Error uploading video:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
-};
+}
