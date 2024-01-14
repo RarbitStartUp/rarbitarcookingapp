@@ -1,6 +1,6 @@
 "use client";
 
-import NavLink from "./navLink/navLink";
+import NavLink from "./navLink/NavLink";
 import styles from "./links.module.css";
 import { useState } from "react";
 

@@ -1,60 +1,96 @@
 "use client";
 // displayCheckbox.js
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { SubmitChecklist } from "@/components/submitChecklist/SubmitChecklist";
+import styles from "./checkbox.module.css";
 
 // A helper function for safely parsing JSON
-function safeJsonParse(jsonString) {
+function safeJsonParse(data) {
   try {
-    return JSON.parse(jsonString);
+    // If data is already an object, return it directly
+    if (typeof data === "object" && data !== null) {
+      return data;
+    }
+
+    // Otherwise, parse the JSON string
+    return JSON.parse(data);
   } catch (error) {
     console.error("Error parsing JSON:", error);
-    console.error("JSON String causing the error:", jsonString);
+    console.error("Data causing the error:", data);
     throw new Error("Invalid JSON format");
   }
 }
 
-const DisplayCheckbox = ({ apiResponse, onAddItem }) => {
+export function DisplayCheckbox({ apiResponse, onAddItem }) {
+  console.log("apiResponse in displayCheckbox1.jsx:", apiResponse);
+
   const [addedItems, setAddedItems] = useState([]);
   const [jsonData, setJsonData] = useState(null); // Added state for jsonData
 
-  const router = useRouter();
-  function pageRoute() {
-    console.log("upload button clicked");
-    router.push("/src/app/(livestream)");
-  }
-
-  const socketRef = useRef(
-    // new WebSocket("wss://9e07-89-187-185-171.ngrok-free.app")
-    new WebSocket("ws://localhost:3001")
-  );
+  const [objectItems, setObjectItems] = useState([]);
+  const [actionItems, setActionItems] = useState([]);
 
   useEffect(() => {
     // Parse and set jsonData when apiResponse changes
     try {
-      const jsonString = apiResponse.result.parts[0].text;
-      const jsonData = safeJsonParse(jsonString);
+      // const jsonString = apiResponse.result.parts[0].text;
+      // const parsedData = safeJsonParse(jsonString);
+      console.log("apiResponse in displayCheckbox2.jsx:", apiResponse);
+      const parsedData = safeJsonParse(apiResponse);
+
+      if (!parsedData) {
+        console.error("Error: Invalid JSON structure");
+        alert("Error: Invalid JSON structure. Please try again.");
+        return;
+      }
 
       // Check if the expected structure exists
       if (
-        !jsonData ||
-        !jsonData.checklist ||
-        !jsonData.checklist.objects ||
-        !jsonData.checklist.actions
+        !parsedData ||
+        !parsedData.checklist ||
+        !parsedData.checklist.objects ||
+        !parsedData.checklist.actions
       ) {
         console.error("Error: Invalid JSON structure");
         alert("Error: Invalid JSON structure. Please try again.");
         return;
       }
       // Log the parsed JSON data
-      console.log("Parsed JSON Data:", jsonData);
+      console.log("Parsed JSON Data:", parsedData);
 
-      setJsonData(jsonData);
+      // setJsonData(parsedData);
+      setJsonData(
+        (prevData) => {
+          if (!parsedData) {
+            console.error("Error: Invalid JSON structure");
+            alert("Error: Invalid JSON structure. Please try again.");
+            return prevData; // Return previous data if parsing fails
+          }
+          // Check if the expected structure exists
+          if (
+            !parsedData.checklist ||
+            !parsedData.checklist.objects ||
+            !parsedData.checklist.actions
+          ) {
+            console.error("Error: Invalid JSON structure");
+            alert("Error: Invalid JSON structure. Please try again.");
+            return prevData; // Return previous data if structure is missing
+          }
+          // Log the parsed JSON data
+          console.log("Parsed JSON Data:", parsedData);
+          return parsedData; // Return the updated data
+        },
+        [apiResponse]
+      ); // Add apiResponse as a dependency
     } catch (error) {
       console.error("Error parsing API response:", error);
       // Handle parsing error
     }
   }, [apiResponse]);
+
+  if (jsonData === null) {
+    return <div>Loading...</div>; // or any other loading indicator
+  }
 
   const addNewItem = async (listId, inputId) => {
     try {
@@ -63,37 +99,13 @@ const DisplayCheckbox = ({ apiResponse, onAddItem }) => {
 
       const newItem = newItemInput.value.toLowerCase();
 
-      if (
-        Object.keys(
-          jsonData.checklist[listId === "objectList" ? "objects" : "actions"]
-        ).some((item) => item.toLowerCase() === newItem)
-      ) {
-        alert("The item is already added!");
+      if (!newItem) {
+        alert("Please enter a valid item.");
         return;
       }
 
-      const newItemIndex =
-        Object.keys(
-          jsonData.checklist[listId === "objectList" ? "objects" : "actions"]
-        ).length + 1;
-
-      const newItemElement = document.createElement("li");
-      newItemElement.innerHTML = `
-        ${newItemIndex}. 
-        <span>${newItemInput.value}</span>
-        <input type="checkbox" checked ${
-          jsonData.checklist[listId === "objectList" ? "objects" : "actions"][
-            newItem
-          ]
-            ? "checked"
-            : ""
-        }/>
-        <button onClick={() => removeNewItem(listId, newItem)}>Remove</button>
-      `;
-
-      itemList.appendChild(newItemElement);
-
-      setAddedItems((prevItems) => [...prevItems, newItem]);
+      // Clear the input value after adding the new item
+      newItemInput.value = "";
 
       setJsonData((prevData) => ({
         ...prevData,
@@ -109,7 +121,11 @@ const DisplayCheckbox = ({ apiResponse, onAddItem }) => {
       }));
 
       if (onAddItem) {
-        onAddItem(addedItems);
+        if (listId === "objectList") {
+          setObjectItems((prevItems) => [...prevItems, newItem]);
+        } else {
+          setActionItems((prevItems) => [...prevItems, newItem]);
+        }
       }
     } catch (error) {
       console.error("Error adding new items:", error);
@@ -119,38 +135,29 @@ const DisplayCheckbox = ({ apiResponse, onAddItem }) => {
 
   const removeNewItem = (listId, item) => {
     try {
-      const itemList = document.getElementById(listId);
+      const updatedItems =
+        listId === "objectList"
+          ? objectItems.filter((obj) => obj !== item)
+          : actionItems.filter((act) => act !== item);
 
-      const itemToRemove = Array.from(itemList.children).find(
-        (li) =>
-          li.querySelector("span") &&
-          li.querySelector("span").textContent.toLowerCase() === item
-      );
-
-      if (itemToRemove) {
-        itemList.removeChild(itemToRemove);
-
-        setJsonData((prevData) => ({
-          ...prevData,
-          checklist: {
-            ...prevData.checklist,
-            [listId === "objectList" ? "objects" : "actions"]: {
-              ...prevData.checklist[
-                listId === "objectList" ? "objects" : "actions"
-              ],
-              [item]: undefined,
-            },
+      setJsonData((prevData) => ({
+        ...prevData,
+        checklist: {
+          ...prevData.checklist,
+          [listId === "objectList" ? "objects" : "actions"]: {
+            ...prevData.checklist[
+              listId === "objectList" ? "objects" : "actions"
+            ],
+            [item]: undefined,
           },
-        }));
+        },
+      }));
 
-        setAddedItems((prevItems) =>
-          prevItems.filter((addedItem) => addedItem !== item)
-        );
-
-        console.log("after removal:", jsonData);
-
-        if (typeof onRemoveItem === "function") {
-          onRemoveItem(item);
+      if (onRemoveItem) {
+        if (listId === "objectList") {
+          setObjectItems(updatedItems);
+        } else {
+          setActionItems(updatedItems);
         }
       }
     } catch (error) {
@@ -161,66 +168,63 @@ const DisplayCheckbox = ({ apiResponse, onAddItem }) => {
 
   const resetChecklist = () => {
     try {
-      addedItems.forEach((item) => {
-        const listElement = document.getElementById(item.list);
-        const listItem = listElement?.children[item.index];
+      objectItems.forEach((object) => {
+        const listElement = document.getElementById("objectList");
+        const listItem = listElement
+          ?.querySelector(`span:contains('${object}')`)
+          .closest("li");
 
         if (listItem) {
           listItem.remove();
 
-          delete jsonData.checklist[
-            item.list === "objectList" ? "objects" : "actions"
-          ][item.item];
-
-          console.log("after removal:", jsonData);
-
-          if (onRemoveItem) {
-            onRemoveItem(item);
-          }
+          delete jsonData.checklist.objects[object];
         }
       });
 
-      setAddedItems([]);
+      actionItems.forEach((action) => {
+        const listElement = document.getElementById("actionList");
+        const listItem = listElement
+          ?.querySelector(`span:contains('${action}')`)
+          .closest("li");
+
+        if (listItem) {
+          listItem.remove();
+
+          delete jsonData.checklist.actions[action];
+        }
+      });
+
+      console.log("after removal:", jsonData);
+
+      if (onRemoveItem) {
+        onRemoveItem(); // Pass any necessary arguments to onRemoveItem
+      }
+
+      setObjectItems([]);
+      setActionItems([]);
     } catch (error) {
       console.error("Error resetting checklist:", error);
       alert("Error resetting checklist. Please try again.");
     }
   };
 
-  async function submitChecklist() {
-    try {
-      const wsMessage = JSON.stringify({
-        type: "ping",
-        jsonData: jsonData, // Include the current state of jsonData
-      });
-
-      // Assuming you have a way to establish a WebSocket connection in Next.js
-      // Example: const socket = new WebSocket('ws://example.com/socket');
-      socket.send(wsMessage);
-
-      pageRoute();
-    } catch (error) {
-      console.error("Error updating checklist:", error);
-      // Handle the error, e.g., display an error message to the user
-      document.getElementById("result-container").textContent =
-        "Error updating checklist. Please try again.";
-    }
-  }
-
   return (
     <div>
-      <h1>Checklist</h1>
+      <h1 className={styles.checklist}>Checklist</h1>
       <div>
-        <h2>Objects</h2>
+        <h2 className={styles.header}>Objects</h2>
         <ul className="item-list" id="objectList">
           {Object.keys(jsonData.checklist.objects).map((object, index) => (
             <li key={index + 1}>
-              {index + 1}. <span>{object}</span>
+              {index + 1}. <span className={styles.options}>{object}</span>
               <input
                 type="checkbox"
                 defaultChecked={jsonData.checklist.objects[object]}
               />
-              <button onClick={() => removeNewItem("objectList", object)}>
+              <button
+                className={styles.button}
+                onClick={() => removeNewItem("objectList", object)}
+              >
                 Remove
               </button>
             </li>
@@ -232,23 +236,29 @@ const DisplayCheckbox = ({ apiResponse, onAddItem }) => {
               id="newObjectInput"
               placeholder="Add new object"
             />
-            <button onClick={() => addNewItem("objectList", "newObjectInput")}>
+            <button
+              className={styles.button}
+              onClick={() => addNewItem("objectList", "newObjectInput")}
+            >
               Add
             </button>
           </li>
         </ul>
       </div>
       <div>
-        <h2>Actions</h2>
+        <h2 className={styles.header}>Actions</h2>
         <ul className="item-list" id="actionList">
           {Object.keys(jsonData.checklist.actions).map((action, index) => (
             <li key={index + 1}>
-              {index + 1}. <span>{action}</span>
+              {index + 1}. <span className={styles.options}>{action}</span>
               <input
                 type="checkbox"
                 defaultChecked={jsonData.checklist.actions[action]}
               />
-              <button onClick={() => removeNewItem("actionList", action)}>
+              <button
+                className={styles.button}
+                onClick={() => removeNewItem("actionList", action)}
+              >
                 Remove
               </button>
             </li>
@@ -260,18 +270,25 @@ const DisplayCheckbox = ({ apiResponse, onAddItem }) => {
               id="newActionInput"
               placeholder="Add new action"
             />
-            <button onClick={() => addNewItem("actionList", "newActionInput")}>
+            <button
+              className={styles.button}
+              onClick={() => addNewItem("actionList", "newActionInput")}
+            >
               Add
             </button>
           </li>
         </ul>
       </div>
-      <button onClick={() => resetChecklist()}>Reset Checklist</button>
-      <button id="submitBtn" onClick={() => submitChecklist()}>
+      <button className={styles.largeButton} onClick={() => resetChecklist()}>
+        Reset Checklist
+      </button>
+      <button
+        className={styles.largeButton}
+        id="submitBtn"
+        onClick={() => SubmitChecklist()}
+      >
         Submit Checklist
       </button>
     </div>
   );
-};
-
-export default DisplayCheckbox;
+}

@@ -1,0 +1,7 @@
+import { useRouter } from "next/navigation";
+
+ const router = useRouter();
+    function pageRoute() {
+      console.log("upload button clicked");
+      router.push("@/app/checkbox");
+    }

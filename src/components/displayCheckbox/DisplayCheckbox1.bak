@@ -1,0 +1,12 @@
+export function DisplayCheckbox({ apiResponse, onAddItem }) {
+  if (!apiResponse) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <h1>Checklist</h1>
+      <pre>{JSON.stringify(apiResponse, null, 2)}</pre>
+    </div>
+  );
+}

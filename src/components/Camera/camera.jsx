@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 let video;
 let isCapturing = false;
 
-const Camera = () => {
+export function Camera() {
   const [frames, setFrames] = useState([]);
   const socketRef = useRef();
 
@@ -172,6 +172,4 @@ const Camera = () => {
       console.error("Error starting capture:", error);
     }
   };
-};
-
-export default Camera;
+}
