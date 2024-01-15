@@ -212,7 +212,7 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
       <h1 className={styles.checklist}>Checklist</h1>
       <div>
         <h2 className={styles.header}>Objects</h2>
-        <ul className="item-list" id="objectList">
+        <ul className="mt-1" id="objectList">
           {Object.keys(jsonData.checklist.objects).map((object, index) => (
             <li key={index + 1} className="flex items-center space-x-2">
               <span className={styles.options}>{index + 1}.</span>{" "}
@@ -228,10 +228,10 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
             </li>
           ))}
           <li>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 mt-1">
               <input
                 type="text"
-                className="mb-2 p-2 shadow-inner border text-center rounded w-full sm:w-auto sm:p-2 focus:outline-none focus:ring-5 focus:ring-slate-500"
+                className="mb-2 p-1 shadow-inner border text-center rounded w-full sm:w-auto sm:p-2 focus:outline-none focus:ring-5 focus:ring-slate-500"
                 id="newObjectInput"
                 placeholder="Add new object"
               />
@@ -245,7 +245,7 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
       </div>
       <div>
         <h2 className={styles.header}>Actions</h2>
-        <ul className="item-list" id="actionList">
+        <ul className="mt-1" id="actionList">
           {Object.keys(jsonData.checklist.actions).map((action, index) => (
             <li key={index + 1} className="flex items-center space-x-2">
               <span className={styles.options}>{index + 1}.</span>{" "}
@@ -261,10 +261,10 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
             </li>
           ))}
           <li>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 mt-1">
               <input
                 type="text"
-                className="mb-2 p-2 shadow-inner border text-center rounded w-full sm:w-auto sm:p-2 focus:outline-none focus:ring-5 focus:ring-slate-500"
+                className="mb-2 p-1 shadow-inner border text-center rounded w-full sm:w-auto sm:p-2 focus:outline-none focus:ring-5 focus:ring-slate-500"
                 id="newActionInput"
                 placeholder="Add new action"
               />
@@ -276,7 +276,7 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
           </li>
         </ul>
       </div>
-      <div className="flex justify-between">
+      <div className="flex space-x-2">
         <button className={styles.largeButton} onClick={() => resetChecklist()}>
           Reset
         </button>

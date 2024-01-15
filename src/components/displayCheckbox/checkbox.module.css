@@ -4,7 +4,7 @@
 }
 
 .header {
-  @apply text-xl font-bold text-white;
+  @apply mt-1 text-xl font-bold text-white;
 }
 
 .options {
@@ -12,12 +12,12 @@
 }
 
 .addButton {
-  @apply relative bg-gray-300 text-gray-700 drop-shadow-md font-semibold px-2 py-2 rounded-full w-9 h-9;
+  @apply relative mb-1 bg-blue-500 text-gray-700 drop-shadow-md font-semibold px-2 py-2 rounded-full w-9 h-9;
 }
 
 .addButton::before {
   content: "+"; /* Plus sign */
-  @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500;
+  @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white;
 }
 
 .removeButton {
