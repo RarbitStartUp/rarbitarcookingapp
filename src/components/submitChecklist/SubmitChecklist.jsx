@@ -1,19 +1,26 @@
 "use client";
 
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { DisplayCheckedList } from "@/components/displayCheckedList/DisplayCheckedList";
 import { Camera } from "@/components/camera/Camera";
 
 export function SubmitChecklist() {
   const [aiResult, setAiResult] = useState(null);
   const isCapturingRef = useRef(false);
-  const socketRef = useRef(new WebSocket("ws://localhost:3001"));
+  const socketRef = useRef(
+    // new WebSocket("wss://9e07-89-187-185-171.ngrok-free.app")
+    new WebSocket("ws://localhost:3001")
+  );
 
   useEffect(() => {
     const socket = socketRef.current;
 
     socket.addEventListener("error", (error) => {
       console.error("WebSocket error:", error);
+    });
+
+    socket.addEventListener("open", () => {
+      console.log("WebSocket connection opened successfully");
     });
 
     socket.addEventListener("message", (event) => {

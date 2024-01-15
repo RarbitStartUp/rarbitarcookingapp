@@ -7,7 +7,6 @@ let isCapturing = false;
 
 export function Camera() {
   const [frames, setFrames] = useState([]);
-  const socketRef = useRef();
 
   useEffect(() => {
     video = document.createElement("video");

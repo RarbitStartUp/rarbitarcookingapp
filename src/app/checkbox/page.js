@@ -62,7 +62,11 @@ export default function Checkbox() {
   return (
     <div className="flex flex-col items-center">
       {forceRender && (
-        <DisplayCheckbox apiResponse={apiResponse} onAddItem={""} />
+        <DisplayCheckbox
+          apiResponse={apiResponse}
+          onAddItem={""}
+          onRemoveItem={""}
+        />
       )}
     </div>
   );

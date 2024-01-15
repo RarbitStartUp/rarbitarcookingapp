@@ -11,8 +11,22 @@
   @apply text-lg font-bold text-white;
 }
 
-.button {
-  @apply bg-slate-300 text-slate-700 drop-shadow-md font-semibold px-4 py-2 rounded w-full sm:w-auto sm:px-2 min-h-[2rem];
+.addButton {
+  @apply relative bg-gray-300 text-gray-700 drop-shadow-md font-semibold px-2 py-2 rounded-full w-9 h-9;
+}
+
+.addButton::before {
+  content: "+"; /* Plus sign */
+  @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-gray-500;
+}
+
+.removeButton {
+  @apply relative opacity-75 bg-gray-300 text-white drop-shadow-md font-semibold px-2 py-2 rounded-full w-5 h-5;
+}
+
+.removeButton::before {
+  content: "\00D7"; /* Unicode character for a cross (×) */
+  @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white;
 }
 
 .largeButton {

@@ -1,8 +1,9 @@
 "use client";
 // displayCheckbox.js
 import { useEffect, useState } from "react";
-import { SubmitChecklist } from "@/components/submitChecklist/SubmitChecklist";
+// import { SubmitChecklist } from "@/components/submitChecklist/SubmitChecklist";
 import styles from "./checkbox.module.css";
+import { Simplify } from "@/components/simplify/Simplify";
 
 // A helper function for safely parsing JSON
 function safeJsonParse(data) {
@@ -21,10 +22,9 @@ function safeJsonParse(data) {
   }
 }
 
-export function DisplayCheckbox({ apiResponse, onAddItem }) {
+export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
   console.log("apiResponse in displayCheckbox1.jsx:", apiResponse);
 
-  const [addedItems, setAddedItems] = useState([]);
   const [jsonData, setJsonData] = useState(null); // Added state for jsonData
 
   const [objectItems, setObjectItems] = useState([]);
@@ -95,7 +95,6 @@ export function DisplayCheckbox({ apiResponse, onAddItem }) {
   const addNewItem = async (listId, inputId) => {
     try {
       const newItemInput = document.getElementById(inputId);
-      const itemList = document.getElementById(listId);
 
       const newItem = newItemInput.value.toLowerCase();
 
@@ -215,33 +214,32 @@ export function DisplayCheckbox({ apiResponse, onAddItem }) {
         <h2 className={styles.header}>Objects</h2>
         <ul className="item-list" id="objectList">
           {Object.keys(jsonData.checklist.objects).map((object, index) => (
-            <li key={index + 1}>
-              {index + 1}. <span className={styles.options}>{object}</span>
+            <li key={index + 1} className="flex items-center space-x-2">
+              <span className={styles.options}>{index + 1}.</span>{" "}
+              <span className={styles.options}>{object}</span>
               <input
                 type="checkbox"
                 defaultChecked={jsonData.checklist.objects[object]}
               />
               <button
-                className={styles.button}
+                className={styles.removeButton}
                 onClick={() => removeNewItem("objectList", object)}
-              >
-                Remove
-              </button>
+              ></button>
             </li>
           ))}
           <li>
-            <input
-              type="text"
-              className="new-input"
-              id="newObjectInput"
-              placeholder="Add new object"
-            />
-            <button
-              className={styles.button}
-              onClick={() => addNewItem("objectList", "newObjectInput")}
-            >
-              Add
-            </button>
+            <div className="flex items-center space-x-2">
+              <input
+                type="text"
+                className="mb-2 p-2 shadow-inner border text-center rounded w-full sm:w-auto sm:p-2 focus:outline-none focus:ring-5 focus:ring-slate-500"
+                id="newObjectInput"
+                placeholder="Add new object"
+              />
+              <button
+                className={styles.addButton}
+                onClick={() => addNewItem("objectList", "newObjectInput")}
+              ></button>
+            </div>
           </li>
         </ul>
       </div>
@@ -249,46 +247,48 @@ export function DisplayCheckbox({ apiResponse, onAddItem }) {
         <h2 className={styles.header}>Actions</h2>
         <ul className="item-list" id="actionList">
           {Object.keys(jsonData.checklist.actions).map((action, index) => (
-            <li key={index + 1}>
-              {index + 1}. <span className={styles.options}>{action}</span>
+            <li key={index + 1} className="flex items-center space-x-2">
+              <span className={styles.options}>{index + 1}.</span>{" "}
+              <span className={styles.options}>{action}</span>
               <input
                 type="checkbox"
                 defaultChecked={jsonData.checklist.actions[action]}
               />
               <button
-                className={styles.button}
+                className={styles.removeButton}
                 onClick={() => removeNewItem("actionList", action)}
-              >
-                Remove
-              </button>
+              ></button>
             </li>
           ))}
           <li>
-            <input
-              type="text"
-              className="new-input"
-              id="newActionInput"
-              placeholder="Add new action"
-            />
-            <button
-              className={styles.button}
-              onClick={() => addNewItem("actionList", "newActionInput")}
-            >
-              Add
-            </button>
+            <div className="flex items-center space-x-2">
+              <input
+                type="text"
+                className="mb-2 p-2 shadow-inner border text-center rounded w-full sm:w-auto sm:p-2 focus:outline-none focus:ring-5 focus:ring-slate-500"
+                id="newActionInput"
+                placeholder="Add new action"
+              />
+              <button
+                className={styles.addButton}
+                onClick={() => addNewItem("actionList", "newActionInput")}
+              ></button>
+            </div>
           </li>
         </ul>
       </div>
-      <button className={styles.largeButton} onClick={() => resetChecklist()}>
-        Reset Checklist
-      </button>
-      <button
-        className={styles.largeButton}
-        id="submitBtn"
-        onClick={() => SubmitChecklist()}
-      >
-        Submit Checklist
-      </button>
+      <div className="flex justify-between">
+        <button className={styles.largeButton} onClick={() => resetChecklist()}>
+          Reset
+        </button>
+        <button
+          className={styles.largeButton}
+          id="submitBtn"
+          // onClick={SubmitChecklist}
+          onClick={() => Simplify()}
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );
 }
