@@ -54,7 +54,7 @@ export default function Checkbox() {
 
   if (!dataReady || apiResponse === null || apiResponse === undefined) {
     console.log("apiResponse before useEffect() :", apiResponse);
-    return <div>Loading...</div>; // or any other loading indicator
+    return <div className="text-white font-bold">Loading...</div>; // or any other loading indicator
   }
 
   console.log("apiResponse before rendering DisplayCheckbox:", apiResponse);

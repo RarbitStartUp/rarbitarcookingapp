@@ -1,9 +1,9 @@
 "use client";
 // displayCheckbox.js
-import { useEffect, useState } from "react";
-// import { SubmitChecklist } from "@/components/submitChecklist/SubmitChecklist";
+import { useRef,useEffect, useState } from "react";
+import { useWebSocket } from '@/app/WebsocketProvider';
 import styles from "./checkbox.module.css";
-import { Simplify } from "@/components/simplify/Simplify";
+import { useRouter } from "next/navigation";
 
 // A helper function for safely parsing JSON
 function safeJsonParse(data) {
@@ -29,6 +29,29 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
 
   const [objectItems, setObjectItems] = useState([]);
   const [actionItems, setActionItems] = useState([]);
+  const router = useRouter();
+
+  // const socketRef = useRef(new WebSocket("ws://localhost:3001"));
+  const socket = useWebSocket();
+  const [isWebSocketOpen, setIsWebSocketOpen] = useState(false); // Add this line
+
+  useEffect(() => {
+    socket.addEventListener("error", (error) => {
+      console.error("WebSocket error in displayCheckbox :", error);
+    });
+
+    socket.addEventListener("open", () => {
+      setIsWebSocketOpen(true); // Update WebSocket connection status
+      console.log(
+        "WebSocket connection opened successfully in displayCheckbox"
+      );
+    });
+
+    socket.addEventListener("close", () => {
+      setIsWebSocketOpen(false);
+      console.log("WebSocket connection closed in displayCheckbox");
+    });
+  }, [socket]);
 
   useEffect(() => {
     // Parse and set jsonData when apiResponse changes
@@ -134,10 +157,14 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
 
   const removeNewItem = (listId, item) => {
     try {
+      console.log("Removing item:", item);
+
       const updatedItems =
         listId === "objectList"
           ? objectItems.filter((obj) => obj !== item)
           : actionItems.filter((act) => act !== item);
+
+      console.log("Updated items:", updatedItems);
 
       setJsonData((prevData) => ({
         ...prevData,
@@ -169,9 +196,9 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
     try {
       objectItems.forEach((object) => {
         const listElement = document.getElementById("objectList");
-        const listItem = listElement
-          ?.querySelector(`span:contains('${object}')`)
-          .closest("li");
+        const listItem = Array.from(listElement.children).find((li) =>
+          li.textContent.includes(object)
+        );
 
         if (listItem) {
           listItem.remove();
@@ -182,9 +209,9 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
 
       actionItems.forEach((action) => {
         const listElement = document.getElementById("actionList");
-        const listItem = listElement
-          ?.querySelector(`span:contains('${action}')`)
-          .closest("li");
+        const listItem = Array.from(listElement.children).find((li) =>
+          li.textContent.includes(action)
+        );
 
         if (listItem) {
           listItem.remove();
@@ -204,6 +231,33 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
     } catch (error) {
       console.error("Error resetting checklist:", error);
       alert("Error resetting checklist. Please try again.");
+    }
+  };
+
+  // Function to submit jsonData to WebSocket
+  const submitDataToWebSocket = () => {
+    try {
+      // Check if WebSocket connection is open
+      if (socket.readyState === WebSocket.OPEN) {
+        // Convert jsonData to a JSON string
+        // const jsonString = JSON.stringify(jsonData);
+
+        // Send the JSON string to the WebSocket server
+        // socket.send(jsonString);
+        socket.send(JSON.stringify({ type: "jsonData", jsonData }));
+
+        // Log success message
+        console.log("Data submitted to WebSocket:", jsonData);
+
+        router.push("/livestream");
+      } else {
+        // Log an error if WebSocket connection is not open
+        console.error("WebSocket connection not open. Unable to submit data.");
+        alert("Error: WebSocket connection not open. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting data to WebSocket:", error);
+      alert("Error submitting data to WebSocket. Please try again.");
     }
   };
 
@@ -277,14 +331,13 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
         </ul>
       </div>
       <div className="flex space-x-2">
-        <button className={styles.largeButton} onClick={() => resetChecklist()}>
+        <button className={styles.largeButton} onClick={resetChecklist}>
           Reset
         </button>
         <button
           className={styles.largeButton}
           id="submitBtn"
-          // onClick={SubmitChecklist}
-          onClick={() => Simplify()}
+          onClick={submitDataToWebSocket}
         >
           Submit
         </button>

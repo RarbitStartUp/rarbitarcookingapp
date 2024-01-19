@@ -3,6 +3,7 @@ import Head from "next/head";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
+import { WebSocketProvider } from "./WebsocketProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,6 +15,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
+    <WebSocketProvider>
     <html lang="en">
       <Head>
         <meta
@@ -63,5 +65,7 @@ export default function RootLayout({ children }) {
         </div>
       </body>
     </html>
+    </WebSocketProvider>
   );
 }
+

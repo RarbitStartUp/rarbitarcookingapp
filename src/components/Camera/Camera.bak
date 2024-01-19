@@ -1,0 +1,155 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+
+export async function initCamera(videoRef) {
+  try {
+    const video = videoRef.current;
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
+
+    video.addEventListener("loadedmetadata", () => {
+      console.log("Video metadata loaded");
+    });
+
+    // Add this line to ensure the video is fully loaded before capturing
+    // await video.play();
+    // Wait for the video to be fully loaded
+    await new Promise((resolve) => {
+      video.addEventListener("loadeddata",
+      ()=>{
+      console.log("Video data loaded");
+      console.log("Initializing camera...");
+     resolve(); 
+      },{ once: true });
+    });
+  } catch (error) {
+    console.error("Error initializing camera:", error);
+  }
+};
+
+export async function startCapture(socket, isCapturingRef, framesRef, videoRef) {
+  try {
+    isCapturingRef.current = true;
+    console.log("Capturing started");
+
+    let video; // Declare video outside the try block
+
+    const captureAndCallback = async () => {
+      if (isCapturingRef.current) {
+        try {
+          // Capture frame logic
+          await new Promise((resolve) => {
+            const checkDimensions = () => {
+              video = videoRef.current;
+              if (video && video.videoWidth && video.videoHeight) {
+                resolve();
+              } else {
+                requestAnimationFrame(checkDimensions);
+              }
+            };
+
+            checkDimensions();
+          });
+
+          const { videoWidth, videoHeight } = video;
+
+          const canvas = document.createElement("canvas");
+          canvas.width = videoWidth;
+          canvas.height = videoHeight;
+
+          const context = canvas.getContext("2d");
+
+          await video.play();
+
+          const captureFrame = async () => {
+            try {
+              context.drawImage(video, 0, 0, videoWidth, videoHeight);
+
+              const imageData = context.getImageData(
+                0,
+                0,
+                videoWidth,
+                videoHeight
+              );
+
+              // Inside the captureFrame function
+const imageDataToArray = (imageData) => {
+  const { data, width, height } = imageData;
+  return { data: Array.from(data), width, height };
+};
+
+// Inside the captureFrame function where frames are updated
+// const updatedFrames = [...framesRef.current, imageDataToArray(imageData)];
+              // const updatedFrames = [...framesRef.current, imageData];
+              
+              // Capture only one frame
+              const frameData = imageDataToArray(imageData);
+
+              console.log("Captured frame:", imageData);
+              console.log("Captured frame:", frameData);
+              // console.log("Updated frames length:", updatedFrames.length);
+
+              // framesRef.current = updatedFrames;
+              framesRef.current = [frameData]; // Store only the current frame
+              console.log("framesRef.current :", framesRef.current);
+
+              //Chunk Size
+    //           const chunkSize = 1024; // Adjust the chunk size as needed
+    // const totalChunks = Math.ceil(imageData.data.length / chunkSize);
+
+    // for (let i = 0; i < totalChunks; i++) {
+    //   const start = i * chunkSize;
+    //   const end = (i + 1) * chunkSize;
+    //   const chunk = imageData.data.slice(start, end);
+
+              if (isCapturingRef.current) {
+                // Send frame instantly
+                if (
+                  socket &&
+                  socket.readyState === WebSocket.OPEN
+                ) {
+                  console.log("Sending frames instantly:", framesRef.current );
+                  // console.log("Sending frames instantly:", chunk );
+                  socket.send(
+                    JSON.stringify({ type: "frames", frames:  framesRef.current })
+                    // JSON.stringify({ type: "frames", frames:  chunk })
+                  );
+                } else {
+                  console.error("Socket not open.");
+                }
+              // } //this blanket is for chunk size application
+
+                // Continue capturing frames
+                requestAnimationFrame(captureFrame);
+              }
+            } catch (error) {
+              console.error("Error capturing frame:", error);
+            }
+          };
+
+          // Initial capture frame
+          await new Promise((resolve) => captureFrame(resolve));
+        } catch (error) {
+          console.error("Error capturing frames:", error.message);
+          return [];
+        }
+      }
+    };
+
+    // Start capturing frames
+    captureAndCallback();
+  } catch (error) {
+    console.error("Error starting capture:", error);
+  }
+}
+
+export function stopCapture(isCapturingRef, framesRef) {
+  return new Promise((resolve) => {
+    isCapturingRef.current = false;
+    resolve(); // Resolve the promise first
+
+    // Clear frames array after resolving the promise
+    framesRef.current = [];
+  });
+};

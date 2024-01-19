@@ -1,174 +1,116 @@
 "use client";
+// camera.jsx
+import * as tf from '@tensorflow/tfjs';
+import { useEffect, useRef, useState } from 'react';
 
-import { useEffect, useRef, useState } from "react";
+export async function initCamera(videoRef) {
+  try {
+    const video = videoRef.current;
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    video.srcObject = stream;
 
-let video;
-let isCapturing = false;
+    video.addEventListener('loadedmetadata', () => {
+      console.log('Video metadata loaded');
+    });
 
-export function Camera() {
-  const [frames, setFrames] = useState([]);
-
-  useEffect(() => {
-    video = document.createElement("video");
-    video.id = "videoElement";
-
-    const container = document.createElement("div");
-    container.id = "camera-feed";
-    document.body.appendChild(container);
-
-    initCamera();
-
-    return () => {
-      // Cleanup code if needed
-      stopCapture();
-    };
-  }, []);
-
-  const initCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-
-      video.srcObject = stream;
-
-      video.addEventListener("loadedmetadata", () => {
-        console.log("Video metadata loaded");
-        console.log("Initializing camera...");
-      });
-    } catch (error) {
-      console.error("Error initializing camera:", error);
-    }
-  };
-
-  const displayFrames = async () => {
-    try {
-      const container = document.getElementById("camera-feed");
-      container.innerHTML = "";
-      container.appendChild(video);
-
-      for (const frame of frames) {
-        const canvas = document.createElement("canvas");
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-
-        const context = canvas.getContext("2d");
-        context.putImageData(frame, 0, 0);
-
-        container.appendChild(canvas);
-
-        await new Promise((resolve) => setTimeout(resolve, 100));
-      }
-    } catch (error) {
-      console.error("Error displaying frames:", error);
-    }
-  };
-
-  const captureFrames = async (captureInterval = 100) => {
-    try {
-      await new Promise((resolve) => {
-        const checkDimensions = () => {
-          if (video && video.videoWidth && video.videoHeight) {
-            resolve();
-          } else {
-            requestAnimationFrame(checkDimensions);
-          }
-        };
-
-        checkDimensions();
-      });
-
-      const { videoWidth, videoHeight } = video;
-
-      const canvas = document.createElement("canvas");
-      canvas.width = videoWidth;
-      canvas.height = videoHeight;
-
-      const context = canvas.getContext("2d");
-
-      return new Promise(async (resolve, reject) => {
-        try {
-          await video.play();
+    await new Promise((resolve) => {
+      video.addEventListener(
+        'loadeddata',
+        () => {
+          console.log('Video data loaded');
+          console.log('Initializing camera...');
           resolve();
-        } catch (error) {
-          console.error("Error playing video:", error);
-          reject(error);
-        }
-
-        const captureFrame = async () => {
-          try {
-            context.drawImage(video, 0, 0, videoWidth, videoHeight);
-
-            const imageData = context.getImageData(
-              0,
-              0,
-              videoWidth,
-              videoHeight
-            );
-
-            setFrames((prevFrames) => [...prevFrames, imageData]);
-
-            setTimeout(captureFrame, captureInterval);
-          } catch (error) {
-            console.error("Error capturing frame:", error);
-            resolve();
-          }
-        };
-
-        captureFrame();
-      });
-    } catch (error) {
-      console.error("Error capturing frames:", error.message);
-    }
-  };
-
-  const stopCapture = () => {
-    isCapturing = false;
-  };
-
-  const startCaptureFrames = (socketRef) => {
-    if (!socketRef.current) {
-      socketRef.current = new WebSocket(
-        "wss://9e07-89-187-185-171.ngrok-free.app"
+        },
+        { once: true }
       );
+    });
 
-      socketRef.current.addEventListener("error", (error) => {
-        console.error("WebSocket error:", error);
-      });
+    await tf.ready();
+  } catch (error) {
+    console.error('Error initializing camera:', error);
+  }
+}
 
-      socketRef.current.addEventListener("message", (event) => {
-        const aiResult = JSON.parse(event.data);
-        console.log(
-          "user submitted checklist in displayCheckedList.js :",
-          aiResult
-        );
-      });
-    }
+export async function startCapture(socket, isCapturingRef, framesRef, videoRef) {
+  try {
+    isCapturingRef.current = true;
+    console.log('Capturing started');
 
-    try {
-      setFrames([]); // Clear any previous frames and display the live stream
-      isCapturing = true;
+    let video;
 
-      const captureAndCallback = async () => {
-        if (isCapturing) {
-          const capturedFrames = await captureFrames(1);
+    const captureFrame = async () => {
+      try {
+        const { videoWidth, videoHeight } = video;
 
-          displayFrames();
+        const canvas = document.createElement('canvas');
+        canvas.width = videoWidth;
+        canvas.height = videoHeight;
 
-          if (
-            socketRef.current &&
-            socketRef.current.readyState === WebSocket.OPEN
-          ) {
-            socketRef.current.send(
-              JSON.stringify({ type: "frames", frames: capturedFrames })
-            );
-          }
+        const context = canvas.getContext('2d');
 
-          setTimeout(captureAndCallback, 0);
+        await video.play();
+
+        context.drawImage(video, 0, 0, videoWidth, videoHeight);
+
+        const imageData = context.getImageData(0, 0, videoWidth, videoHeight);
+
+        console.log('Captured frame dimensions:', videoWidth, videoHeight);
+
+        const tensorData = tf.browser.fromPixels(canvas);
+        console.log('Tensor data:', tensorData);
+
+        const tensorResized = tf.image.resizeBilinear(tensorData, [224, 224]);
+        const tensorExpanded = tensorResized.expandDims(0);
+
+        const tensorArray = tensorExpanded.arraySync();
+        console.log('Sent, tensorArray:', tensorArray);
+
+        console.log("Sent, tensorArray:", tensorArray);
+        if (socket.readyState === WebSocket.OPEN) {
+          socket.send(JSON.stringify({ type: 'frames', frames: tensorArray }));
+          console.log('Sent frames to the server.');
+        } else {
+          console.warn('WebSocket not open. Frames not sent.');
         }
-      };
+        
+      } catch (error) {
+        console.error('Error capturing frame:', error);
+      }
+    };
 
-      captureAndCallback();
-    } catch (error) {
-      console.error("Error starting capture:", error);
-    }
-  };
+    const captureAndCallback = async () => {
+      while (isCapturingRef.current) {
+        await new Promise((resolve) => {
+          const checkDimensions = () => {
+            video = videoRef.current;
+            if (video && video.videoWidth && video.videoHeight) {
+              resolve();
+            } else {
+              requestAnimationFrame(checkDimensions);
+            }
+          };
+
+          checkDimensions();
+        });
+
+        await captureFrame();
+      }
+    };
+
+    await captureAndCallback();
+
+    // Add a delay (e.g., 1000 milliseconds) between frame captures, 1 second
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  } catch (error) {
+    console.error('Error starting capture:', error);
+  }
+}
+
+export function stopCapture(isCapturingRef, framesRef) {
+  return new Promise((resolve) => {
+    isCapturingRef.current = false;
+    resolve();
+
+    framesRef.current = [];
+  });
 }

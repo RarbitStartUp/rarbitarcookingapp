@@ -1,0 +1,119 @@
+"use client";
+
+import { useRef, useEffect, useState } from "react";
+import { useWebSocket } from '../WebsocketProvider';
+import { DisplayCheckedList } from "@/components/displayCheckedList/DisplayCheckedList";
+import { initCamera,captureFrames,displayFrames,startCapture,stopCapture } from "@/components/camera/Camera";
+import styles from "./livestream.module.css";
+
+export default function Livestream() {
+  const [aiResult, setAiResult] = useState(null);
+  const [isCameraInitialized, setIsCameraInitialized] = useState(false);
+const [isLoading, setIsLoading] = useState(true);
+const [isWebSocketOpen, setIsWebSocketOpen] = useState(false);
+  const isCapturingRef = useRef(false);
+  const framesRef = useRef([]); // Define framesRef
+  const videoRef = useRef();
+  const socket = useWebSocket();
+
+  // Add event listener to close WebSocket before unloading the page
+  // window.addEventListener('beforeunload', () => {
+  //   const socket = socketRef.current;
+  //   if (socket.readyState === WebSocket.OPEN) {
+  //     socket.close();
+  //   }
+  // });
+
+  useEffect(() => {
+    socket.addEventListener("error", (error) => {
+      console.error("WebSocket error in livestream page :", error);
+    });
+
+    socket.addEventListener("open", () => {
+      setIsWebSocketOpen(true); // Update WebSocket connection status
+      console.log(
+        "WebSocket connection opened successfully in livestream page"
+      );
+    });
+
+    socket.addEventListener("message", (event) => {
+      try {
+        const aiResult = JSON.parse(event.data);
+        console.log("Received AI result during capturing frames:", aiResult);
+        setAiResult(aiResult); // Update state with aiResult
+      } catch (error) {
+        console.log("Received WebSocket message:", event.data);
+        console.error("Error processing WebSocket message:", error);
+        // Handle the error, e.g., display an error message to the user
+      }
+    });
+
+    socket.addEventListener("close", () => {
+      setIsWebSocketOpen(false);
+      console.log("WebSocket connection closed in livestream page");
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    // This effect runs once after the initial render
+    const fetchData = async () => {
+      try {
+        // Initialize the camera before capturing frames
+        await initCamera(videoRef);
+        setIsCameraInitialized(true); // Update camera initialization status
+          
+        // Initialize framesRef
+        framesRef.current = [];
+      } catch (error) {
+        console.error("Error Streaming:", error);
+      } finally {
+        setIsLoading(false); // Set loading to false regardless of success or failure
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array means this effect runs once after the initial render
+
+  function handleStartCapture () {
+    // if (isCameraInitialized && isWebSocketOpen) {
+    if (isCameraInitialized) {
+      startCapture(socket, isCapturingRef, framesRef, videoRef);
+    } else {
+      console.warn("Cannot start capturing. Camera not initialized or WebSocket not open.");
+    }
+  };
+
+  async function handleStopCapture(){
+    await stopCapture(isCapturingRef, framesRef);
+  };
+
+  return (
+    <div className="flex flex-col items-center">
+      <div id="camera-feed">
+      <video ref={videoRef} id="videoElement" autoPlay muted />
+      </div>
+      <div className="flex flex-row">
+      <div className="flex space-x-2">
+        <button
+          className={styles.button}
+          onClick={handleStartCapture}
+          // disabled={!isCameraInitialized || isLoading || !isWebSocketOpen}
+          disabled={!isCameraInitialized || isLoading }
+        >
+           {isLoading ? "Initializing..." : "Start Capturing"}
+        </button>
+        <button 
+        className={styles.button} 
+        onClick={handleStopCapture}
+        // disabled={!isCameraInitialized || isLoading || !isWebSocketOpen }
+        disabled={!isCameraInitialized || isLoading }
+        > 
+           {isLoading ? "Initializing..." : "Stop Capturing"}
+        </button>
+      </div>
+      </div>
+      {/* DisplayCheckedList component */}
+      {aiResult && <DisplayCheckedList aiResult={aiResult} />}
+    </div>
+  );
+}
