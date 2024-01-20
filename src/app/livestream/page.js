@@ -29,7 +29,7 @@ export default function Livestream() {
     socket.addEventListener('message', (event) => {
       try {
         const aiResult = JSON.parse(event.data);
-        console.log('Received AI result during capturing frames:', aiResult);
+        console.log('Received parsed aiResult on client side ws :', aiResult);
         setAiResult(aiResult);
       } catch (error) {
         console.log('Received WebSocket message:', event.data);
@@ -96,7 +96,8 @@ export default function Livestream() {
           </button>
         </div>
       </div>
-      {aiResult && <DisplayCheckedList aiResult={aiResult} />}
+      <div className="pt-5 mt-5" />    
+      { aiResult && <DisplayCheckedList aiResult={aiResult} />}
     </div>
   );
 }
