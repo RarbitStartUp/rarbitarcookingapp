@@ -1,5 +1,4 @@
-import { checklistAI } from "./checklistAI";
-
+const { checklistAI } = require("./checklistAI");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 
