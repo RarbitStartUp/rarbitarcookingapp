@@ -1,5 +1,6 @@
 // api.js
-const { VertexAI } = require("@google-cloud/vertexai");
+import { VertexAI } from "@google-cloud/vertexai";
+
 const project = "arcookingapp";
 const location = "us-central1";
 const vertex_ai = new VertexAI({ project, location });

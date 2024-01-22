@@ -1,8 +1,8 @@
 // checklistAI.js (server-side logic for processing checked lists)
 
-import { VertexAI } from "@google-cloud/vertexai";
-import { Storage } from "@google-cloud/storage";
-import sharp from 'sharp';
+const { VertexAI } = require("@google-cloud/vertexai");
+const { Storage } = require("@google-cloud/storage");
+const sharp = require('sharp');
 
 const project = "arcookingapp";
 const location = "us-central1";
@@ -15,7 +15,7 @@ const generativeVisionModel = vertex_ai.preview.getGenerativeModel({
   model: "gemini-pro-vision",
 });
 
-export async function checkedListAI(jsonData, frames) {
+async function checkedListAI(jsonData, frames) {
   return new Promise(async (resolve, reject) => {
     console.log("Entering checkedListAI function");
     console.log("jsonData:", jsonData);
@@ -120,3 +120,6 @@ function delay(ms) {
     }
   });
 }
+
+// Export the function
+module.exports = checkedListAI;
