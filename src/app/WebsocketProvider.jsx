@@ -7,7 +7,7 @@ const WebSocketContext = createContext();
 
 export const WebSocketProvider = ({ children }) => {
   // const socket = new WebSocket("ws://localhost:8080");
-  const socket = io("ws://localhost:3001");
+  const socket = io("http://localhost:3002");
 
   return (
     <WebSocketContext.Provider value={socket}>
