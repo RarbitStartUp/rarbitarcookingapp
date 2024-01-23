@@ -238,13 +238,15 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
   const submitDataToWebSocket = () => {
     try {
       // Check if WebSocket connection is open
-      if (socket.readyState === WebSocket.OPEN) {
+      // if (socket.readyState === WebSocket.OPEN) {
+        if (socket.connected) {
         // Convert jsonData to a JSON string
         // const jsonString = JSON.stringify(jsonData);
 
         // Send the JSON string to the WebSocket server
         // socket.send(jsonString);
-        socket.send(JSON.stringify({ type: "jsonData", jsonData }));
+        // socket.send(JSON.stringify({ type: "jsonData", jsonData }));
+        socket.emit('jsonData', jsonData);
 
         // Log success message
         console.log("Data submitted to WebSocket:", jsonData);

@@ -21,12 +21,12 @@ export default function Livestream() {
       console.error('WebSocket error in livestream page:', error);
     });
 
-    socket.addEventListener('open', () => {
+    socket.on('connect', () => {
       setIsWebSocketOpen(true);
       console.log('WebSocket connection opened successfully in livestream page');
     });
 
-    socket.addEventListener('message', (event) => {
+    socket.on('connect', (event) => {
       try {
         const aiResult = JSON.parse(event.data);
         console.log('Received parsed aiResult on client side ws :', aiResult);
@@ -37,10 +37,15 @@ export default function Livestream() {
       }
     });
 
-    socket.addEventListener('close', () => {
+    socket.on('disconnect', () => {
       setIsWebSocketOpen(false);
       console.log('WebSocket connection closed in livestream page');
     });
+
+    return () => {
+      // Cleanup: Disconnect socket when component unmounts
+      socket.disconnect();
+    };
   }, [socket]);
 
   useEffect(() => {
