@@ -5,7 +5,7 @@ import { createContext, useContext } from 'react';
 const WebSocketContext = createContext();
 
 export const WebSocketProvider = ({ children }) => {
-  const socket = new WebSocket("ws://rarbit.com:3001");
+  const socket = new WebSocket("wss://rarbit.tech");
   // const socket = new WebSocket("ws://0.0.0.0:3001");
 
   return (
