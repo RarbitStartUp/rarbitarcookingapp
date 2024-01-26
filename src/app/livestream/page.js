@@ -2,8 +2,8 @@
 // livestream.jsx
 import { useRef, useEffect, useState } from 'react';
 import { useWebSocket } from '../WebsocketProvider';
-import { DisplayCheckedList } from '../../components/displayCheckedList/DisplayCheckedList';
-import { initCamera, startCapture, stopCapture } from '../../components/camera/Camera';
+import { DisplayCheckedList } from '@/components/displayCheckedList/DisplayCheckedList';
+import { initCamera, startCapture, stopCapture } from '@/components/camera/Camera';
 import styles from './livestream.module.css';
 
 export default function Livestream() {
