@@ -21,12 +21,13 @@ export default function Livestream() {
       console.error('WebSocket error in livestream page:', error);
     });
 
-    socket.on('connect', () => {
+    socket.addEventListener('open', () => {
       setIsWebSocketOpen(true);
+      fetchData();
       console.log('WebSocket connection opened successfully in livestream page');
     });
 
-    socket.on('connect', (event) => {
+    socket.addEventListener('message', (event) => {
       try {
         const aiResult = JSON.parse(event.data);
         console.log('Received parsed aiResult on client side ws :', aiResult);
@@ -37,32 +38,23 @@ export default function Livestream() {
       }
     });
 
-    socket.on('disconnect', () => {
+    socket.addEventListener('close', () => {
       setIsWebSocketOpen(false);
       console.log('WebSocket connection closed in livestream page');
     });
-
-    return () => {
-      // Cleanup: Disconnect socket when component unmounts
-      socket.disconnect();
-    };
   }, [socket]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await initCamera(videoRef);
-        setIsCameraInitialized(true);
-        framesRef.current = [];
-      } catch (error) {
-        console.error('Error Streaming:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+const fetchData = async () => {
+    try {
+      await initCamera(videoRef);
+      setIsCameraInitialized(true);
+      framesRef.current = [];
+    } catch (error) {
+      console.error('Error Streaming:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   function handleStartCapture() {
     if (isCameraInitialized) {
