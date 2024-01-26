@@ -1,13 +1,13 @@
-"use client";
+"use client"
+
 import { useFormState, useFormStatus } from "react-dom";
-import { useRef } from "react";
-import { useRouter } from "next/navigation";
-import { uploadVideoGS } from "@/lib/uploadVideoGS";
+// import { useRef } from "react";
+import { VideoUploader } from "@/lib/VideoUploader";
 
 export function UploadVideo() {
   const { pending } = useFormStatus();
-  const ref = useRef(null);
-  const router = useRouter(); // Initialize the useRouter hook
+//   const ref = useRef(null);
+ 
 
   // const [state, action] = useFormState(action, {
   //   message: "",
@@ -17,39 +17,9 @@ export function UploadVideo() {
   return (
     <div className="flex flex-col items-center ">
       <form
-        ref={ref}
+        // ref={ref}
+        action={VideoUploader}
         // action={action}
-        action={async (formData) => {
-          const apiResponse = await uploadVideoGS(formData);
-
-          // Log the apiResponse for debugging
-          console.log("API response:", apiResponse);
-
-          // Check if the apiResponse is valid
-          if (
-            apiResponse &&
-            apiResponse.role === "model" &&
-            apiResponse.parts
-          ) {
-            // Parse the JSON data from the apiResponse
-            const jsonString = apiResponse.parts[0].text;
-            const jsonData = JSON.parse(jsonString);
-
-            const newSearchParams = new URLSearchParams();
-            newSearchParams.set("checklistData", JSON.stringify(jsonData));
-
-            router.push(`/checkbox?${newSearchParams.toString()}`);
-
-            // Update the form state message to "Upload successfully!"
-            action({ message: "Upload successfully!" });
-
-            // Reset the form
-            ref.current?.reset();
-          } else {
-            console.error("Invalid API response");
-          }
-        }}
-        // action={uploadVideoGS}
         className="flex flex-col items-center"
       >
         {/* {state.message && <p>{state.message}</p>} */}

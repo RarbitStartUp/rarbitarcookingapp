@@ -5,25 +5,27 @@ import { useEffect, useState } from "react";
 import { DisplayCheckbox } from "@/components/displayCheckbox/DisplayCheckbox";
 
 export default function Checkbox() {
-// Use the useSearchParams hook to get and update the query parameters
+  // Use the useSearchParams hook to get and update the query parameters
   const searchParams = useSearchParams();
   console.log("searchParams:", searchParams);
-  // Parse the JSON data from the query parameter
-  const checklistData = JSON.parse(decodeURIComponent(searchParams.get("checklistData")));
-  console.log("checklistData:", checklistData);
 
-// State to store AI response
-const [apiResponse, setApiResponse] = useState(null);
-const [dataReady, setDataReady] = useState(false);
-const [forceRender, setForceRender] = useState(false);
+  // State to store AI response
+  const [apiResponse, setApiResponse] = useState(null);
+  const [dataReady, setDataReady] = useState(false);
+  const [forceRender, setForceRender] = useState(false);
 
-useEffect(() => {
+  useEffect(() => {
     try {
+      // Parse the JSON data from the query parameter
+      const checklistData = JSON.parse(searchParams.get("checklistData"));
+      console.log("checklistData:", checklistData);
+
       // Set the AI response state
-      // setApiResponse(checklistData);
+      //   setApiResponse(checklistData);
       setApiResponse((prevApiResponse) => {
         console.log("apiResponse prev1:", prevApiResponse);
-        return checklistData });
+        return checklistData;
+      });
 
       setDataReady(true); // Set dataReady to true when data is ready
     } catch (error) {
@@ -36,7 +38,7 @@ useEffect(() => {
       });
       setDataReady(true); // Set dataReady to true even if parsing fails
     }
-  }, []);
+  }, [searchParams]);
 
   // Use another useEffect to trigger the update of apiResponse
   useEffect(() => {

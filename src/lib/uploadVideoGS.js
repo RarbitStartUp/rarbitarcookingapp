@@ -4,7 +4,7 @@ import { checkboxAI } from "./checkboxAI";
 import ytdl from "ytdl-core";
 
 export async function uploadVideoGS(formData) {
-  console.log("formData:", formData);
+  console.log("formData in uploadVideoGS:", formData);
   const inputLink = formData.get("inputLink");
   const storage = new Storage();
   const bucketName = "users_uploads";
