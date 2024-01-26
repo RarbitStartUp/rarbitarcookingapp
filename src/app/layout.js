@@ -15,18 +15,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <WebSocketProvider>
     <html lang="en">
       <Head>
         <meta
           name="viewport"
           content="initial-scale=1, viewport-fit=cover, width=device-width"
-        />
+          />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
-        />
+          />
       </Head>
       <body
         className="font-inter relative"
@@ -34,7 +33,8 @@ export default function RootLayout({ children }) {
           minHeight: "calc(100vh + env(safe-area-inset-top))",
           padding: "env(safe-area-inset-top) 0 env(safe-area-inset-bottom) 0",
         }}
-      >
+        >
+        <WebSocketProvider>
         <div className="absolute inset-0 z-20 bg-black opacity-50"></div>
         <div
           className=" bg-cover bg-center relative h-screen flex flex-col"
@@ -63,9 +63,9 @@ export default function RootLayout({ children }) {
             <Footer />
           </div>
         </div>
+    </WebSocketProvider>
       </body>
     </html>
-    </WebSocketProvider>
   );
 }
 
