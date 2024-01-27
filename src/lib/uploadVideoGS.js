@@ -6,7 +6,9 @@ import ytdl from "ytdl-core";
 export async function uploadVideoGS(formData) {
   console.log("formData in uploadVideoGS:", formData);
   const inputLink = formData.get("inputLink");
+  // const key = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
   const storage = new Storage();
+  // const storage = new Storage({ credentials: key });
   const bucketName = "users_uploads";
 
   try {

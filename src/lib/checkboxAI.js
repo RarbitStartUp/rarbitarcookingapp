@@ -2,8 +2,10 @@
 import { VertexAI } from "@google-cloud/vertexai";
 
 const project = "arcookingapp";
-const location = "us-central1";
-const vertex_ai = new VertexAI({ project, location });
+const location = "us-central1"; 
+// const key = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+// const vertex_ai = new VertexAI({ project, location, credentials: key});
+const vertex_ai = new VertexAI({ project, location});
 
 const generativeVisionModel = vertex_ai.preview.getGenerativeModel({
   model: "gemini-pro-vision",
