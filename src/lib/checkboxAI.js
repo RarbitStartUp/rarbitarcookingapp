@@ -10,7 +10,10 @@ const generativeVisionModel = vertex_ai.preview.getGenerativeModel({
 });
 
 const prompt = `
-You are an action detection AI, detect the objects and actions with the corresponding objects from egocentric view , reply in the following JSON format as text
+You are an action detection AI, 
+detect the objects and actions with contextual objects ( e.g. cutting an apple ),
+reply in the following JSON format as text,
+in the language of English
 
 JSON format :
 {

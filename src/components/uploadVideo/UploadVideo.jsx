@@ -2,13 +2,14 @@
 
 import { useFormState, useFormStatus } from "react-dom";
 // import { useRef } from "react";
-import { VideoUploader } from "@/lib/VideoUploader";
+import { upload } from "@/lib/actions";
 
 export function UploadVideo() {
   const { pending } = useFormStatus();
+  console.log("Value of pending:", pending);
+
 //   const ref = useRef(null);
  
-
   // const [state, action] = useFormState(action, {
   //   message: "",
   //   inputLink: "",
@@ -18,12 +19,11 @@ export function UploadVideo() {
     <div className="flex flex-col items-center ">
       <form
         // ref={ref}
-        action={VideoUploader}
+        action={upload}
         // action={action}
         className="flex flex-col items-center"
       >
         {/* {state.message && <p>{state.message}</p>} */}
-
         <input
           type="text"
           placeholder="Paste Your Youtube Link"
