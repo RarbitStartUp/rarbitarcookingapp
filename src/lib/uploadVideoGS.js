@@ -13,13 +13,13 @@ export async function uploadVideoGS(formData) {
   // const storage = new Storage({ credentials: key });
   const bucketName = "users_uploads";
 
-  const file = storageClient.bucket(bucketName).file(fileName);
+  // const file = storageClient.bucket(bucketName).file(fileName);
 
-  await file.save(JSON.stringify({
-    foo: 'bar',
-  }), {
-    contentType: 'application/json',
-  });
+  // await file.save(JSON.stringify({
+  //   foo: 'bar',
+  // }), {
+  //   contentType: 'application/json',
+  // });
 
   try {
     // Validate the video link or perform any necessary checks
