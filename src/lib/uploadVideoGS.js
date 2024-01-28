@@ -1,5 +1,6 @@
 "use server";
 import { Storage } from "@google-cloud/storage";
+import {getGCPCredentials } from "./getGCPCredentials"
 import { checkboxAI } from "./checkboxAI";
 import ytdl from "ytdl-core";
 
@@ -7,9 +8,18 @@ export async function uploadVideoGS(formData) {
   console.log("formData in uploadVideoGS:", formData);
   const inputLink = formData.get("inputLink");
   // const key = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
-  const storage = new Storage();
+  // const storage = new Storage();
+  const storageClient = new Storage(getGCPCredentials());
   // const storage = new Storage({ credentials: key });
   const bucketName = "users_uploads";
+
+  const file = storageClient.bucket(bucketName).file(fileName);
+
+  await file.save(JSON.stringify({
+    foo: 'bar',
+  }), {
+    contentType: 'application/json',
+  });
 
   try {
     // Validate the video link or perform any necessary checks
@@ -19,7 +29,8 @@ export async function uploadVideoGS(formData) {
 
     // Download the YouTube video
     const videoStream = ytdl(inputLink, { filter: "audioandvideo" });
-    const writeStream = storage
+    // const writeStream = storage
+    const writeStream = storageClient
       .bucket(bucketName)
       .file(filename)
       .createWriteStream();

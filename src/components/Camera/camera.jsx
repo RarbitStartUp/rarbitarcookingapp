@@ -66,9 +66,9 @@ export async function startCapture(socket, isCapturingRef, framesRef, videoRef) 
         console.log('Sent, tensorArray:', tensorArray);
 
         console.log("Sent, tensorArray:", tensorArray);
-        if (socket.readyState === WebSocket.OPEN) {
+        if (socket.socket.readyState === WebSocket.OPEN) {
           // if (socket.connected) {
-          socket.send(JSON.stringify({ type: 'frames', frames: tensorArray }));
+          socket.socket.send(JSON.stringify({ type: 'frames', frames: tensorArray }));
           // socket.emit('frames', { frames: tensorArray });
           console.log('Sent frames to the server.');
         } else {

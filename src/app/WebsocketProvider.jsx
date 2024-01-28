@@ -1,20 +1,71 @@
 "use client"
 
-import { createContext, useContext } from 'react';
+// WebsocketProvider.jsx
+import { createContext, useContext, useState, useEffect } from 'react';
 
 const WebSocketContext = createContext();
 
-export const WebSocketProvider = ({ children }) => {
-  const socket = new WebSocket("wss://rarbit.tech");
-  // const socket = new WebSocket("ws://0.0.0.0:3001");
+const getWebSocketURL = () => {
+  const isDevelopment = process.env.NODE_ENV === 'development';
 
+  if (isDevelopment) {
+    return "ws://localhost:3001";
+  }
+
+  if (typeof window !== 'undefined') {
+    const isLocalhost = window.location.hostname === 'localhost';
+    if (isLocalhost) {
+      return "ws://localhost:3001";
+    }
+
+    if (window.location.hostname === 'rarbit.com') {
+      return "wss://rarbit.tech";
+    }
+  }
+};
+
+export const WebSocketProvider = ({ children }) => {
+  const socketUrl = getWebSocketURL();
+  console.log("socketUrl :", socketUrl);
+  
+  // Use state to manage the WebSocket instance and its connection status
+  const [socket, setSocket] = useState(null);
+  const [isWebSocketOpen, setIsWebSocketOpen] = useState(false);
+  
+  useEffect(() => {
+    const newSocket = new WebSocket(socketUrl);
+    
+    newSocket.addEventListener('open', () => {
+      console.log("WebSocket connection opened successfully");
+      setIsWebSocketOpen(true);
+      // Add a small delay to ensure WebSocket is connected before logging
+      setTimeout(() => {
+        console.log("Is WebSocket connected:", newSocket instanceof WebSocket);
+      }, 100);
+    });
+    
+    newSocket.addEventListener('close', () => {
+      console.log("WebSocket connection closed");
+      setIsWebSocketOpen(false);
+    });
+    
+    setSocket(newSocket);
+    
+    // Clean up the WebSocket instance and event listeners when the component is unmounted
+    return () => {
+      newSocket.close();
+    };
+  }, [socketUrl]);
+  
+  // console.log("Is WebSocket connected:", socket instanceof WebSocket);
+  
   return (
-    <WebSocketContext.Provider value={socket}>
+    <WebSocketContext.Provider value={{ socket,isWebSocketOpen }}>
       {children}
     </WebSocketContext.Provider>
   );
 };
 
 export const useWebSocket = () => {
-    return useContext(WebSocketContext);
-  };
+  return useContext(WebSocketContext);
+};
