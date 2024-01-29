@@ -10,23 +10,30 @@ export default function Livestream() {
   const [aiResult, setAiResult] = useState(null);
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isWebSocketOpen, setIsWebSocketOpen] = useState(null);
   const isCapturingRef = useRef(false);
   const framesRef = useRef([]);
   const videoRef = useRef();
-  const socket = useWebSocket();
-  console.log("isWebSocketOpen :", socket.isWebSocketOpen);
-
+  const socket = useWebSocket()
+  console.log("socket:",socket);
+  
   useEffect(() => {
-    socket.socket.addEventListener('error', (error) => {
+    socket.addEventListener('error', (error) => {
       console.error('WebSocket error in livestream page:', error);
     });
-
-    socket.socket.addEventListener('open', () => {
+    
+    socket.addEventListener('open', () => {
+      setIsWebSocketOpen((prev) => {
+        if (prev !== true) {
+          console.log("isWebSocketOpen:", true);
+        }
+        return true;
+      });
       init();
       console.log('WebSocket connection opened successfully in livestream page');
     });
 
-    socket.socket.addEventListener('message', (event) => {
+    socket.addEventListener('message', (event) => {
       try {
         const aiResult = JSON.parse(event.data);
         console.log('Received parsed aiResult on client side ws :', aiResult);
@@ -37,7 +44,13 @@ export default function Livestream() {
       }
     });
 
-    socket.socket.addEventListener('close', () => {
+    socket.addEventListener('close', () => {
+      setIsWebSocketOpen((prev) => {
+        if (prev !== false) {
+          console.log("isWebSocketOpen:", false);
+        }
+        return false;
+      });
       console.log('WebSocket connection closed in livestream page');
     });
   }, [socket]);
@@ -55,7 +68,7 @@ const init = async () => {
   };
 
   function handleStartCapture() {
-    if (isCameraInitialized && socket && socket.isWebSocketOpen) {
+    if (isCameraInitialized && socket && isWebSocketOpen) {
       startCapture(socket, isCapturingRef, framesRef, videoRef);
     } else {
       if (!isCameraInitialized) {
@@ -64,7 +77,7 @@ const init = async () => {
   
       if (!socket) {
         console.warn('WebSocket is not initialized.');
-      } else if (!socket.isWebSocketOpen) {
+      } else if (!isWebSocketOpen) {
         console.warn('WebSocket connection is not open.');
       }
     }
@@ -84,14 +97,14 @@ const init = async () => {
           <button
             className={styles.button}
             onClick={handleStartCapture}
-            disabled={!isCameraInitialized || isLoading || !(socket && socket.isWebSocketOpen)}
+            disabled={!isCameraInitialized || isLoading || !(socket && isWebSocketOpen)}
           >
             {isLoading ? 'Initializing...' : 'Start Capturing'}
           </button>
           <button
             className={styles.button}
             onClick={handleStopCapture}
-            disabled={!isCameraInitialized || isLoading || !(socket && socket.isWebSocketOpen)}
+            disabled={!isCameraInitialized || isLoading || !(socket && isWebSocketOpen)}
           >
             {isLoading ? 'Initializing...' : 'Stop Capturing'}
           </button>

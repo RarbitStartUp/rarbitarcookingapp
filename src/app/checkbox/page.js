@@ -6,7 +6,7 @@ import { DisplayCheckbox } from "@/components/displayCheckbox/DisplayCheckbox";
 
 export default function Checkbox() {
     const searchParams = useSearchParams();
-    console.log("searchParams:", searchParams);
+    // console.log("searchParams:", searchParams);
     const [apiResponse, setApiResponse] = useState(null);
 
     useEffect(() => {

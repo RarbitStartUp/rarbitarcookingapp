@@ -33,34 +33,34 @@ export const WebSocketProvider = ({ children }) => {
   const [isWebSocketOpen, setIsWebSocketOpen] = useState(false);
   
   useEffect(() => {
-    const newSocket = new WebSocket(socketUrl);
+    const socket = new WebSocket(socketUrl);
     
-    newSocket.addEventListener('open', () => {
+    socket.addEventListener('open', () => {
       console.log("WebSocket connection opened successfully");
       setIsWebSocketOpen(true);
       // Add a small delay to ensure WebSocket is connected before logging
       setTimeout(() => {
-        console.log("Is WebSocket connected:", newSocket instanceof WebSocket);
+        console.log("Is WebSocket connected:", socket instanceof WebSocket);
       }, 100);
     });
     
-    newSocket.addEventListener('close', () => {
+    socket.addEventListener('close', () => {
       console.log("WebSocket connection closed");
       setIsWebSocketOpen(false);
     });
     
-    setSocket(newSocket);
+    setSocket(socket);
     
     // Clean up the WebSocket instance and event listeners when the component is unmounted
     return () => {
-      newSocket.close();
+      socket.close();
     };
   }, [socketUrl]);
   
   // console.log("Is WebSocket connected:", socket instanceof WebSocket);
   
   return (
-    <WebSocketContext.Provider value={{ socket,isWebSocketOpen }}>
+    <WebSocketContext.Provider value={socket}>
       {children}
     </WebSocketContext.Provider>
   );

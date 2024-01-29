@@ -7,33 +7,31 @@ import ytdl from "ytdl-core";
 export async function uploadVideoGS(formData) {
   console.log("formData in uploadVideoGS:", formData);
   const inputLink = formData.get("inputLink");
-  // const key = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
   // const storage = new Storage();
-  const storageClient = new Storage(getGCPCredentials());
-  // const storage = new Storage({ credentials: key });
+  // const storageClient = new Storage(getGCPCredentials());
+  const projectId = "arcookingapp";
+  const credential = JSON.parse(
+  Buffer.from(process.env.GOOGLE_SERVICE_KEY, "base64").toString().replace(/\n/g,"")
+)
+  const storageClient = new Storage({
+    projectId,
+    credentials: {
+      client_email: credential.client_email,
+      private_key: credential.private_key,
+    },
+  });
+  // console.log("storageClient:", storageClient);
   const bucketName = "users_uploads";
 
-  // const file = storageClient.bucket(bucketName).file(fileName);
-
-  // await file.save(JSON.stringify({
-  //   foo: 'bar',
-  // }), {
-  //   contentType: 'application/json',
-  // });
-
   try {
-    // Validate the video link or perform any necessary checks
-
     // Generate a unique filename for the uploaded video
     const filename = `video_${Date.now()}.mp4`;
+    // storageClient changes to storage if locally
+    const file = storageClient.bucket(bucketName).file(filename);
+    const writeStream = file.createWriteStream();
 
     // Download the YouTube video
     const videoStream = ytdl(inputLink, { filter: "audioandvideo" });
-    // const writeStream = storage
-    const writeStream = storageClient
-      .bucket(bucketName)
-      .file(filename)
-      .createWriteStream();
 
     // Pipe the video stream to the write stream
     videoStream.pipe(writeStream);

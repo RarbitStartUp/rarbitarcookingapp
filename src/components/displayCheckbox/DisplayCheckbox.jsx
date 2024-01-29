@@ -26,6 +26,7 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
   console.log("apiResponse in displayCheckbox1.jsx:", apiResponse);
 
   const [jsonData, setJsonData] = useState(null); // Added state for jsonData
+  const [isWebSocketOpen, setIsWebSocketOpen] = useState(null);
 
   const [objectItems, setObjectItems] = useState([]);
   const [actionItems, setActionItems] = useState([]);
@@ -33,24 +34,25 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
 
   // const socketRef = useRef(new WebSocket("ws://localhost:3001"));
   const socket = useWebSocket();
-  console.log("socket:", socket.socket);
-  console.log("isWebSocketOpen:",socket.isWebSocketOpen);
-  console.log("Is socket a WebSocket instance:", socket.socket instanceof WebSocket);
-  console.log("WebSocket readyState:", socket.socket.readyState);
+  console.log("socket:", socket);
+  console.log("isWebSocketOpen:", isWebSocketOpen);
+  console.log("WebSocket readyState:", socket.readyState);
   
   useEffect(() => {
-  if (socket.socket && socket.socket instanceof WebSocket) {
-    socket.socket.addEventListener("error", (error) => {
+  if (socket && socket instanceof WebSocket) {
+    socket.addEventListener("error", (error) => {
       console.error("WebSocket error in displayCheckbox :", error);
     });
 
-    socket.socket.addEventListener("open", () => {
+    socket.addEventListener("open", () => {
+      setIsWebSocketOpen(true);
       console.log(
         "WebSocket connection opened successfully in displayCheckbox"
       );
     });
 
-    socket.socket.addEventListener("close", () => {
+    socket.addEventListener("close", () => {
+      setIsWebSocketOpen(false);
       console.log("WebSocket connection closed in displayCheckbox");
     });
   } else {
@@ -243,14 +245,14 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
   const submitDataToWebSocket = () => {
     try {
       // Check if WebSocket connection is open
-      if (socket.socket.readyState === WebSocket.OPEN) {
+      if (socket.readyState === WebSocket.OPEN) {
         // if (socket.connected) {
         // Convert jsonData to a JSON string
         // const jsonString = JSON.stringify(jsonData);
 
         // Send the JSON string to the WebSocket server
         // socket.send(jsonString);
-        socket.socket.send(JSON.stringify({ type: "jsonData", jsonData }));
+        socket.send(JSON.stringify({ type: "jsonData", jsonData }));
         // socket.emit('jsonData', jsonData);
 
         // Log success message
