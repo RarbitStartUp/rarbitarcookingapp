@@ -2,8 +2,8 @@
 // displayCheckbox.js
 import { useRef,useEffect, useState } from "react";
 import { useWebSocket } from '@/app/WebsocketProvider';
-import styles from "./checkbox.module.css";
 import { useRouter } from "next/navigation";
+import styles from "./checkbox.module.css";
 
 // A helper function for safely parsing JSON
 function safeJsonParse(data) {
