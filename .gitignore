@@ -35,4 +35,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-./google_cloud_credentials.json
+./google_service_key.json

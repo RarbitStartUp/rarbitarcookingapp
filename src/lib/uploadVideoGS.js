@@ -1,6 +1,5 @@
 "use server";
 import { Storage } from "@google-cloud/storage";
-import {getGCPCredentials } from "./getGCPCredentials"
 import { checkboxAI } from "./checkboxAI";
 import ytdl from "ytdl-core";
 
@@ -9,7 +8,7 @@ export async function uploadVideoGS(formData) {
   const inputLink = formData.get("inputLink");
   // const storage = new Storage();
   // const storageClient = new Storage(getGCPCredentials());
-  const projectId = "arcookingapp";
+  const projectId = "arcookngapp";
   const credential = JSON.parse(
   Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
 )
