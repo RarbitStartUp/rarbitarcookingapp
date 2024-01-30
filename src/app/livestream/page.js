@@ -67,7 +67,7 @@ export default function Livestream() {
       });
       console.log('WebSocket connection closed in livestream page');
     });
-  }, []);
+  }, [socket]);
 
   function handleStartCapture() {
     // if (isCameraInitialized && socket && isWebSocketOpen) {
