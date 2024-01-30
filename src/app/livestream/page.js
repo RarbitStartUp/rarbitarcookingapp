@@ -102,7 +102,7 @@ export default function Livestream() {
             className={styles.button}
             onClick={handleStartCapture}
             // disabled={!isCameraInitialized || isLoading || !(socket && isWebSocketOpen)}
-            disabled={!isCameraInitialized || isLoading }
+            disabled={!isCameraInitialized || isLoading || !socket }
           >
             {isLoading ? 'Initializing...' : 'Start Capturing'}
           </button>
@@ -110,7 +110,7 @@ export default function Livestream() {
             className={styles.button}
             onClick={handleStopCapture}
             // disabled={!isCameraInitialized || isLoading || !(socket && isWebSocketOpen)}
-            disabled={!isCameraInitialized || isLoading }
+            disabled={!isCameraInitialized || isLoading || !socket}
           >
             {isLoading ? 'Initializing...' : 'Stop Capturing'}
           </button>
