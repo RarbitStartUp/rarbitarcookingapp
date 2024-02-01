@@ -4,8 +4,11 @@ import { GoogleAuth } from 'google-auth-library';
 
 export async function checkboxAI(fileUri) {
   try {
+    // const credential = JSON.parse(
+    //   Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
+    // )
     const credential = JSON.parse(
-      Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
+      Buffer.from(process.env.GOOGLE_SERVICE_KEY, "base64").toString().replace(/\n/g,"")
     )
     // Use the default authentication provided by google-auth-library
     const auth = new GoogleAuth({
