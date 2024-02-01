@@ -46,10 +46,10 @@ export async function checkboxAI(fileUri) {
     
     const project = "arcookingapp";
     const location = "us-central1"; 
-    const googleAuth = {
+    const googleAuthOptions = {
       jsonContent: credential,
       scopes: 'https://www.googleapis.com/auth/cloud-platform'};
-    const vertex_ai = new VertexAI({ project, location, googleAuth});
+    const vertex_ai = new VertexAI({ project, location, googleAuthOptions});
     console.log("vertex_ai :",vertex_ai)
     
     const generativeVisionModel = vertex_ai.preview.getGenerativeModel({
