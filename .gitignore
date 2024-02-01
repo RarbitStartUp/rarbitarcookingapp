@@ -36,3 +36,4 @@ yarn-error.log*
 next-env.d.ts
 
 ./google_service_key.json
+./server-logs.log
