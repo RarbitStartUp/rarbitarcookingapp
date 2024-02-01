@@ -10,41 +10,44 @@ export async function checkboxAI(fileUri) {
     const credential = JSON.parse(
       Buffer.from(process.env.GOOGLE_SERVICE_KEY, "base64").toString().replace(/\n/g,"")
     )
-    // Use the default authentication provided by google-auth-library
-    const auth = new GoogleAuth({
-      credentials : credential,
-      // keyFilename: "google_service_key.json", // Load the key file from the environment variable
-      scopes: ['https://www.googleapis.com/auth/cloud-platform'], 
-    });
-    console.log("auth:", auth);
-    const authClient = await auth.getClient();
-    console.log("authClient:", authClient);
+    // // Use the default authentication provided by google-auth-library
+    // const auth = new GoogleAuth({
+    //   credentials : credential,
+    //   // keyFilename: "google_service_key.json", // Load the key file from the environment variable
+    //   scopes: ['https://www.googleapis.com/auth/cloud-platform'], 
+    // });
+    // console.log("auth:", auth);
+    // const authClient = await auth.getClient();
+    // console.log("authClient:", authClient);
     
-    async function getCredentials(authClient) {
-      // Fetch the credentials using the auth client
-      return new Promise((resolve, reject) => {
-        authClient.getAccessToken().then(
-          (response) => {
-            // Extract the access token from the response
-            const accessToken = response.token;
-            // Create a simple object with the access token
-            const credentials = { access_token: accessToken };
-            resolve(credentials);
-          },
-          (error) => {
-            reject(error);
-          }
-        );
-      });
-    }
+    // async function getCredentials(authClient) {
+    //   // Fetch the credentials using the auth client
+    //   return new Promise((resolve, reject) => {
+    //     authClient.getAccessToken().then(
+    //       (response) => {
+    //         // Extract the access token from the response
+    //         const accessToken = response.token;
+    //         // Create a simple object with the access token
+    //         const credentials = { access_token: accessToken };
+    //         resolve(credentials);
+    //       },
+    //       (error) => {
+    //         reject(error);
+    //       }
+    //     );
+    //   });
+    // }
     
-    // Get the credentials from the auth client
-    const credentials = await getCredentials(authClient);
-    console.log("credentials:", credentials);
+    // // Get the credentials from the auth client
+    // const credentials = await getCredentials(authClient);
+    // console.log("credentials:", credentials);
     
     const project = "arcookingapp";
     const location = "us-central1"; 
-    const vertex_ai = new VertexAI({ project, location});
+    const googleAuth = {
+      jsonContent: credential,
+      scopes: 'https://www.googleapis.com/auth/cloud-platform'};
+    const vertex_ai = new VertexAI({ project, location, googleAuth});
     console.log("vertex_ai :",vertex_ai)
     
     const generativeVisionModel = vertex_ai.preview.getGenerativeModel({
