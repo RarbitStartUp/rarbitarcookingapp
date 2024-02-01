@@ -11,7 +11,7 @@ export async function checkboxAI(fileUri) {
       Buffer.from(process.env.GOOGLE_SERVICE_KEY, "base64").toString().replace(/\n/g,"")
     )
 
-    console.log("credential :", credential);
+    // console.log("credential :", credential);
     // // Use the default authentication provided by google-auth-library
     // const auth = new GoogleAuth({
     //   credentials : credential,
@@ -47,9 +47,16 @@ export async function checkboxAI(fileUri) {
     const project = "arcookingapp";
     const location = "us-central1"; 
     const googleAuthOptions = {
-      jsonContent: credential,
-      scopes: 'https://www.googleapis.com/auth/cloud-platform'};
-    const vertex_ai = new VertexAI({ project, location, googleAuthOptions});
+      jsonContent : credential,
+      // keyFilename: "google_service_key.json", // Load the key file from the environment variable
+      scopes: ['https://www.googleapis.com/auth/cloud-platform'], 
+      }
+    const vertex_ai = new VertexAI({ 
+      project, 
+      location, 
+      googleAuth:googleAuthOptions,
+    });
+
     console.log("vertex_ai :",vertex_ai)
     
     const generativeVisionModel = vertex_ai.preview.getGenerativeModel({
