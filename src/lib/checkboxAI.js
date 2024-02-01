@@ -46,15 +46,15 @@ export async function checkboxAI(fileUri) {
     
     const project = "arcookingapp";
     const location = "us-central1"; 
-    const googleAuthOptions = {
-      jsonContent : credential,
+    const googleAuthOptions = new GoogleAuth({
+      credentials : credential,
       // keyFilename: "google_service_key.json", // Load the key file from the environment variable
       scopes: ['https://www.googleapis.com/auth/cloud-platform'], 
-      }
+      });
     const vertex_ai = new VertexAI({ 
       project, 
       location, 
-      googleAuth:googleAuthOptions,
+      googleAuthOptions,
     });
 
     console.log("vertex_ai :",vertex_ai)

@@ -23,3 +23,27 @@
 2024-02-01T16:34:46.276Z [INFO]: successfully uploaded
 2024-02-01T16:34:46.277Z [INFO]: fileUri :
 2024-02-01T16:35:12.414Z [INFO]: upload Video apiResponse :
+2024-02-01T16:37:36.674Z [INFO]: formData in uploadVideoGS:
+2024-02-01T16:37:47.940Z [INFO]: successfully uploaded
+2024-02-01T16:37:47.940Z [INFO]: fileUri :
+2024-02-01T16:38:10.671Z [INFO]: upload Video apiResponse :
+2024-02-01T16:58:51.505Z [INFO]: formData in uploadVideoGS:
+2024-02-01T16:59:14.657Z [INFO]: successfully uploaded
+2024-02-01T16:59:14.657Z [INFO]: fileUri :
+2024-02-01T16:59:41.044Z [INFO]: upload Video apiResponse :
+2024-02-01T17:04:51.773Z [INFO]: formData in uploadVideoGS:
+2024-02-01T17:05:05.553Z [INFO]: successfully uploaded
+2024-02-01T17:05:05.553Z [INFO]: fileUri :
+2024-02-01T17:05:54.079Z [INFO]: upload Video apiResponse :
+2024-02-01T17:25:40.288Z [INFO]: formData in uploadVideoGS:
+2024-02-01T17:25:52.685Z [INFO]: successfully uploaded
+2024-02-01T17:25:52.685Z [INFO]: fileUri :
+2024-02-01T17:25:52.687Z [ERROR]: Error uploading video: googleAuth is not defined
+2024-02-01T17:31:33.744Z [INFO]: formData in uploadVideoGS:
+2024-02-01T17:31:47.457Z [INFO]: successfully uploaded
+2024-02-01T17:31:47.457Z [INFO]: fileUri :
+2024-02-01T17:31:49.391Z [ERROR]: Error uploading video: [VertexAI.ClientError]: got status: 403 Forbidden
+2024-02-01T17:35:01.925Z [INFO]: formData in uploadVideoGS:
+2024-02-01T17:35:18.549Z [INFO]: successfully uploaded
+2024-02-01T17:35:18.550Z [INFO]: fileUri :
+2024-02-01T17:35:44.407Z [INFO]: upload Video apiResponse :
