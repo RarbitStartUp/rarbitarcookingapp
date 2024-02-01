@@ -2,3 +2,12 @@
 2024-02-01T13:25:55.708Z [INFO]: successfully uploaded
 2024-02-01T13:25:55.708Z [INFO]: fileUri :
 2024-02-01T13:26:27.251Z [INFO]: upload Video apiResponse :
+2024-02-01T14:22:04.205Z [INFO]: formData in uploadVideoGS:
+2024-02-01T14:25:06.764Z [ERROR]: Error waiting for video upload: Retry limit exceeded - Error: request to https://storage.googleapis.com/upload/storage/v1/b/users_uploads/o?name=video_1706797324207.mp4&uploadType=resumable&upload_id=ABPtcPoe3TzwFgfHnQRkq6gt39gf8yesTbYUB2wgkGgFk5dIiUXXj2OH75MKsTfwjxPyxEk4YPl1_1-_3h9MLlMRimI96WzcYQi37IJ6GTihhY1s failed, reason: write EPIPE
+2024-02-01T14:25:06.765Z [INFO]: successfully uploaded
+2024-02-01T14:25:06.765Z [INFO]: fileUri :
+2024-02-01T14:25:12.256Z [ERROR]: Error uploading video: [VertexAI.GoogleGenerativeAIError]: got status: 500 Internal Server Error
+2024-02-01T14:26:05.198Z [INFO]: formData in uploadVideoGS:
+2024-02-01T14:26:27.484Z [INFO]: successfully uploaded
+2024-02-01T14:26:27.484Z [INFO]: fileUri :
+2024-02-01T14:26:50.444Z [INFO]: upload Video apiResponse :
