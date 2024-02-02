@@ -10,7 +10,7 @@ export async function checkboxAI(fileUri) {
     const credential = JSON.parse(
       Buffer.from(process.env.GOOGLE_SERVICE_KEY, "base64").toString().replace(/\n/g,"")
     )
-
+    // process.env.GOOGLE_APPLICATION_CREDENTIALS = JSON.stringify(credential) ;
     // console.log("credential :", credential);
     // // Use the default authentication provided by google-auth-library
     // const auth = new GoogleAuth({
@@ -47,14 +47,29 @@ export async function checkboxAI(fileUri) {
     const project = "arcookingapp";
     const location = "us-central1"; 
     const googleAuthOptions = new GoogleAuth({
+    // const googleAuthOptions = new GoogleAuth({
       credentials : credential,
       // keyFilename: "google_service_key.json", // Load the key file from the environment variable
-      scopes: ['https://www.googleapis.com/auth/cloud-platform'], 
+      scopes: [
+        'https://www.googleapis.com/auth/cloud-platform',
+        'https://www.googleapis.com/auth/aiplatform',
+        'https://www.googleapis.com/auth/aiplatform.jobs',
+      ]
+      });
+    const googleAuth = new GoogleAuth({
+      credentials : credential,
+      // keyFilename: "google_service_key.json", // Load the key file from the environment variable
+      scopes: [
+      'https://www.googleapis.com/auth/cloud-platform',
+      'https://www.googleapis.com/auth/aiplatform',
+      'https://www.googleapis.com/auth/aiplatform.jobs',
+    ], 
       });
     const vertex_ai = new VertexAI({ 
       project, 
       location, 
       googleAuthOptions,
+      googleAuth
     });
 
     console.log("vertex_ai :",vertex_ai)

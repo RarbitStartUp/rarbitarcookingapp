@@ -2,7 +2,7 @@
 import { Storage } from "@google-cloud/storage";
 import { checkboxAI } from "./checkboxAI";
 import ytdl from "ytdl-core";
-import logger from "./logger"
+import logger from "../../logger"
 
 export async function uploadVideoGS(formData) {
   logger.info("formData in uploadVideoGS:", formData);
@@ -15,12 +15,9 @@ export async function uploadVideoGS(formData) {
 )
   const storageClient = new Storage({
     projectId,
-    credentials: {
-      client_email: credential.client_email,
-      private_key: credential.private_key,
-    },
+    credentials: credential
   });
-  // console.log("storageClient:", storageClient);
+  console.log("storageClient:", storageClient);
   const bucketName = "users_uploads";
 
   try {

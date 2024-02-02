@@ -47,3 +47,70 @@
 2024-02-01T17:35:18.549Z [INFO]: successfully uploaded
 2024-02-01T17:35:18.550Z [INFO]: fileUri :
 2024-02-01T17:35:44.407Z [INFO]: upload Video apiResponse :
+2024-02-01T18:07:43.445Z [INFO]: formData in uploadVideoGS:
+2024-02-01T18:07:59.439Z [INFO]: successfully uploaded
+2024-02-01T18:07:59.439Z [INFO]: fileUri :
+2024-02-01T18:07:59.444Z [ERROR]: Error uploading video: [VertexAI.GoogleAuthError]: 
+Unable to authenticate your request        
+Depending on your run time environment, you can get authentication by        
+- if in local instance or cloud shell: `!gcloud auth login`        
+- if in Colab:        
+    -`from google.colab import auth`        
+    -`auth.authenticate_user()`        
+- if in service account or other: please follow guidance in https://cloud.google.com/docs/authentication
+2024-02-01T18:29:08.493Z [INFO]: formData in uploadVideoGS:
+2024-02-01T18:29:31.528Z [INFO]: successfully uploaded
+2024-02-01T18:29:31.528Z [INFO]: fileUri :
+2024-02-01T18:29:31.533Z [ERROR]: Error uploading video: [VertexAI.GoogleAuthError]: 
+Unable to authenticate your request        
+Depending on your run time environment, you can get authentication by        
+- if in local instance or cloud shell: `!gcloud auth login`        
+- if in Colab:        
+    -`from google.colab import auth`        
+    -`auth.authenticate_user()`        
+- if in service account or other: please follow guidance in https://cloud.google.com/docs/authentication
+2024-02-01T18:31:28.976Z [INFO]: formData in uploadVideoGS:
+2024-02-01T18:31:44.340Z [INFO]: successfully uploaded
+2024-02-01T18:31:44.341Z [INFO]: fileUri :
+2024-02-01T18:31:44.344Z [ERROR]: Error uploading video: [VertexAI.GoogleAuthError]: 
+Unable to authenticate your request        
+Depending on your run time environment, you can get authentication by        
+- if in local instance or cloud shell: `!gcloud auth login`        
+- if in Colab:        
+    -`from google.colab import auth`        
+    -`auth.authenticate_user()`        
+- if in service account or other: please follow guidance in https://cloud.google.com/docs/authentication
+2024-02-01T19:50:47.981Z [INFO]: formData in uploadVideoGS:
+2024-02-01T19:50:58.660Z [INFO]: successfully uploaded
+2024-02-01T19:50:58.661Z [INFO]: fileUri :
+2024-02-01T19:51:23.267Z [INFO]: upload Video apiResponse :
+2024-02-02 04:36:07 [[32MINFO[39M]: formData in uploadVideoGS:
+2024-02-02 04:36:17 [[32MINFO[39M]: successfully uploaded
+2024-02-02 04:36:17 [[32MINFO[39M]: fileUri :
+2024-02-02 04:36:17 [[31MERROR[39M]: ReferenceError: google is not defined
+    at checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:50:35)
+    at uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:90)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-03 03:23:10 [[32MINFO[39M]: formData in uploadVideoGS:
+2024-02-03 03:23:19 [[32MINFO[39M]: successfully uploaded
+2024-02-03 03:23:19 [[32MINFO[39M]: fileUri :
+2024-02-03 03:23:49 [[32MINFO[39M]: upload Video apiResponse :
