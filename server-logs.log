@@ -657,3 +657,10 @@ Depending on your run time environment, you can get authentication by
     at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
     at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
     at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 03:34:01 [[32MINFO[39M]: formData in uploadVideoGS:
+2024-02-04 03:34:01 [[32MINFO[39M]: storageClient:
+2024-02-04 03:34:37 [[32MINFO[39M]: successfully uploaded
+2024-02-04 03:34:37 [[32MINFO[39M]: fileUri :
+2024-02-04 03:35:07 [[32MINFO[39M]: Aggregated Response:
+2024-02-04 03:35:07 [[32MINFO[39M]: Aggregated Response Content:
+2024-02-04 03:35:07 [[32MINFO[39M]: upload Video apiResponse :

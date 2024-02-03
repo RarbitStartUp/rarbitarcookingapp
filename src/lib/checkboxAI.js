@@ -9,28 +9,29 @@ export async function checkboxAI(fileUri) {
       Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
     )
 
-    // const googleAuth = new GoogleAuth({
-    //   // credentials : credential,
+    const googleAuth = new GoogleAuth({
+      credentials : credential,
 
-    //   // keyFilename: "google_service_key.json", // Load the key file from the environment variable
-    //   scopes: [
-    //   'https://www.googleapis.com/auth/cloud-platform',
-    //   'https://www.googleapis.com/auth/aiplatform',
-    //   'https://www.googleapis.com/auth/aiplatform.jobs',
-    // ], 
-    //   });
+      // keyFilename: "google_service_key.json", // Load the key file from the environment variable
+      scopes: [
+      'https://www.googleapis.com/auth/cloud-platform',
+      'https://www.googleapis.com/auth/aiplatform',
+      'https://www.googleapis.com/auth/aiplatform.jobs',
+    ], 
+      });
     const vertex_ai = new VertexAI({ 
       project:"arcookingapp", 
       location: "us-central1",
       // apiEndpoint : "https://us-central1-aiplatform.googleapis.com/v1/projects/arcookingapp/locations/us-central1/publishers/google/models/gemini-pro-vision:streamGenerateContent",
-      googleAuthOptions:{
-        credentials : credential,
-        scopes: [
-          'https://www.googleapis.com/auth/cloud-platform',
-          'https://www.googleapis.com/auth/aiplatform',
-          'https://www.googleapis.com/auth/aiplatform.jobs',
-        ], 
-      },
+      googleAuthOptions:googleAuth,
+      // googleAuthOptions:{
+      //   credentials : credential,
+      //   scopes: [
+      //     'https://www.googleapis.com/auth/cloud-platform',
+      //     'https://www.googleapis.com/auth/aiplatform',
+      //     'https://www.googleapis.com/auth/aiplatform.jobs',
+      //   ], 
+      // },
       // GoogleAuth
     });
 
