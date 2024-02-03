@@ -6,7 +6,7 @@
       }
     ],
     "functions": {
-      "src/**/*.js": {
+      "src/lib/**/*.js": {
         "runtime": "nodejs18"
       }
     }
