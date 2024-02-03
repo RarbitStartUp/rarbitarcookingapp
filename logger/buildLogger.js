@@ -1,6 +1,6 @@
 // logger.mjs
 import { createLogger, format, transports } from 'winston';
-const { combine, timestamp,errors,json } = format;
+const { combine,timestamp,errors,json } = format;
 
 function buildLogger(){
   return createLogger({

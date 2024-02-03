@@ -1,48 +1,44 @@
 // api.js
 import { VertexAI } from "@google-cloud/vertexai";
 import { GoogleAuth } from 'google-auth-library';
+import logger from "../../logger"
 
 export async function checkboxAI(fileUri) {
   try {
-    // const credential = JSON.parse(
-    //   Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
-    // )
     const credential = JSON.parse(
-      Buffer.from(process.env.GOOGLE_SERVICE_KEY, "base64").toString().replace(/\n/g,"")
+      Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
     )
-    // process.env.GOOGLE_APPLICATION_CREDENTIALS = JSON.stringify(credential) ;
-    // console.log("credential :", credential);
-    // // Use the default authentication provided by google-auth-library
-    // const auth = new GoogleAuth({
-    //   credentials : credential,
-    //   // keyFilename: "google_service_key.json", // Load the key file from the environment variable
-    //   scopes: ['https://www.googleapis.com/auth/cloud-platform'], 
-    // });
-    // console.log("auth:", auth);
-    // const authClient = await auth.getClient();
-    // console.log("authClient:", authClient);
+    // Use the default authentication provided by google-auth-library
+    const auth = new GoogleAuth({
+      credentials : credential,
+      // keyFilename: "google_service_key.json", // Load the key file from the environment variable
+      scopes: ['https://www.googleapis.com/auth/cloud-platform'], 
+    });
+    logger.info("auth:", auth);
+    const authClient = await auth.getClient();
+    logger.info("authClient:", authClient);
     
-    // async function getCredentials(authClient) {
-    //   // Fetch the credentials using the auth client
-    //   return new Promise((resolve, reject) => {
-    //     authClient.getAccessToken().then(
-    //       (response) => {
-    //         // Extract the access token from the response
-    //         const accessToken = response.token;
-    //         // Create a simple object with the access token
-    //         const credentials = { access_token: accessToken };
-    //         resolve(credentials);
-    //       },
-    //       (error) => {
-    //         reject(error);
-    //       }
-    //     );
-    //   });
-    // }
+    async function getCredentials(authClient) {
+      // Fetch the credentials using the auth client
+      return new Promise((resolve, reject) => {
+        authClient.getAccessToken().then(
+          (response) => {
+            // Extract the access token from the response
+            const accessToken = response.token;
+            // Create a simple object with the access token
+            const credentials = { access_token: accessToken };
+            resolve(credentials);
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      });
+    }
     
-    // // Get the credentials from the auth client
-    // const credentials = await getCredentials(authClient);
-    // console.log("credentials:", credentials);
+    // Get the credentials from the auth client
+    const credentials = await getCredentials(authClient);
+    logger.info("credentials:", credentials);
     
     const project = "arcookingapp";
     const location = "us-central1"; 
@@ -67,7 +63,7 @@ export async function checkboxAI(fileUri) {
       });
     const vertex_ai = new VertexAI({ 
       project, 
-      location, 
+      location,
       googleAuthOptions,
       googleAuth
     });
@@ -111,7 +107,7 @@ export async function checkboxAI(fileUri) {
     );
     const aggregatedResponse = await streamingResp.response;
 
-    console.log("Aggregated Response:", aggregatedResponse);
+    logger.info("Aggregated Response:", aggregatedResponse);
 
     if (
       !aggregatedResponse.candidates ||
@@ -122,7 +118,7 @@ export async function checkboxAI(fileUri) {
 
     const content = aggregatedResponse.candidates[0].content;
 
-    console.log("Aggregated Response Content:", content);
+    logger.info("Aggregated Response Content:", content);
 
     if (!content) {
       throw new Error("Invalid content in the response.");
@@ -130,7 +126,7 @@ export async function checkboxAI(fileUri) {
 
     return content;
   } catch (error) {
-    console.error("Error in checkbox function:", error);
+    logger.error("Error in checkbox function:", error);
     throw error; // rethrow the error to handle it in the calling function
   }
 }

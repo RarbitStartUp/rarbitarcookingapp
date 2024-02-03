@@ -17,7 +17,7 @@ export async function uploadVideoGS(formData) {
     projectId,
     credentials: credential
   });
-  console.log("storageClient:", storageClient);
+  logger.info("storageClient:", storageClient);
   const bucketName = "users_uploads";
 
   try {

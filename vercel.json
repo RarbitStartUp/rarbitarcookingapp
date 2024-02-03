@@ -1,0 +1,14 @@
+{
+    "builds": [
+      {
+        "src": "src",
+        "use": "@vercel/node"
+      }
+    ],
+    "functions": {
+      "src/**/*.js": {
+        "runtime": "nodejs14"
+      }
+    }
+  }
+  
