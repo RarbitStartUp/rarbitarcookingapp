@@ -2,10 +2,9 @@
 import { Storage } from "@google-cloud/storage";
 import { checkboxAI } from "./checkboxAI";
 import ytdl from "ytdl-core";
-import logger from "../../logger"
 
 export async function uploadVideoGS(formData) {
-  logger.info("formData in uploadVideoGS:", formData);
+  console.log("formData in uploadVideoGS:", formData);
   const inputLink = formData.get("inputLink");
   // const storage = new Storage();
   // const storageClient = new Storage(getGCPCredentials());
@@ -17,7 +16,7 @@ export async function uploadVideoGS(formData) {
     projectId,
     credentials: credential
   });
-  logger.info("storageClient:", storageClient);
+  console.log("storageClient:", storageClient);
   const bucketName = "users_uploads";
 
   try {
@@ -38,24 +37,24 @@ export async function uploadVideoGS(formData) {
       writeStream.on("finish", resolve);
       writeStream.on("error", reject);
     }).catch((error) => {
-      logger.error("Error waiting for video upload:", error);
+      console.log("Error waiting for video upload:", error);
       // Handle the error, e.g., display an error message to the user
     });
 
     // Construct the file URI for the uploaded video
     const fileUri = `gs://${bucketName}/${filename}`;
 
-    logger.info("successfully uploaded");
-    logger.info("fileUri :", fileUri);
+    console.log("successfully uploaded");
+    console.log("fileUri :", fileUri);
     // Call checkbox function with the fileUri
     const apiResponse = await checkboxAI(fileUri);
 
-    logger.info("upload Video apiResponse :", apiResponse);
+    console.log("upload Video apiResponse :", apiResponse);
 
     // You can return the file URI if needed
     // res.json({ apiResponse });
     return apiResponse;
   } catch (error) {
-    logger.error("Error uploading video:", error);
+    console.log("Error uploading video:", error);
   }
 }

@@ -11,7 +11,6 @@ export async function checkboxAI(fileUri) {
 
     const googleAuth = new GoogleAuth({
       credentials : credential,
-
       // keyFilename: "google_service_key.json", // Load the key file from the environment variable
       scopes: [
       'https://www.googleapis.com/auth/cloud-platform',
@@ -19,20 +18,12 @@ export async function checkboxAI(fileUri) {
       'https://www.googleapis.com/auth/aiplatform.jobs',
     ], 
       });
+      
     const vertex_ai = new VertexAI({ 
       project:"arcookingapp", 
       location: "us-central1",
       // apiEndpoint : "https://us-central1-aiplatform.googleapis.com/v1/projects/arcookingapp/locations/us-central1/publishers/google/models/gemini-pro-vision:streamGenerateContent",
-      googleAuthOptions:googleAuth,
-      // googleAuthOptions:{
-      //   credentials : credential,
-      //   scopes: [
-      //     'https://www.googleapis.com/auth/cloud-platform',
-      //     'https://www.googleapis.com/auth/aiplatform',
-      //     'https://www.googleapis.com/auth/aiplatform.jobs',
-      //   ], 
-      // },
-      // GoogleAuth
+      googleAuthOptions: googleAuth,
     });
 
     console.log("vertex_ai :",vertex_ai)

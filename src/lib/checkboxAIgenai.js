@@ -1,9 +1,8 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { GoogleGenerativeAIStream, Message, StreamingTextResponse } from 'ai';
-import logger from "../../logger";
 
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || '');
-logger.info("genAI:", genAI);
+console.log("genAI:", genAI);
 
 export const runtime = 'edge';
 
@@ -49,10 +48,12 @@ export async function checkboxAI(fileUri) {
             }],
       };
 
+      console.log(request);
+
     const streamingResp = await generativeModel.generateContentStream(request);
     const aggregatedResponse = await streamingResp.response;
 
-    logger.info("Aggregated Response:", aggregatedResponse);
+    console.log("Aggregated Response:", aggregatedResponse);
 
     if (!aggregatedResponse.candidates || aggregatedResponse.candidates.length === 0) {
       throw new Error("Invalid or empty candidates in the response.");
@@ -60,7 +61,7 @@ export async function checkboxAI(fileUri) {
 
     const content = aggregatedResponse.candidates[0].content;
 
-    logger.info("Aggregated Response Content:", content);
+    console.log("Aggregated Response Content:", content);
 
     if (!content) {
       throw new Error("Invalid content in the response.");
@@ -68,7 +69,7 @@ export async function checkboxAI(fileUri) {
 
     return content;
   } catch (error) {
-    logger.error("Error in checkbox function:", error);
+    console.error("Error in checkbox function:", error);
     throw error; // rethrow the error to handle it in the calling function
   }
 }
