@@ -177,3 +177,483 @@ Depending on your run time environment, you can get authentication by
 2024-02-04 00:32:50 [[32MINFO[39M]: Aggregated Response:
 2024-02-04 00:32:50 [[32MINFO[39M]: Aggregated Response Content:
 2024-02-04 00:32:50 [[32MINFO[39M]: upload Video apiResponse :
+2024-02-04 01:36:44 [[32MINFO[39M]: genAI:
+2024-02-04 01:36:44 [[32MINFO[39M]: formData in uploadVideoGS:
+2024-02-04 01:36:44 [[32MINFO[39M]: storageClient:
+2024-02-04 01:36:58 [[32MINFO[39M]: successfully uploaded
+2024-02-04 01:36:58 [[32MINFO[39M]: fileUri :
+2024-02-04 01:36:59 [[31MERROR[39M]: Error: [400 Bad Request] Invalid JSON payload received. Unknown name "file_data" at 'contents[0].parts[1]': Cannot find field. [{"@type":"type.googleapis.com/google.rpc.BadRequest","fieldViolations":[{"field":"contents[0].parts[1]","description":"Invalid JSON payload received. Unknown name \"file_data\" at 'contents[0].parts[1]': Cannot find field."}]}]
+    at makeRequest (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:212:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:532:22)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:56:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 01:36:59 [[31MERROR[39M]: Error: [400 Bad Request] Invalid JSON payload received. Unknown name "file_data" at 'contents[0].parts[1]': Cannot find field. [{"@type":"type.googleapis.com/google.rpc.BadRequest","fieldViolations":[{"field":"contents[0].parts[1]","description":"Invalid JSON payload received. Unknown name \"file_data\" at 'contents[0].parts[1]': Cannot find field."}]}]
+    at makeRequest (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:212:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:532:22)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:56:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 02:19:42 [[32MINFO[39M]: genAI:
+2024-02-04 02:19:42 [[32MINFO[39M]: formData in uploadVideoGS:
+2024-02-04 02:19:42 [[32MINFO[39M]: storageClient:
+2024-02-04 02:20:02 [[32MINFO[39M]: successfully uploaded
+2024-02-04 02:20:02 [[32MINFO[39M]: fileUri :
+2024-02-04 02:20:04 [[31MERROR[39M]: Error: [400 Bad Request] Invalid JSON payload received. Unknown name "file_uri" at 'contents[0].parts[1]': Cannot find field.
+Invalid JSON payload received. Unknown name "mime_type" at 'contents[0].parts[1]': Cannot find field. [{"@type":"type.googleapis.com/google.rpc.BadRequest","fieldViolations":[{"field":"contents[0].parts[1]","description":"Invalid JSON payload received. Unknown name \"file_uri\" at 'contents[0].parts[1]': Cannot find field."},{"field":"contents[0].parts[1]","description":"Invalid JSON payload received. Unknown name \"mime_type\" at 'contents[0].parts[1]': Cannot find field."}]}]
+    at makeRequest (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:212:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:532:22)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:64:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 02:20:04 [[31MERROR[39M]: Error: [400 Bad Request] Invalid JSON payload received. Unknown name "file_uri" at 'contents[0].parts[1]': Cannot find field.
+Invalid JSON payload received. Unknown name "mime_type" at 'contents[0].parts[1]': Cannot find field. [{"@type":"type.googleapis.com/google.rpc.BadRequest","fieldViolations":[{"field":"contents[0].parts[1]","description":"Invalid JSON payload received. Unknown name \"file_uri\" at 'contents[0].parts[1]': Cannot find field."},{"field":"contents[0].parts[1]","description":"Invalid JSON payload received. Unknown name \"mime_type\" at 'contents[0].parts[1]': Cannot find field."}]}]
+    at makeRequest (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:212:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:532:22)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:64:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 02:51:57 [[32MINFO[39M]: genAI:
+2024-02-04 02:51:57 [[32MINFO[39M]: formData in uploadVideoGS:
+2024-02-04 02:51:57 [[32MINFO[39M]: storageClient:
+2024-02-04 02:52:15 [[32MINFO[39M]: successfully uploaded
+2024-02-04 02:52:15 [[32MINFO[39M]: fileUri :
+2024-02-04 02:52:17 [[31MERROR[39M]: Error: [400 Bad Request] Invalid JSON payload received. Unknown name "fileData" at 'contents[0].parts[1]': Cannot find field. [{"@type":"type.googleapis.com/google.rpc.BadRequest","fieldViolations":[{"field":"contents[0].parts[1]","description":"Invalid JSON payload received. Unknown name \"fileData\" at 'contents[0].parts[1]': Cannot find field."}]}]
+    at makeRequest (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:212:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:532:22)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:63:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 02:52:17 [[31MERROR[39M]: Error: [400 Bad Request] Invalid JSON payload received. Unknown name "fileData" at 'contents[0].parts[1]': Cannot find field. [{"@type":"type.googleapis.com/google.rpc.BadRequest","fieldViolations":[{"field":"contents[0].parts[1]","description":"Invalid JSON payload received. Unknown name \"fileData\" at 'contents[0].parts[1]': Cannot find field."}]}]
+    at makeRequest (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:212:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:532:22)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:63:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 02:59:02 [[32MINFO[39M]: genAI:
+2024-02-04 02:59:02 [[32MINFO[39M]: formData in uploadVideoGS:
+2024-02-04 02:59:02 [[32MINFO[39M]: storageClient:
+2024-02-04 02:59:17 [[32MINFO[39M]: successfully uploaded
+2024-02-04 02:59:17 [[32MINFO[39M]: fileUri :
+2024-02-04 02:59:18 [[31MERROR[39M]: Error: [400 Bad Request] Invalid JSON payload received. Unknown name "fileData" at 'contents[0].parts[0]': Cannot find field. [{"@type":"type.googleapis.com/google.rpc.BadRequest","fieldViolations":[{"field":"contents[0].parts[0]","description":"Invalid JSON payload received. Unknown name \"fileData\" at 'contents[0].parts[0]': Cannot find field."}]}]
+    at makeRequest (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:212:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:532:22)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:59:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 02:59:18 [[31MERROR[39M]: Error: [400 Bad Request] Invalid JSON payload received. Unknown name "fileData" at 'contents[0].parts[0]': Cannot find field. [{"@type":"type.googleapis.com/google.rpc.BadRequest","fieldViolations":[{"field":"contents[0].parts[0]","description":"Invalid JSON payload received. Unknown name \"fileData\" at 'contents[0].parts[0]': Cannot find field."}]}]
+    at makeRequest (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:212:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google/generative-ai/dist/index.mjs:532:22)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:59:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 03:11:41 [[32MINFO[39M]: formData in uploadVideoGS:
+2024-02-04 03:11:41 [[32MINFO[39M]: storageClient:
+2024-02-04 03:12:01 [[32MINFO[39M]: successfully uploaded
+2024-02-04 03:12:01 [[32MINFO[39M]: fileUri :
+2024-02-04 03:12:06 [[31MERROR[39M]: ClientError: [VertexAI.ClientError]: got status: 404 Not Found
+    at throwErrorIfNotOK (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:379:15)
+    at GenerativeModel.generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:302:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:82:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 03:12:06 [[31MERROR[39M]: ClientError: [VertexAI.ClientError]: got status: 404 Not Found
+    at throwErrorIfNotOK (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:379:15)
+    at GenerativeModel.generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:302:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:82:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 03:13:15 [[32MINFO[39M]: formData in uploadVideoGS:
+2024-02-04 03:13:15 [[32MINFO[39M]: storageClient:
+2024-02-04 03:13:51 [[32MINFO[39M]: successfully uploaded
+2024-02-04 03:13:51 [[32MINFO[39M]: fileUri :
+2024-02-04 03:13:51 [[31MERROR[39M]: GoogleAuthError: [VertexAI.GoogleAuthError]: 
+Unable to authenticate your request        
+Depending on your run time environment, you can get authentication by        
+- if in local instance or cloud shell: `!gcloud auth login`        
+- if in Colab:        
+    -`from google.colab import auth`        
+    -`auth.authenticate_user()`        
+- if in service account or other: please follow guidance in https://cloud.google.com/docs/authentication
+    at eval (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:104:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async GenerativeModel.generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:296:20)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:83:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 03:13:51 [[31MERROR[39M]: GoogleAuthError: [VertexAI.GoogleAuthError]: 
+Unable to authenticate your request        
+Depending on your run time environment, you can get authentication by        
+- if in local instance or cloud shell: `!gcloud auth login`        
+- if in Colab:        
+    -`from google.colab import auth`        
+    -`auth.authenticate_user()`        
+- if in service account or other: please follow guidance in https://cloud.google.com/docs/authentication
+    at eval (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:104:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async GenerativeModel.generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:296:20)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:83:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 03:15:00 [[32MINFO[39M]: formData in uploadVideoGS:
+2024-02-04 03:15:00 [[32MINFO[39M]: storageClient:
+2024-02-04 03:15:12 [[32MINFO[39M]: successfully uploaded
+2024-02-04 03:15:12 [[32MINFO[39M]: fileUri :
+2024-02-04 03:15:13 [[31MERROR[39M]: GoogleAuthError: [VertexAI.GoogleAuthError]: 
+Unable to authenticate your request        
+Depending on your run time environment, you can get authentication by        
+- if in local instance or cloud shell: `!gcloud auth login`        
+- if in Colab:        
+    -`from google.colab import auth`        
+    -`auth.authenticate_user()`        
+- if in service account or other: please follow guidance in https://cloud.google.com/docs/authentication
+    at eval (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:104:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async GenerativeModel.generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:296:20)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:81:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 03:15:13 [[31MERROR[39M]: GoogleAuthError: [VertexAI.GoogleAuthError]: 
+Unable to authenticate your request        
+Depending on your run time environment, you can get authentication by        
+- if in local instance or cloud shell: `!gcloud auth login`        
+- if in Colab:        
+    -`from google.colab import auth`        
+    -`auth.authenticate_user()`        
+- if in service account or other: please follow guidance in https://cloud.google.com/docs/authentication
+    at eval (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:104:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async GenerativeModel.generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:296:20)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:81:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 03:16:17 [[32MINFO[39M]: formData in uploadVideoGS:
+2024-02-04 03:16:17 [[32MINFO[39M]: storageClient:
+2024-02-04 03:16:29 [[32MINFO[39M]: successfully uploaded
+2024-02-04 03:16:29 [[32MINFO[39M]: fileUri :
+2024-02-04 03:16:30 [[31MERROR[39M]: GoogleAuthError: [VertexAI.GoogleAuthError]: 
+Unable to authenticate your request        
+Depending on your run time environment, you can get authentication by        
+- if in local instance or cloud shell: `!gcloud auth login`        
+- if in Colab:        
+    -`from google.colab import auth`        
+    -`auth.authenticate_user()`        
+- if in service account or other: please follow guidance in https://cloud.google.com/docs/authentication
+    at eval (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:104:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async GenerativeModel.generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:296:20)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:81:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)
+2024-02-04 03:16:30 [[31MERROR[39M]: GoogleAuthError: [VertexAI.GoogleAuthError]: 
+Unable to authenticate your request        
+Depending on your run time environment, you can get authentication by        
+- if in local instance or cloud shell: `!gcloud auth login`        
+- if in Colab:        
+    -`from google.colab import auth`        
+    -`auth.authenticate_user()`        
+- if in service account or other: please follow guidance in https://cloud.google.com/docs/authentication
+    at eval (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:104:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async GenerativeModel.generateContentStream (webpack-internal:///(action-browser)/./node_modules/@google-cloud/vertexai/build/src/index.js:296:20)
+    at async checkboxAI (webpack-internal:///(action-browser)/./src/lib/checkboxAI.js:81:31)
+    at async uploadVideoGS (webpack-internal:///(action-browser)/./src/lib/uploadVideoGS.js:59:29)
+    at async upload (webpack-internal:///(action-browser)/./src/lib/actions.js:19:25)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:406
+    at async t4 (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:38:6379)
+    at async rk (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:25934)
+    at async doRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1394:30)
+    at async cacheEntry.responseCache.get.routeKind (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1555:28)
+    at async DevServer.renderToResponseWithComponentsImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1463:28)
+    at async DevServer.renderPageComponent (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1856:24)
+    at async DevServer.renderToResponseImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:1894:32)
+    at async DevServer.pipeImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:911:25)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/next-server.js:271:17)
+    at async DevServer.handleRequestImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/base-server.js:807:17)
+    at async /Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:331:20
+    at async Span.traceAsyncFn (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/trace/trace.js:151:20)
+    at async DevServer.handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/dev/next-dev-server.js:328:24)
+    at async invokeRender (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:163:21)
+    at async handleRequest (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:342:24)
+    at async requestHandlerImpl (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/router-server.js:366:13)
+    at async Server.requestListener (/Users/enajeod/Documents/code/NextJS/rarbitarcookingapp/node_modules/next/dist/server/lib/start-server.js:140:13)

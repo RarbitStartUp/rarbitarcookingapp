@@ -1,5 +1,8 @@
 {
     "editor.fontSize": 15,
     "terminal.integrated.fontSize": 15,
-    "workbench.colorTheme": "Visual Studio Dark - C++"
+    "workbench.colorTheme": "Visual Studio Dark - C++",
+    "cSpell.words": [
+        "arcookingapp"
+    ]
 }
