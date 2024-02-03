@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export async function initCamera(videoRef) {
   try {
+    if (typeof window !== 'undefined' && navigator.mediaDevices) {
     const video = videoRef.current;
     const stream = await navigator.mediaDevices.getUserMedia({ video: true });
     video.srcObject = stream;
@@ -26,7 +27,7 @@ export async function initCamera(videoRef) {
     });
 
     await tf.ready();
-  } catch (error) {
+  }} catch (error) {
     console.error('Error initializing camera:', error);
   }
 }
