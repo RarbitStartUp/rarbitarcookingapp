@@ -7,7 +7,7 @@
     ],
     "functions": {
       "src/**/*.js": {
-        "runtime": "nodejs14"
+        "runtime": "nodejs18"
       }
     }
   }
