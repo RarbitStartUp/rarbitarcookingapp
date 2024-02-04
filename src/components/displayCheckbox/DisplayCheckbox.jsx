@@ -65,8 +65,16 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
     try {
       // const jsonString = apiResponse.result.parts[0].text;
       // const parsedData = safeJsonParse(jsonString);
+
+      if (!apiResponse || apiResponse.length === 0) {
+        console.error("Error: Invalid API response structure");
+        alert("Error: Invalid API response structure. Please try again.");
+        return;
+      }
+
       console.log("apiResponse in displayCheckbox2.jsx:", apiResponse);
       const parsedData = safeJsonParse(apiResponse);
+      console.log("parsedData:",parsedData);
 
       if (!parsedData) {
         console.error("Error: Invalid JSON structure");
@@ -77,9 +85,10 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
       // Check if the expected structure exists
       if (
         !parsedData ||
-        !parsedData.checklist ||
-        !parsedData.checklist.objects ||
-        !parsedData.checklist.actions
+        !parsedData[0].timestamp ||
+        !parsedData[0].checklist ||
+        !parsedData[0].checklist.objects ||
+        !parsedData[0].checklist.actions
       ) {
         console.error("Error: Invalid JSON structure");
         alert("Error: Invalid JSON structure. Please try again.");
@@ -98,9 +107,11 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
           }
           // Check if the expected structure exists
           if (
-            !parsedData.checklist ||
-            !parsedData.checklist.objects ||
-            !parsedData.checklist.actions
+            !parsedData ||
+            !parsedData[0].timestamp ||
+            !parsedData[0].checklist ||
+            !parsedData[0].checklist.objects ||
+            !parsedData[0].checklist.actions
           ) {
             console.error("Error: Invalid JSON structure");
             alert("Error: Invalid JSON structure. Please try again.");
@@ -270,91 +281,92 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
     }
   };
 
+  
   return (
     <div>
-     {timestamps.map((timestampData, index) => (
-       <div key={index}>
-         <h1 className={styles.checklist}>Checklist for Timestamp: {timestampData.timestamp}</h1>
-      <div>
-        <h2 className={styles.header}>Objects</h2>
-        <ul className="mt-1" id="objectList">
-          {Object.keys(jsonData.checklist.objects).map((object, index) => (
-            <li key={index + 1} className="flex items-center space-x-2">
-              <span className={styles.options}>{index + 1}.</span>{" "}
-              <span className={styles.options}>{object}</span>
-              <input
-                type="checkbox"
-                defaultChecked={jsonData.checklist.objects[object]}
-              />
-              <button
-                className={styles.removeButton}
-                onClick={() => removeNewItem("objectList", object)}
-              ></button>
-            </li>
-          ))}
-          <li>
-            <div className="flex items-center space-x-2 mt-1">
-              <input
-                type="text"
-                className="mb-2 p-1 shadow-inner border text-center rounded w-full sm:w-auto sm:p-2 focus:outline-none focus:ring-5 focus:ring-slate-500"
-                id="newObjectInput"
-                placeholder="Add new object"
-              />
-              <button
-                className={styles.addButton}
-                onClick={() => addNewItem("objectList", "newObjectInput")}
-              ></button>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h2 className={styles.header}>Actions</h2>
-        <ul className="mt-1" id="actionList">
-          {Object.keys(jsonData.checklist.actions).map((action, index) => (
-            <li key={index + 1} className="flex items-center space-x-2">
-              <span className={styles.options}>{index + 1}.</span>{" "}
-              <span className={styles.options}>{action}</span>
-              <input
-                type="checkbox"
-                defaultChecked={jsonData.checklist.actions[action]}
-              />
-              <button
-                className={styles.removeButton}
-                onClick={() => removeNewItem("actionList", action)}
-              ></button>
-            </li>
-          ))}
-          <li>
-            <div className="flex items-center space-x-2 mt-1">
-              <input
-                type="text"
-                className="mb-2 p-1 shadow-inner border text-center rounded w-full sm:w-auto sm:p-2 focus:outline-none focus:ring-5 focus:ring-slate-500"
-                id="newActionInput"
-                placeholder="Add new action"
-              />
-              <button
-                className={styles.addButton}
-                onClick={() => addNewItem("actionList", "newActionInput")}
-              ></button>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div className="flex space-x-2">
-        <button className={styles.largeButton} onClick={resetChecklist}>
-          Reset
-        </button>
-        <button
-          className={styles.largeButton}
-          id="submitBtn"
-          onClick={submitDataToWebSocket}
-        >
-          Submit
-        </button>
-      </div>
-    </div>
+      {jsonData.map((timestampData, index) => (
+        <div key={index}>
+          <h1 className={styles.checklist}>Checklist for Timestamp: {timestampData.timestamp}</h1>
+          <div>
+            <h2 className={styles.header}>Objects</h2>
+            <ul className="mt-1" id="objectList">
+              {Object.keys(timestampData.checklist.objects).map((object, objIndex) => (
+                <li key={objIndex + 1} className="flex items-center space-x-2">
+                  <span className={styles.options}>{objIndex + 1}.</span>{" "}
+                  <span className={styles.options}>{object}</span>
+                  <input
+                    type="checkbox"
+                    defaultChecked={timestampData.checklist.objects[object]}
+                  />
+                  <button
+                    className={styles.removeButton}
+                    onClick={() => removeNewItem("objectList", object)}
+                  ></button>
+                </li>
+              ))}
+              <li>
+                <div className="flex items-center space-x-2 mt-1">
+                  <input
+                    type="text"
+                    className="mb-2 p-1 shadow-inner border text-center rounded w-full sm:w-auto sm:p-2 focus:outline-none focus:ring-5 focus:ring-slate-500"
+                    id="newObjectInput"
+                    placeholder="Add new object"
+                  />
+                  <button
+                    className={styles.addButton}
+                    onClick={() => addNewItem("objectList", "newObjectInput")}
+                  ></button>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h2 className={styles.header}>Actions</h2>
+            <ul className="mt-1" id="actionList">
+              {Object.keys(timestampData.checklist.actions).map((action, actIndex) => (
+                <li key={actIndex + 1} className="flex items-center space-x-2">
+                  <span className={styles.options}>{actIndex + 1}.</span>{" "}
+                  <span className={styles.options}>{action}</span>
+                  <input
+                    type="checkbox"
+                    defaultChecked={timestampData.checklist.actions[action]}
+                  />
+                  <button
+                    className={styles.removeButton}
+                    onClick={() => removeNewItem("actionList", action)}
+                  ></button>
+                </li>
+              ))}
+              <li>
+                <div className="flex items-center space-x-2 mt-1">
+                  <input
+                    type="text"
+                    className="mb-2 p-1 shadow-inner border text-center rounded w-full sm:w-auto sm:p-2 focus:outline-none focus:ring-5 focus:ring-slate-500"
+                    id="newActionInput"
+                    placeholder="Add new action"
+                  />
+                  <button
+                    className={styles.addButton}
+                    onClick={() => addNewItem("actionList", "newActionInput")}
+                  ></button>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div className="flex space-x-2">
+            <button className={styles.largeButton} onClick={resetChecklist}>
+              Reset
+            </button>
+            <button
+              className={styles.largeButton}
+              id="submitBtn"
+              onClick={submitDataToWebSocket}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
       ))}
-  </div>
-  );
+    </div>
+  );  
 }
