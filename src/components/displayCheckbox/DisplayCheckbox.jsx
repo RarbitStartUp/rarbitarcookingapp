@@ -272,7 +272,9 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
 
   return (
     <div>
-      <h1 className={styles.checklist}>Checklist</h1>
+     {timestamps.map((timestampData, index) => (
+       <div key={index}>
+         <h1 className={styles.checklist}>Checklist for Timestamp: {timestampData.timestamp}</h1>
       <div>
         <h2 className={styles.header}>Objects</h2>
         <ul className="mt-1" id="objectList">
@@ -352,5 +354,7 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
         </button>
       </div>
     </div>
+      ))}
+  </div>
   );
 }

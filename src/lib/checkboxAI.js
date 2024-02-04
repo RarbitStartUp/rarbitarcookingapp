@@ -1,14 +1,14 @@
 // api.js
 import { VertexAI } from "@google-cloud/vertexai";
 import { GoogleAuth } from 'google-auth-library';
-import logger from "../../logger"
 
 export async function checkboxAI(fileUri) {
   try {
     const credential = JSON.parse(
       Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
     )
-
+    console.log("credential:", credential);
+    
     const googleAuth = new GoogleAuth({
       credentials : credential,
       // keyFilename: "google_service_key.json", // Load the key file from the environment variable
@@ -23,7 +23,12 @@ export async function checkboxAI(fileUri) {
       project:"arcookingapp", 
       location: "us-central1",
       // apiEndpoint : "https://us-central1-aiplatform.googleapis.com/v1/projects/arcookingapp/locations/us-central1/publishers/google/models/gemini-pro-vision:streamGenerateContent",
-      googleAuthOptions: googleAuth,
+      apiEndpoint : "us-central1-aiplatform.googleapis.com",
+      // apiEndpoint : "https://iamcredentials.googleapis.com",
+      // googleAuthOptions: {
+      //   googleAuth: googleAuth, // Use the existing GoogleAuth instance
+      // },
+      googleAuth: googleAuth, // Also, pass it here if needed
     });
 
     console.log("vertex_ai :",vertex_ai)
@@ -34,21 +39,27 @@ export async function checkboxAI(fileUri) {
     
     const prompt = `
     You are an action detection AI, 
-    detect the objects and actions with contextual objects ( e.g. cutting an apple ),
+    detect the objects and actions in the video,
+    and give me the timestamp of each step,
     reply in the following JSON format as text,
     in the language of English
     
     JSON format :
-    {
-      checklist: {
-        objects:{
-            "objects" : true | false
-        },
-        actions:{
-            "actions" : true | false
+    [
+      {
+        "timestamp": "00:00:01",
+        "checklist": {
+          "objects": {
+            "apple": true
+          },
+          "actions": {
+            "wash the apple in the bowl": true,
+            "slice the apple": true
+          }
         }
       },
-    }
+      // Additional timestamps if needed
+    ]    
     `;
     const filePart = {
       file_data: {
@@ -65,7 +76,7 @@ export async function checkboxAI(fileUri) {
     );
     const aggregatedResponse = await streamingResp.response;
 
-    logger.info("Aggregated Response:", aggregatedResponse);
+    console.log("Aggregated Response:", aggregatedResponse);
 
     if (
       !aggregatedResponse.candidates ||
@@ -76,7 +87,7 @@ export async function checkboxAI(fileUri) {
 
     const content = aggregatedResponse.candidates[0].content;
 
-    logger.info("Aggregated Response Content:", content);
+    console.log("Aggregated Response Content:", content);
 
     if (!content) {
       throw new Error("Invalid content in the response.");
@@ -84,7 +95,7 @@ export async function checkboxAI(fileUri) {
 
     return content;
   } catch (error) {
-    logger.error("Error in checkbox function:", error);
+    console.error("Error in checkbox function:", error);
     throw error; // rethrow the error to handle it in the calling function
   }
 }
