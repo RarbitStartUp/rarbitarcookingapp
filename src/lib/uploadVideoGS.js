@@ -10,7 +10,7 @@ export async function uploadVideoGS(formData) {
   // const storageClient = new Storage(getGCPCredentials());
   const projectId = "arcookngapp";
   const credential = JSON.parse(
-  Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
+  Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
 )
   const storageClient = new Storage({
     projectId,
