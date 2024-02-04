@@ -5,7 +5,7 @@ import { GoogleAuth } from 'google-auth-library';
 export async function checkboxAI(fileUri) {
   try {
     const credential = JSON.parse(
-      Buffer.from(process.env.GOOGLE_APPLICATION_CREDENTIALS.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
+      Buffer.from(process.env.GOOGLE_PRIVATE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
     )
     console.log("credential:", credential);
     
