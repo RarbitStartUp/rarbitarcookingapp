@@ -1,34 +1,49 @@
 // api.js
 import { VertexAI } from "@google-cloud/vertexai";
-import { GoogleAuth } from 'google-auth-library';
+// import { GoogleAuth } from 'google-auth-library';
+import { Storage } from '@google-cloud/storage';
+import {getGCPCredentials} from "./getGCPCredentials"
+import path from 'path'; // Import the 'path' module
 
 export async function checkboxAI(fileUri) {
   try {
-    const credential = JSON.parse(
-      Buffer.from(process.env.GOOGLE_PRIVATE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
-    )
-    console.log("credential:", credential);
+    // const credentials = getGCPCredentials();
+    // console.log("credentials:", credentials);
+    // const credential = JSON.parse(
+    //   Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
+    // )
+    // console.log("credential:", credential);
     
-    const googleAuth = new GoogleAuth({
-      credentials : credential,
-      // keyFilename: "google_service_key.json", // Load the key file from the environment variable
-      scopes: [
-      'https://www.googleapis.com/auth/cloud-platform',
-      'https://www.googleapis.com/auth/aiplatform',
-      'https://www.googleapis.com/auth/aiplatform.jobs',
-    ], 
-      });
+    // const googleAuth = new GoogleAuth({
+    //   credentials : credentials,
+    //   // keyFilename: "google_service_key.json", // Load the key file from the environment variable
+    //   scopes: [
+    //   'https://www.googleapis.com/auth/cloud-platform',
+    //   'https://www.googleapis.com/auth/aiplatform',
+    //   'https://www.googleapis.com/auth/aiplatform.jobs',
+    // ], 
+    //   });
       
+    // const auth = {
+    //     client_email: credentials.credentials.client_email,
+    //     private_key: credentials.credentials.private_key,
+    //   };
+    
+    console.log("auth:",auth);
+
     const vertex_ai = new VertexAI({ 
-      project:"arcookingapp", 
+      project: "arcookingapp", 
+      // project: credentials.projectId, 
       location: "us-central1",
-      // apiEndpoint : "https://us-central1-aiplatform.googleapis.com/v1/projects/arcookingapp/locations/us-central1/publishers/google/models/gemini-pro-vision:streamGenerateContent",
+      // apiEndpoint : "us-central1-aiplatform.googleapis.com/v1/projects/arcookingapp/locations/us-central1/publishers/google/models/gemini-pro-vision:streamGenerateContent",
       apiEndpoint : "us-central1-aiplatform.googleapis.com",
-      // apiEndpoint : "https://iamcredentials.googleapis.com",
+      // apiEndpoint : "iamcredentials.googleapis.com",
       // googleAuthOptions: {
       //   googleAuth: googleAuth, // Use the existing GoogleAuth instance
       // },
-      googleAuth: googleAuth, // Also, pass it here if needed
+      // googleAuth: googleAuth, // Also, pass it here if needed
+      // googleAuthOptions: auth,
+      googleAuthOptions:getGCPCredentials(),
     });
 
     console.log("vertex_ai :",vertex_ai)
@@ -61,19 +76,73 @@ export async function checkboxAI(fileUri) {
       // Additional timestamps if needed
     ]    
     `;
-    const filePart = {
-      file_data: {
-        file_uri: fileUri,
-        mime_type: "video/mp4",
-      },
-    };
+
+
+ // Assuming fileUri is the path to the video file
+
+const bucketName = "users_uploads";
+const storageClient = new Storage(getGCPCredentials());
+
+
+const chunkSize = 250 * 1024;  // Set your desired chunk size in bytes
+// Get a reference to the bucket
+const bucket = storageClient.bucket(bucketName);
+const fileName = path.basename(fileUri);
+// Get a reference to the file
+const file = bucket.file(fileName);
+
+// Read the file
+const fileContents = await file.download();
+
+// Now you can work with the file contents
+const fileBuffer = fileContents[0];
+// Split the file into chunks
+// const chunks = [];
+// for (let i = 0; i < fileBuffer.length; i += chunkSize) {
+//   const chunk = fileBuffer.slice(i, i + chunkSize);
+//   chunks.push(chunk);
+// }
+
+// Split the file into chunks
+const chunks = [];
+for (let i = 0; i < fileBuffer.length; i += chunkSize) {
+  const start = i;
+  const end = Math.min(i + chunkSize, fileBuffer.length);
+  const chunk = fileBuffer.subarray(start, end);
+  chunks.push(chunk);
+}
+
+// Prepare the first request with the first chunk
+const firstChunk = chunks.shift();
+const firstFilePart = {
+  file_data: {
+    file_content: firstChunk.toString('base64'),
+    mime_type: "video/mp4",
+  },
+};
+
     const textPart = { text: prompt };
-    const request = {
-      contents: [{ role: "user", parts: [textPart, filePart] }],
+    const firstRequest = {
+      contents: [{ role: "user", parts: [textPart, firstFilePart] }],
     };
     const streamingResp = await generativeVisionModel.generateContentStream(
-      request
+      firstRequest
     );
+
+// Continue sending requests for the remaining chunks
+for (const chunk of chunks) {
+  const filePart = {
+    file_data: {
+      file_content: chunk.toString('base64'),
+      mime_type: "video/mp4",
+    },
+  };
+  const request = {
+    contents: [{ role: "user", parts: [textPart, filePart] }],
+  };
+  await streamingResp.write(request);
+}
+
     const aggregatedResponse = await streamingResp.response;
 
     console.log("Aggregated Response:", aggregatedResponse);
