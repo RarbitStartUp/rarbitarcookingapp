@@ -29,7 +29,7 @@ export async function checkboxAI(fileUri) {
     //     private_key: credentials.credentials.private_key,
     //   };
     
-    console.log("auth:",auth);
+    // console.log("auth:",auth);
 
     const vertex_ai = new VertexAI({ 
       project: "arcookingapp", 
