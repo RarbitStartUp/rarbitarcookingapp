@@ -2,7 +2,7 @@
 import { VertexAI } from "@google-cloud/vertexai";
 import { GoogleAuth } from 'google-auth-library';
 import { Storage } from '@google-cloud/storage';
-import {getGCPCredentials} from "./getGCPCredentials"
+// import {getGCPCredentials} from "./getGCPCredentials"
 import path from 'path'; // Import the 'path' module
 
 export async function checkboxAI(fileUri) {
@@ -42,7 +42,7 @@ export async function checkboxAI(fileUri) {
       googleAuthOptions: {
         googleAuth: googleAuth, // Use the existing GoogleAuth instance
       },
-      googleAuth: googleAuth, // Also, pass it here if needed
+      // googleAuth: googleAuth, // Also, pass it here if needed
       // googleAuthOptions: googleAuth,
       // googleAuth:getGCPCredentials(),
     });
