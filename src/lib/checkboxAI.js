@@ -81,68 +81,85 @@ export async function checkboxAI(fileUri) {
 
  // Assuming fileUri is the path to the video file
 
-const bucketName = "users_uploads";
-const storageClient = new Storage(getGCPCredentials());
+// const bucketName = "users_uploads";
+// const storageClient = new Storage(getGCPCredentials());
 
 
-const chunkSize = 250 * 1024;  // Set your desired chunk size in bytes
-// Get a reference to the bucket
-const bucket = storageClient.bucket(bucketName);
-const fileName = path.basename(fileUri);
-// Get a reference to the file
-const file = bucket.file(fileName);
+// const chunkSize = 250 * 1024;  // Set your desired chunk size in bytes
+// // Get a reference to the bucket
+// const bucket = storageClient.bucket(bucketName);
+// const fileName = path.basename(fileUri);
+// console.log("filename:",fileName);
+// // Get a reference to the file
+// const file = bucket.file(fileName);
+// console.log("Downloading file from:", file);
 
-// Read the file
-const fileContents = await file.download();
+// // Read the file
+// const fileContents = await file.download();
+// console.log("File downloaded successfully.");
+// console.log("fileContents:", fileContents);
 
-// Now you can work with the file contents
-const fileBuffer = fileContents[0];
-// Split the file into chunks
+// // Now you can work with the file contents
+// const fileBuffer = fileContents[0];
+// console.log("fileBuffer:",fileBuffer);
+// // Split the file into chunks
+// // const chunks = [];
+// // for (let i = 0; i < fileBuffer.length; i += chunkSize) {
+// //   const chunk = fileBuffer.slice(i, i + chunkSize);
+// //   chunks.push(chunk);
+// // }
+
+// // Split the file into chunks
 // const chunks = [];
 // for (let i = 0; i < fileBuffer.length; i += chunkSize) {
-//   const chunk = fileBuffer.slice(i, i + chunkSize);
+//   const start = i;
+//   const end = Math.min(i + chunkSize, fileBuffer.length);
+//   const chunk = fileBuffer.subarray(start, end);
 //   chunks.push(chunk);
 // }
+// console.log("chunks:",chunks);
 
-// Split the file into chunks
-const chunks = [];
-for (let i = 0; i < fileBuffer.length; i += chunkSize) {
-  const start = i;
-  const end = Math.min(i + chunkSize, fileBuffer.length);
-  const chunk = fileBuffer.subarray(start, end);
-  chunks.push(chunk);
-}
+// // Prepare the first request with the first chunk
+// const firstChunk = chunks.shift();
+// console.log("firstChunk:",firstChunk);
 
-// Prepare the first request with the first chunk
-const firstChunk = chunks.shift();
-const firstFilePart = {
+// const firstFilePart = {
+//   inline_data: {
+//     data: firstChunk.toString('base64'),
+//     mime_type: "video/mp4",
+//   },
+// };
+// console.log("firstFilePart:",firstFilePart);
+
+const filePart = {
   file_data: {
-    file_content: firstChunk.toString('base64'),
+    file_uri: fileUri,
     mime_type: "video/mp4",
   },
 };
 
     const textPart = { text: prompt };
-    const firstRequest = {
-      contents: [{ role: "user", parts: [textPart, firstFilePart] }],
+    const request = {
+      contents: [{ role: "user", parts: [textPart, filePart] }],
     };
     const streamingResp = await generativeVisionModel.generateContentStream(
-      firstRequest
+      request
     );
+    console.log("streamingResp:",streamingResp);
 
 // Continue sending requests for the remaining chunks
-for (const chunk of chunks) {
-  const filePart = {
-    file_data: {
-      file_content: chunk.toString('base64'),
-      mime_type: "video/mp4",
-    },
-  };
-  const request = {
-    contents: [{ role: "user", parts: [textPart, filePart] }],
-  };
-  await streamingResp.write(request);
-}
+// for (const chunk of chunks) {
+//   const filePart = {
+//     inline_data: {
+//       data: chunk.toString('base64'),
+//       mime_type: "video/mp4",
+//     },
+//   };
+//   const request = {
+//     contents: [{ role: "user", parts: [textPart, filePart] }],
+//   };
+//   await streamingResp.write(JSON.stringify(request));
+// }
 
     const aggregatedResponse = await streamingResp.response;
 
