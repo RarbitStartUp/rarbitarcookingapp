@@ -1,46 +1,38 @@
 // api.js
 import { VertexAI } from "@google-cloud/vertexai";
 import { GoogleAuth } from 'google-auth-library';
-import { Storage } from '@google-cloud/storage';
 import {getGCPCredentials} from "./getGCPCredentials"
-import path from 'path'; // Import the 'path' module
 
 export async function checkboxAI(fileUri) {
   try {
     // const credentials = getGCPCredentials();
     // console.log("credentials:", credentials);
     // console.log("credentials:", credentials.credentials);
-    const credential = JSON.parse(
-      Buffer.from(process.env.GCP_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
-    )
-    console.log("credential:", credential);
+    // const credential = JSON.parse(
+    //   Buffer.from(process.env.GCP_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
+    // )
+    // console.log("credential:", credential);
     
-    const googleAuth = new GoogleAuth({
-      credentials : credential,
-      // keyFilename: "google_service_key.json", // Load the key file from the environment variable
-      scopes: [
-      'https://www.googleapis.com/auth/cloud-platform',
-      'https://www.googleapis.com/auth/aiplatform',
-      'https://www.googleapis.com/auth/aiplatform.jobs',
-    ], 
-      });
-      
-    // const auth = {
-    //     client_email: credentials.credentials.client_email,
-    //     private_key: credentials.credentials.private_key,
-    //   };
-    
-    // console.log("auth:",auth);
+    // const googleAuth = new GoogleAuth({
+    //   credentials : credential,
+    //   // keyFilename: "google_service_key.json", // Load the key file from the environment variable
+    //   scopes: [
+    //   'https://www.googleapis.com/auth/cloud-platform',
+    //   'https://www.googleapis.com/auth/aiplatform',
+    //   'https://www.googleapis.com/auth/aiplatform.jobs',
+    // ], 
+    //   });
 
     const vertex_ai = new VertexAI({ 
       project: "arcookingapp", 
-      // project: credentials.projectId, 
       location: "us-central1",
       // apiEndpoint : "us-central1-aiplatform.googleapis.com/v1/projects/arcookingapp/locations/us-central1/publishers/google/models/gemini-pro-vision:streamGenerateContent",
       apiEndpoint : "us-central1-aiplatform.googleapis.com",
-      // apiEndpoint : "iamcredentials.googleapis.com",
+      // googleAuthOptions: {
+      //   googleAuth: googleAuth, // Use the existing GoogleAuth instance
+      // },
       googleAuthOptions: {
-        googleAuth: googleAuth, // Use the existing GoogleAuth instance
+        googleAuth: getGCPCredentials(), // Use the existing GoogleAuth instance
       },
       // googleAuth: googleAuth, // Also, pass it here if needed
       // googleAuthOptions: googleAuth,
