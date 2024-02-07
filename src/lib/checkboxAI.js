@@ -5,8 +5,8 @@ import {getGCPCredentials} from "./getGCPCredentials"
 
 export async function checkboxAI(fileUri) {
   try {
-    console.log("getGCPCredentials in AI:",getGCPCredentials);
-    // const credentials = getGCPCredentials();
+    const credentials = getGCPCredentials();
+    console.log("getGCPCredentials in AI:",credentials);
     // console.log("credentials:", credentials);
     // console.log("credentials:", credentials.credentials);
     // const credential = JSON.parse(
@@ -33,7 +33,7 @@ export async function checkboxAI(fileUri) {
       //   googleAuth: googleAuth, // Use the existing GoogleAuth instance
       // },
       googleAuthOptions: {
-        googleAuth: getGCPCredentials, // Use the existing GoogleAuth instance
+        googleAuth: credentials, // Use the existing GoogleAuth instance
       },
       // googleAuth: googleAuth, // Also, pass it here if needed
       // googleAuthOptions: googleAuth,

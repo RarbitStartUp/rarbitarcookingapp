@@ -9,7 +9,8 @@ export async function uploadVideoGS(formData) {
   const inputLink = formData.get("inputLink");
   // const storage = new Storage();
   const bucketName = "users_uploads";
-  const storageClient = new Storage(getGCPCredentials);
+  const credentials = getGCPCredentials();
+  const storageClient = new Storage(credentials);
 //   const projectId = "arcookngapp";
 //   const credential = JSON.parse(
 //   Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
