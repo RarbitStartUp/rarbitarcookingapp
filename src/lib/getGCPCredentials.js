@@ -1,4 +1,4 @@
-export function getGCPCredentials(){
+export const getGCPCredentials = ()=>{
 
   const privateKey = process.env.GCP_PRIVATE_KEY.replace(/\\n/g, '\n').replace(/"/g, '');
     // for Vercel, use environment variables

@@ -8,7 +8,8 @@ export async function uploadVideoGS(formData) {
   console.log("formData in uploadVideoGS:", formData);
   const inputLink = formData.get("inputLink");
   // const storage = new Storage();
-  const storageClient = new Storage(getGCPCredentials());
+  const bucketName = "users_uploads";
+  const storageClient = new Storage(getGCPCredentials);
 //   const projectId = "arcookngapp";
 //   const credential = JSON.parse(
 //   Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
@@ -19,7 +20,6 @@ export async function uploadVideoGS(formData) {
 //   });
 
   console.log("storageClient:", storageClient);
-  const bucketName = "users_uploads";
 
   try {
     // Generate a unique filename for the uploaded video
