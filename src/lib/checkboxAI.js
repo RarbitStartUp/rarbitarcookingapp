@@ -6,15 +6,6 @@ import {getGCPCredentials} from "./getGCPCredentials"
 export async function checkboxAI(fileUri) {
   try {
     const credential = getGCPCredentials();
-    // console.log("getGCPCredentials in AI:",credentials);
-    // console.log("credentials:", credentials);
-    // console.log("credentials:", credentials.credentials);
-    // const credential = JSON.parse(
-    //   Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
-    // )
-    // const credential = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
-    // console.log("credential:", credential);
-    
     const googleAuth = new GoogleAuth({
       credentials : credential,
       // keyFilename: "google_service_key.json", // Load the key file from the environment variable
@@ -31,14 +22,8 @@ export async function checkboxAI(fileUri) {
       // apiEndpoint : "us-central1-aiplatform.googleapis.com/v1/projects/arcookingapp/locations/us-central1/publishers/google/models/gemini-pro-vision:streamGenerateContent",
       apiEndpoint : "us-central1-aiplatform.googleapis.com",
       googleAuthOptions: {
-        googleAuth: googleAuth, // Use the existing GoogleAuth instance
+        googleAuth: googleAuth,
       },
-      // googleAuthOptions: {
-      //   googleAuth: credential, // Use the existing GoogleAuth instance
-      // },
-      // googleAuth: googleAuth, // Also, pass it here if needed
-      // googleAuthOptions: googleAuth,
-      // googleAuth:getGCPCredentials(),
     });
 
     console.log("vertex_ai :",vertex_ai)
@@ -50,7 +35,7 @@ export async function checkboxAI(fileUri) {
     const prompt = `
     You are an action detection AI, 
     detect the objects and actions in the video,
-    and give me the timestamp of each step,
+    and give me the timestamp of each step ONLY when the action changes,
     reply in the following JSON format as text,
     in the language of English
     

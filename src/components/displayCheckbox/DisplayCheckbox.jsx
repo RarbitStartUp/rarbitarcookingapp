@@ -26,6 +26,8 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
   console.log("apiResponse in displayCheckbox1.jsx:", apiResponse);
 
   const [jsonData, setJsonData] = useState(null); // Added state for jsonData
+  const [initialJsonData, setInitialJsonData] = useState(null);
+  const [step, setStep] = useState(1);
   const [isWebSocketOpen, setIsWebSocketOpen] = useState(null);
 
   const [objectItems, setObjectItems] = useState([]);
@@ -96,7 +98,8 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
       }
       // Log the parsed JSON data
       console.log("Parsed JSON Data:", parsedData);
-
+     // Store the parsedData in the initialJsonData state variable
+     setInitialJsonData(parsedData);
       // setJsonData(parsedData);
       setJsonData(
         (prevData) => {
@@ -123,11 +126,31 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
         },
         [apiResponse]
       ); // Add apiResponse as a dependency
+
+    
     } catch (error) {
       console.error("Error parsing API response:", error);
       // Handle parsing error
     }
   }, [apiResponse]);
+
+  useEffect(() => {
+    if (jsonData) {
+        let allObjects = [];
+        let allActions = [];
+
+        jsonData.forEach((stepData) => {
+            const objects = Object.keys(stepData.checklist.objects);
+            const actions = Object.keys(stepData.checklist.actions);
+            allObjects = [...allObjects, ...objects];
+            allActions = [...allActions, ...actions];
+        });
+
+        setObjectItems(allObjects);
+        setActionItems(allActions);
+    }
+}, [jsonData]);
+
 
   if (jsonData === null) {
     return <div className="text-white font-bold"> jsonData = null, Loading...</div>; // or any other loading indicator
@@ -135,122 +158,98 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
 
   const addNewItem = async (listId, inputId) => {
     try {
-      const newItemInput = document.getElementById(inputId);
+        const newItemInput = document.getElementById(inputId);
+        const newItem = newItemInput.value.toLowerCase();
 
-      const newItem = newItemInput.value.toLowerCase();
-
-      if (!newItem) {
-        alert("Please enter a valid item.");
-        return;
-      }
-
-      // Clear the input value after adding the new item
-      newItemInput.value = "";
-
-      setJsonData((prevData) => ({
-        ...prevData,
-        checklist: {
-          ...prevData.checklist,
-          [listId === "objectList" ? "objects" : "actions"]: {
-            ...prevData.checklist[
-              listId === "objectList" ? "objects" : "actions"
-            ],
-            [newItem]: true,
-          },
-        },
-      }));
-
-      if (onAddItem) {
-        if (listId === "objectList") {
-          setObjectItems((prevItems) => [...prevItems, newItem]);
-        } else {
-          setActionItems((prevItems) => [...prevItems, newItem]);
+        if (!newItem) {
+            alert("Please enter a valid item.");
+            return;
         }
-      }
+
+        // Clear the input value after adding the new item
+        newItemInput.value = "";
+
+        setJsonData((prevData) => {
+            const newData = prevData.map((stepData) => ({
+                ...stepData,
+                checklist: {
+                    ...stepData.checklist,
+                    [listId === "objectList" ? "objects" : "actions"]: {
+                        ...stepData.checklist[listId === "objectList" ? "objects" : "actions"],
+                        [newItem]: true,
+                    },
+                },
+            }));
+            return newData;
+        });
+
+        if (onAddItem) {
+            setObjectItems((prevItems) => [...prevItems, newItem]);
+        }
     } catch (error) {
-      console.error("Error adding new items:", error);
-      alert("Error adding new items. Please try again.");
+        console.error("Error adding new items:", error);
+        alert("Error adding new items. Please try again.");
     }
-  };
+};
 
-  const removeNewItem = (listId, item) => {
-    try {
-      console.log("Removing item:", item);
+const removeNewItem = (listId, item) => {
+  try {
+      // Update the state to remove the item from objectItems and actionItems
+      setObjectItems(prevObjectItems =>
+          prevObjectItems.filter(obj => obj !== item)
+      );
+      setActionItems(prevActionItems =>
+          prevActionItems.filter(act => act !== item)
+      );
 
-      const updatedItems =
-        listId === "objectList"
-          ? objectItems.filter((obj) => obj !== item)
-          : actionItems.filter((act) => act !== item);
+      // Update the jsonData state to reflect the removal
+      setJsonData(prevData => {
+          const newData = prevData.map(stepData => {
+              const updatedChecklist = {
+                  ...stepData.checklist,
+                  [listId === "objectList" ? "objects" : "actions"]: {
+                      ...stepData.checklist[listId === "objectList" ? "objects" : "actions"],
+                  },
+              };
+              delete updatedChecklist[listId === "objectList" ? "objects" : "actions"][item];
+              
+              return {
+                  ...stepData,
+                  checklist: updatedChecklist,
+              };
+          });
 
-      console.log("Updated items:", updatedItems);
-
-      setJsonData((prevData) => ({
-        ...prevData,
-        checklist: {
-          ...prevData.checklist,
-          [listId === "objectList" ? "objects" : "actions"]: {
-            ...prevData.checklist[
-              listId === "objectList" ? "objects" : "actions"
-            ],
-            [item]: undefined,
-          },
-        },
-      }));
-
-      if (onRemoveItem) {
-        if (listId === "objectList") {
-          setObjectItems(updatedItems);
-        } else {
-          setActionItems(updatedItems);
-        }
-      }
-    } catch (error) {
+          return newData;
+      });
+  } catch (error) {
       console.error("Error removing item:", error);
       alert("Error removing item. Please try again.");
-    }
-  };
+  }
+};
 
-  const resetChecklist = () => {
-    try {
-      objectItems.forEach((object) => {
-        const listElement = document.getElementById("objectList");
-        const listItem = Array.from(listElement.children).find((li) =>
-          li.textContent.includes(object)
-        );
+const resetChecklist = () => {
+  try {
+    // Reset jsonData to its original state
+    setJsonData(initialJsonData);
 
-        if (listItem) {
-          listItem.remove();
+    // Reset objectItems and actionItems
+    let allObjects = [];
+    let allActions = [];
 
-          delete jsonData.checklist.objects[object];
-        }
-      });
+    initialJsonData.forEach((stepData) => {
+      const objects = Object.keys(stepData.checklist.objects);
+      const actions = Object.keys(stepData.checklist.actions);
+      allObjects = [...allObjects, ...objects];
+      allActions = [...allActions, ...actions];
+    });
 
-      actionItems.forEach((action) => {
-        const listElement = document.getElementById("actionList");
-        const listItem = Array.from(listElement.children).find((li) =>
-          li.textContent.includes(action)
-        );
-
-        if (listItem) {
-          listItem.remove();
-
-          delete jsonData.checklist.actions[action];
-        }
-      });
-
-      console.log("after removal:", jsonData);
-
-      if (onRemoveItem) {
-        onRemoveItem(); // Pass any necessary arguments to onRemoveItem
-      }
-
-      setObjectItems([]);
-      setActionItems([]);
-    } catch (error) {
-      console.error("Error resetting checklist:", error);
-      alert("Error resetting checklist. Please try again.");
-    }
-  };
+    setObjectItems(allObjects);
+    setActionItems(allActions);
+  } catch (error) {
+    console.error("Error resetting checklist:", error);
+    alert("Error resetting checklist. Please try again.");
+  }
+};
 
   // Function to submit jsonData to WebSocket
   const submitDataToWebSocket = () => {
@@ -284,9 +283,12 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
   
   return (
     <div>
-      {jsonData.map((timestampData, index) => (
+    {Array.isArray(jsonData) && jsonData.map((timestampData, index) => {
+      const currentStep = step + index; // Calculate the current step value
+      return (
         <div key={index}>
-          <h1 className={styles.checklist}>Checklist for Timestamp: {timestampData.timestamp}</h1>
+          <h1 className={styles.checklist}>Step {currentStep}: </h1>
+          <h2 className={styles.timestamp}> {timestampData.timestamp}</h2>
           <div>
             <h2 className={styles.header}>Objects</h2>
             <ul className="mt-1" id="objectList">
@@ -353,20 +355,21 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
               </li>
             </ul>
           </div>
-          <div className="flex space-x-2">
-            <button className={styles.largeButton} onClick={resetChecklist}>
-              Reset
-            </button>
-            <button
-              className={styles.largeButton}
-              id="submitBtn"
-              onClick={submitDataToWebSocket}
-            >
-              Submit
-            </button>
-          </div>
         </div>
-      ))}
+      );
+              })}
+      <div className="flex space-x-2">
+        <button className={styles.largeButton} onClick={resetChecklist}>
+          Reset
+        </button>
+        <button
+          className={styles.largeButton}
+          id="submitBtn"
+          onClick={submitDataToWebSocket}
+        >
+          Submit
+        </button>
+      </div>
     </div>
   );  
 }
