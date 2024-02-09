@@ -2,67 +2,99 @@
 import { Storage } from "@google-cloud/storage";
 import { checkboxAI } from "./checkboxAI";
 import ytdl from "ytdl-core";
-import {getGCPCredentials} from "./getGCPCredentials"
+import { getGCPCredentials } from "./getGCPCredentials";
 
 export async function uploadVideoGS(formData) {
-  console.log("formData in uploadVideoGS:", formData);
-  const inputLink = formData.get("inputLink");
-  // const storage = new Storage();
-  const bucketName = "users_uploads";
-  const credentials = getGCPCredentials();
-  console.log("credentials:", credentials);
-
-  // const credential = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
-  //   console.log("credential:", credential);
-  const storageClient = new Storage(credentials);
-  // const storageClient = new Storage(credential);
-//   const projectId = "arcookngapp";
-//   const credential = JSON.parse(
-//   Buffer.from(process.env.GOOGLE_SERVICE_KEY.replace(/"/g, ""), "base64").toString().replace(/\n/g,"")
-// )
-//   const storageClient = new Storage({
-//     projectId,
-//     credentials: credential
-//   });
-
-  console.log("storageClient:", storageClient);
-
   try {
-    // Generate a unique filename for the uploaded video
+    console.log("formData in uploadVideoGS:", formData);
+
+    const inputLink = formData.get("inputLink");
+    const bucketName = "users_uploads";
+    const credentials = getGCPCredentials();
+    console.log("credentials:", credentials);
+
+    const storageClient = new Storage(credentials);
+    console.log("storageClient:", storageClient);
+
+    let totalFileSize = 0; // Initialize fileSize to zero
+    let totalBytesTransferred = 0;
+
     const filename = `video_${Date.now()}.mp4`;
-    // storageClient changes to storage if locally
     const file = storageClient.bucket(bucketName).file(filename);
+    console.log("Uploading file:", filename);
+
     const writeStream = file.createWriteStream();
 
-    // Download the YouTube video
     const videoStream = ytdl(inputLink, { filter: "audioandvideo" });
 
-    // Pipe the video stream to the write stream
-    videoStream.pipe(writeStream);
+    videoStream.on("progress", (_, totalBytes, totalBytesExpected) => {
+      totalBytesTransferred = totalBytes;
+      totalFileSize = totalBytesExpected;
 
-    // Wait for the video to be uploaded
-    await new Promise((resolve, reject) => {
-      writeStream.on("finish", resolve);
-      writeStream.on("error", reject);
-    }).catch((error) => {
-      console.log("Error waiting for video upload:", error);
-      // Handle the error, e.g., display an error message to the user
+      const progress = (totalBytesTransferred / totalFileSize) * 100;
+      console.log("Progress:", progress.toFixed(2) + "%");
+
+      // Pass progress to the API endpoint
+      // sendProgressToEndpoint(progress);
     });
 
-    // Construct the file URI for the uploaded video
+    videoStream.pipe(writeStream);
+
+    await new Promise((resolve, reject) => {
+      writeStream.on("finish", () => {
+        // clearInterval(progressEmitter);
+        console.log("Upload complete");
+        resolve();
+      });
+      writeStream.on("error", (error) => {
+        // clearInterval(progressEmitter);
+        console.error("Error uploading file:", error);
+        reject(error);
+      });
+    });
+
     const fileUri = `gs://${bucketName}/${filename}`;
+    console.log("File uploaded to:", fileUri);
 
-    console.log("successfully uploaded");
-    console.log("fileUri :", fileUri);
-    // Call checkbox function with the fileUri
     const apiResponse = await checkboxAI(fileUri);
+    console.log("Checkbox AI response:", apiResponse);
 
-    console.log("upload Video apiResponse :", apiResponse);
-
-    // You can return the file URI if needed
-    // res.json({ apiResponse });
     return apiResponse;
   } catch (error) {
-    console.log("Error uploading video:", error);
+    console.error("Error uploading video:", error);
   }
 }
+
+// async function sendProgressToEndpoint(progress) {
+//   try {
+//     const response = await fetch('api/progress', {
+//       headers:{
+//         Accept: 'application/json',
+//         method: 'POST',
+//         // body: JSON.stringify({ progress }),
+//         body: progress.toString()
+//       }
+//     });
+//     if (!response.ok) {
+//       throw new Error('Failed to send progress to the API endpoint');
+//     }
+//   } catch (error) {
+//     console.error('Error sending progress to endpoint:', error);
+//   }
+// }
+// async function sendProgressToEndpoint(progress) {
+//   try {
+//     const response = await fetch('http://localhost:3000/api/progress', {
+//       method: 'POST',
+//       headers: { 
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({ progress }),
+//     });
+//     if (!response.ok) {
+//       throw new Error('Failed to send progress to the API endpoint');
+//     }
+//   } catch (error) {
+//     console.error('Error sending progress to endpoint:', error);
+//   }
+// }
