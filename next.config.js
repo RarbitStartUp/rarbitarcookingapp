@@ -15,7 +15,7 @@ const withPWA = require("@ducanh2912/next-pwa").default({
 });
 
 const nextConfig = {
-  webpackDevMiddleware: false,
+  // webpackDevMiddleware: false,
 };
 
 // Conditional logic to disable webpackDevMiddleware in production
