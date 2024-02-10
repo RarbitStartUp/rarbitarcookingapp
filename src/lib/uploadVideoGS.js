@@ -16,8 +16,17 @@ export async function uploadVideoGS(formData) {
     const secret = await getGoogleServiceAccountKey();
     console.log("secret:", secret);
 
+    // Parse the secret JSON string
+    const { client_email, private_key } = JSON.parse(secret);
+
+    // Create a credentials object
+    const credentials = {
+       client_email,
+       private_key,
+    };
+
     // const storageClient = new Storage(credentials);
-    const storageClient = new Storage(secret);
+    const storageClient = new Storage(credentials);
     console.log("storageClient:", storageClient);
 
     let totalFileSize = 0; // Initialize fileSize to zero
