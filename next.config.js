@@ -15,8 +15,13 @@ const withPWA = require("@ducanh2912/next-pwa").default({
 });
 
 const nextConfig = {
-  webpackDevMiddleware: false,
+  // webpackDevMiddleware: false,
 };
+
+// Conditional logic to disable webpackDevMiddleware in production
+if (process.env.NODE_ENV === 'production') {
+  nextConfig.webpackDevMiddleware = false;
+}
 
 module.exports = withPWA({
   ...nextConfig, // Merge nextConfig into the withPWA options
@@ -25,11 +30,12 @@ module.exports = withPWA({
     return [
       {
         // Match any request origin
-        "source": '/',
-        "headers": [
+        source: '/',
+        headers: [
           {
             // Allow requests from any origin
-            "key": "Access-Control-Allow-Origin",
+            key: "Access-Control-Allow-Origin",
+            value: '*', // Specify the allowed origin
             // "value": process.env.NEXT_PUBLIC_APP_URL,
             // "value": ['https://xxxx.com', 'https://xxx.com'],
           },
