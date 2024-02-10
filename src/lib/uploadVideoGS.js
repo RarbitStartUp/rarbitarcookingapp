@@ -26,7 +26,7 @@ export async function uploadVideoGS(formData) {
     };
 
     // const storageClient = new Storage(credentials);
-    const storageClient = new Storage(credentials);
+    const storageClient = new Storage({credentials});
     console.log("storageClient:", storageClient);
 
     let totalFileSize = 0; // Initialize fileSize to zero
