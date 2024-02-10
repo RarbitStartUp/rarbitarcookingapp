@@ -14,9 +14,12 @@ const withPWA = require("@ducanh2912/next-pwa").default({
   },
 });
 
-const nextConfig = {};
+const nextConfig = {
+  webpackDevMiddleware: false,
+};
 
 module.exports = withPWA({
+  ...nextConfig, // Merge nextConfig into the withPWA options
   // Your Next.js config
   async headers() {
     return [
@@ -35,5 +38,3 @@ module.exports = withPWA({
     ];
   },
 });
-
-module.exports = withPWA(nextConfig);
