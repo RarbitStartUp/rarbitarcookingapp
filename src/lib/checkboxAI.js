@@ -1,13 +1,17 @@
 // api.js
 import { VertexAI } from "@google-cloud/vertexai";
 import { GoogleAuth } from 'google-auth-library';
-import {getGCPCredentials} from "./getGCPCredentials"
+// import {getGCPCredentials} from "./getGCPCredentials"
+import { getGoogleServiceAccountKey } from "./getGoogleServiceAccountKey"
 
 export async function checkboxAI(fileUri) {
   try {
-    const credential = getGCPCredentials();
+    // const credential = getGCPCredentials();
+    const secret = await getGoogleServiceAccountKey();
+    console.log("secret:",secret);
     const googleAuth = new GoogleAuth({
-      credentials : credential,
+      // credentials : credential,
+      credentials : secret,
       // keyFilename: "google_service_key.json", // Load the key file from the environment variable
       scopes: [
       'https://www.googleapis.com/auth/cloud-platform',

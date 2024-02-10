@@ -2,7 +2,8 @@
 import { Storage } from "@google-cloud/storage";
 import { checkboxAI } from "./checkboxAI";
 import ytdl from "ytdl-core";
-import { getGCPCredentials } from "./getGCPCredentials";
+// import { getGCPCredentials } from "./getGCPCredentials";
+import { getGoogleServiceAccountKey } from "./getGoogleServiceAccountKey"
 
 export async function uploadVideoGS(formData) {
   try {
@@ -10,10 +11,13 @@ export async function uploadVideoGS(formData) {
 
     const inputLink = formData.get("inputLink");
     const bucketName = "users_uploads";
-    const credentials = getGCPCredentials();
-    console.log("credentials:", credentials);
+    // const credentials = getGCPCredentials();
+    // console.log("credentials:", credentials);
+    const secret = await getGoogleServiceAccountKey();
+    console.log("secret:", secret);
 
-    const storageClient = new Storage(credentials);
+    // const storageClient = new Storage(credentials);
+    const storageClient = new Storage(secret);
     console.log("storageClient:", storageClient);
 
     let totalFileSize = 0; // Initialize fileSize to zero

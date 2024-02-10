@@ -2,6 +2,8 @@
 
 const withPWA = require("@ducanh2912/next-pwa").default({
   dest: "public",
+  register: true,
+  scope: "/", // Specify the scope here
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
