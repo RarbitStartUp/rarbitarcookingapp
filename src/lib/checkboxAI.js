@@ -31,6 +31,7 @@ export async function checkboxAI(fileUri) {
     });
 
     console.log("vertex_ai :",vertex_ai)
+    console.log("try")
     
     const generativeVisionModel = vertex_ai.preview.getGenerativeModel({
       model: "gemini-pro-vision",
