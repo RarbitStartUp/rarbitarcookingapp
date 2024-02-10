@@ -30,8 +30,8 @@ module.exports = withPWA({
           {
             // Allow requests from any origin
             "key": "Access-Control-Allow-Origin",
-            // value: process.env.NEXT_PUBLIC_APP_URL,
-            // value: ['https://xxxx.com', 'https://xxx.com'],
+            // "value": process.env.NEXT_PUBLIC_APP_URL,
+            // "value": ['https://xxxx.com', 'https://xxx.com'],
           },
         ],
       },
