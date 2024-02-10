@@ -25,11 +25,11 @@ module.exports = withPWA({
     return [
       {
         // Match any request origin
-        source: '/',
-        headers: [
+        "source": '/',
+        "headers": [
           {
             // Allow requests from any origin
-            key: 'Access-Control-Allow-Origin',
+            "key": "Access-Control-Allow-Origin",
             // value: process.env.NEXT_PUBLIC_APP_URL,
             // value: ['https://xxxx.com', 'https://xxx.com'],
           },
