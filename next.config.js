@@ -18,6 +18,22 @@ const nextConfig = {};
 
 module.exports = withPWA({
   // Your Next.js config
+  async headers() {
+    return [
+      {
+        // Match any request origin
+        source: '/',
+        headers: [
+          {
+            // Allow requests from any origin
+            key: 'Access-Control-Allow-Origin',
+            // value: process.env.NEXT_PUBLIC_APP_URL,
+            // value: ['https://xxxx.com', 'https://xxx.com'],
+          },
+        ],
+      },
+    ];
+  },
 });
 
 module.exports = withPWA(nextConfig);
