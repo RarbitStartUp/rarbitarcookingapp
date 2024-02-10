@@ -14,32 +14,41 @@ export async function checkboxAI(fileUri) {
     const { client_email, private_key } = JSON.parse(secret);
 
     // Create a credentials object
-    const credentials = {
+    // const credentials = {
+    //     client_email,
+    //     private_key,
+    // };
+    const authOptions = {
+      credentials: {
         client_email,
-        private_key,
-    };
-    console.log("credentials:", credentials);
+        private_key
+      }
+    }
+    console.log("credentials:", authOptions);
 
-    const googleAuth = new GoogleAuth({
-      // credentials : credential,
-      // credentials : {credentials},
-      credentials : credentials,
-      // keyFilename: "google_service_key.json", // Load the key file from the environment variable
-      scopes: [
-      'https://www.googleapis.com/auth/cloud-platform',
-      'https://www.googleapis.com/auth/aiplatform',
-      'https://www.googleapis.com/auth/aiplatform.jobs',
-    ], 
-      });
+    // const googleAuth = new GoogleAuth({
+    //   // credentials : credential,
+    //   // credentials : {credentials},
+    //   credentials : credentials,
+    //   // keyFilename: "google_service_key.json", // Load the key file from the environment variable
+    //   scopes: [
+    //   'https://www.googleapis.com/auth/cloud-platform',
+    //   'https://www.googleapis.com/auth/aiplatform',
+    //   'https://www.googleapis.com/auth/aiplatform.jobs',
+    // ], 
+    //   });
+
+      
 
     const vertex_ai = new VertexAI({ 
       project: "arcookingapp", 
       location: "us-central1",
       // apiEndpoint : "us-central1-aiplatform.googleapis.com/v1/projects/arcookingapp/locations/us-central1/publishers/google/models/gemini-pro-vision:streamGenerateContent",
       apiEndpoint : "us-central1-aiplatform.googleapis.com",
-      googleAuthOptions: {
-        googleAuth: googleAuth,
-      },
+      // googleAuthOptions: {
+      //   googleAuth: googleAuth,
+      // },
+      googleAuthOptions: authOptions,
     });
 
     console.log("vertex_ai :",vertex_ai)
