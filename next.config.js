@@ -19,9 +19,9 @@ const nextConfig = {
 };
 
 // Conditional logic to disable webpackDevMiddleware in production
-if (process.env.NODE_ENV === 'production') {
-  nextConfig.webpackDevMiddleware = false;
-}
+// if (process.env.NODE_ENV === 'production') {
+//   nextConfig.webpackDevMiddleware = false;
+// }
 
 module.exports = withPWA({
   ...nextConfig, // Merge nextConfig into the withPWA options
