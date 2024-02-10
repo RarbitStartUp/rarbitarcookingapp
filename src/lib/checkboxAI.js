@@ -8,7 +8,7 @@ export async function checkboxAI(fileUri) {
   try {
     // const credential = getGCPCredentials();
     const secret = await getGoogleServiceAccountKey();
-    console.log("secret:",secret);
+    // console.log("secret:",secret);
 
     // Parse the secret JSON string
     const { client_email, private_key } = JSON.parse(secret);
