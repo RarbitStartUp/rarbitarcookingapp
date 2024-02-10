@@ -8,7 +8,7 @@ export async function checkboxAI(fileUri) {
   try {
     // const credential = getGCPCredentials();
     const secret = await getGoogleServiceAccountKey();
-    console.log("secret:",secret);
+    // console.log("secret:",secret);
 
     // Parse the secret JSON string
     const { client_email, private_key } = JSON.parse(secret);
@@ -18,10 +18,12 @@ export async function checkboxAI(fileUri) {
         client_email,
         private_key,
     };
+    console.log("credentials:", credentials);
 
     const googleAuth = new GoogleAuth({
       // credentials : credential,
-      credentials : {credentials},
+      // credentials : {credentials},
+      credentials : credentials,
       // keyFilename: "google_service_key.json", // Load the key file from the environment variable
       scopes: [
       'https://www.googleapis.com/auth/cloud-platform',

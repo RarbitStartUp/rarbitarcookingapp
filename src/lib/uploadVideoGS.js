@@ -14,7 +14,7 @@ export async function uploadVideoGS(formData) {
     // const credentials = getGCPCredentials();
     // console.log("credentials:", credentials);
     const secret = await getGoogleServiceAccountKey();
-    console.log("secret:", secret);
+    // console.log("secret:", secret);
 
     // Parse the secret JSON string
     const { client_email, private_key } = JSON.parse(secret);
