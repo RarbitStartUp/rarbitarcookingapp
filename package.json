@@ -13,10 +13,8 @@
     "@ducanh2912/next-pwa": "^10.2.2",
     "@google-cloud/storage": "^7.7.0",
     "@google-cloud/vertexai": "^0.2.1",
-    "@google/generative-ai": "^0.2.0",
     "@tensorflow/tfjs": "^4.16.0",
     "ai": "^2.2.33",
-    "google-auth-library": "^9.6.0",
     "next": "^14.0.4",
     "postcss-100vh-fix": "^1.0.2",
     "react": "^18",
@@ -26,7 +24,6 @@
     "ytdl-core": "^4.11.5"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.21.0",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",

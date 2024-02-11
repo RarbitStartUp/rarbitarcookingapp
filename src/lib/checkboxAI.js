@@ -1,6 +1,5 @@
 // api.js
 import { VertexAI } from "@google-cloud/vertexai";
-import { GoogleAuth } from 'google-auth-library';
 // import {getGCPCredentials} from "./getGCPCredentials"
 import { getGoogleServiceAccountKey } from "./getGoogleServiceAccountKey"
 
