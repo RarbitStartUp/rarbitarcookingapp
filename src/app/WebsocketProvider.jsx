@@ -3,19 +3,19 @@
 // WebsocketProvider.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 
-const WebSocketContext = createContext();
+const WebSocketContext = createContext();npm 
 
 const getWebSocketURL = () => {
   const isDevelopment = process.env.NODE_ENV === 'development';
 
   if (isDevelopment) {
-    return "ws://18.222.93.182:3001";
+    return "ws://localhost:3001";
   }
 
   if (typeof window !== 'undefined') {
     const isLocalhost = window.location.hostname === 'localhost';
     if (isLocalhost) {
-      return "ws://18.222.93.182:3001";
+      return "ws://locallost:3001";
     }
 
     if (window.location.hostname === 'rarbit.com') {
