@@ -1,7 +1,7 @@
 "use client"
 
 import { useFormState, useFormStatus } from "react-dom";
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import { upload } from "@/lib/actions";
 
 export function UploadVideo() {
