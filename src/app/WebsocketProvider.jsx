@@ -3,7 +3,7 @@
 // WebsocketProvider.jsx
 import { createContext, useContext, useState, useEffect } from 'react';
 
-const WebSocketContext = createContext();npm 
+const WebSocketContext = createContext();
 
 const getWebSocketURL = () => {
   const isDevelopment = process.env.NODE_ENV === 'development';
