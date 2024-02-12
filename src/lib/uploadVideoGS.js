@@ -12,7 +12,7 @@ export async function uploadVideoGS(formData) {
     const inputLink = formData.get("inputLink");
     const bucketName = "users_uploads";
     const credentials = getGCPCredentials();
-    // console.log("credentials:", credentials);
+    console.log("credentials:", credentials);
     // const secret = await getGoogleServiceAccountKey();
     // console.log("secret:", secret);
 
@@ -25,7 +25,7 @@ export async function uploadVideoGS(formData) {
     //    private_key,
     // };
 
-    const storageClient = new Storage(credentials);
+    const storageClient = new Storage({credentials});
     // const storageClient = new Storage({credentials});
     console.log("storageClient:", storageClient);
 
