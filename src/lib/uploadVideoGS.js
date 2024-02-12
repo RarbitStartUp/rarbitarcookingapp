@@ -24,9 +24,13 @@ export async function uploadVideoGS(formData) {
        client_email,
        private_key,
     };
+    console.log("credentials:", credentials)
 
     // const storageClient = new Storage(credentials);
-    const storageClient = new Storage({credentials});
+    const storageClient = new Storage({
+      projectId: "arcookingapp",
+      credentials: credentials
+     });
     console.log("storageClient:", storageClient);
 
     let totalFileSize = 0; // Initialize fileSize to zero
