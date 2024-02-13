@@ -17,19 +17,21 @@ export default function Livestream() {
   const socket = useWebSocket()
   console.log("socket:",socket);
   
-  const init = async () => {
-    try {
-      await initCamera(videoRef);
-      setIsCameraInitialized(true);
-      framesRef.current = [];
-    } catch (error) {
-      console.error('Error Streaming:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  init();
+  useEffect(() => {
+    const init = async () => {
+      try {
+        await initCamera(videoRef);
+        setIsCameraInitialized(true);
+        framesRef.current = [];
+      } catch (error) {
+        console.error('Error Streaming:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  
+    init();
+  }, []); // Empty dependency array ensures this effect runs only once, after mounting  
   
   useEffect(() => {
     socket.addEventListener('error', (error) => {
