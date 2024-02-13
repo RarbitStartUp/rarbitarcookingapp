@@ -14,7 +14,7 @@ export async function uploadVideoGS(formData) {
     // const credentials = getGCPCredentials();
     // console.log("credentials:", credentials);
     const secret = await getGoogleServiceAccountKey();
-    // console.log("secret:", secret);
+    console.log("secret:", secret);
 
     // Parse the secret JSON string
     const { client_email, private_key } = JSON.parse(secret);
@@ -24,9 +24,14 @@ export async function uploadVideoGS(formData) {
        client_email,
        private_key,
     };
+    console.log("credentials:", credentials)
 
+    // const storageClient = new Storage(getGCPCredentials());
     // const storageClient = new Storage(credentials);
-    const storageClient = new Storage({credentials});
+    const storageClient = new Storage({
+      projectId: "arcookingapp",
+      credentials: credentials
+     });
     console.log("storageClient:", storageClient);
 
     let totalFileSize = 0; // Initialize fileSize to zero
@@ -40,16 +45,16 @@ export async function uploadVideoGS(formData) {
 
     const videoStream = ytdl(inputLink, { filter: "audioandvideo" });
 
-    videoStream.on("progress", (_, totalBytes, totalBytesExpected) => {
-      totalBytesTransferred = totalBytes;
-      totalFileSize = totalBytesExpected;
+    // videoStream.on("progress", (_, totalBytes, totalBytesExpected) => {
+    //   totalBytesTransferred = totalBytes;
+    //   totalFileSize = totalBytesExpected;
 
-      const progress = (totalBytesTransferred / totalFileSize) * 100;
-      console.log("Progress:", progress.toFixed(2) + "%");
+    //   const progress = (totalBytesTransferred / totalFileSize) * 100;
+    //   console.log("Progress:", progress.toFixed(2) + "%");
 
-      // Pass progress to the API endpoint
-      // sendProgressToEndpoint(progress);
-    });
+    //   // Pass progress to the API endpoint
+    //   // sendProgressToEndpoint(progress);
+    // });
 
     videoStream.pipe(writeStream);
 
