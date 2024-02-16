@@ -159,7 +159,7 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
   const addNewItem = async (listId, inputId) => {
     try {
         const newItemInput = document.getElementById(inputId);
-        const newItem = newItemInput.value.toLowerCase();
+        const newItem = newItemInput.value.toLowerCase().trim();
 
         if (!newItem) {
             alert("Please enter a valid item.");
@@ -192,38 +192,56 @@ export function DisplayCheckbox({ apiResponse, onAddItem, onRemoveItem }) {
     }
 };
 
-const removeNewItem = (listId, item) => {
+const removeNewItem = (listId, item, stepIndex) => {
   try {
-      // Update the state to remove the item from objectItems and actionItems
+    console.log("Remove button clicked");
+    console.log("listId:", listId);
+    console.log("item:", item);
+    console.log("stepIndex:", stepIndex);
+
+    // Update the state to remove the item from objectItems and actionItems
+    if (listId === "objectList") {
       setObjectItems(prevObjectItems =>
-          prevObjectItems.filter(obj => obj !== item)
+        prevObjectItems.filter(obj => obj !== item)
       );
+    } else if (listId === "actionList") {
       setActionItems(prevActionItems =>
-          prevActionItems.filter(act => act !== item)
+        prevActionItems.filter(act => act !== item)
       );
+    } else {
+      throw new Error(`Invalid listId: ${listId}`);
+    }
 
-      // Update the jsonData state to reflect the removal
-      setJsonData(prevData => {
-          const newData = prevData.map(stepData => {
-              const updatedChecklist = {
-                  ...stepData.checklist,
-                  [listId === "objectList" ? "objects" : "actions"]: {
-                      ...stepData.checklist[listId === "objectList" ? "objects" : "actions"],
-                  },
-              };
-              delete updatedChecklist[listId === "objectList" ? "objects" : "actions"][item];
-              
-              return {
-                  ...stepData,
-                  checklist: updatedChecklist,
-              };
-          });
+    // Update the jsonData state to reflect the removal
+    setJsonData(prevData => {
+      console.log("prevData :", prevData);
+      const newData = prevData.map((stepData, index) => {
+        console.log("index:", index);
+        console.log("stepIndex:", stepIndex);
+        if (index === stepIndex) {
+          const updatedStep = { ...stepData };
+          console.log("updatedStep before delete:", updatedStep);
+          
+          // Determine the type based on the listId
+          const type = listId === "objectList" ? "objects" : "actions";
+          // Remove the item from the checklist
+          delete updatedStep.checklist[type][item];
 
-          return newData;
+          stepData = updatedStep;
+          
+          // Return the updated checklist directly
+          console.log("stepData with modify:", stepData);
+          return stepData;
+        }
+        console.log("stepData without modify :", stepData);
+        return stepData;
       });
+      console.log("newData :", newData);
+      return newData;
+    });
   } catch (error) {
-      console.error("Error removing item:", error);
-      alert("Error removing item. Please try again.");
+    console.error("Error removing item:", error);
+    alert("Error removing item. Please try again.");
   }
 };
 
@@ -281,28 +299,101 @@ const resetChecklist = () => {
   };
 
   
+   // Function to add a new step's data
+const addStepData = () => {
+  setJsonData(prevJsonData => {
+    const newData = [...prevJsonData, { timestamp: new Date().toISOString(), checklist: { objects: {}, actions: {} } }];
+    return newData;
+  });
+};
+
+// Function to add an item to a specific step
+const addItemToStep = (listId, inputId, stepIndex) => {
+  try {
+    const newItemInput = document.getElementById(inputId);
+
+    if (!newItemInput) {
+      console.error(`Element with ID ${inputId} not found.`);
+      return;
+    }
+
+    const newItem = newItemInput.value.toLowerCase().trim();
+
+    if (!newItem) {
+      alert("Please enter a valid item.");
+      return;
+    }
+
+    // Clear the input value after adding the new item
+    newItemInput.value = "";
+
+    setJsonData((prevData) => {
+      const newData = [...prevData];
+      const updatedStepData = { ...newData[stepIndex] }; // Get the specific step data
+      const updatedChecklist = {
+        ...updatedStepData.checklist,
+        objects: { ...updatedStepData.checklist.objects },
+        actions: { ...updatedStepData.checklist.actions },
+      };
+
+      // Add the new item to the appropriate checklist (objects or actions)
+      if (inputId.includes("newObjectInput")) {
+        updatedChecklist.objects[newItem] = true;
+      } else if (inputId.includes("newActionInput")) {
+        updatedChecklist.actions[newItem] = true;
+      }
+
+      // Update the step data with the modified checklist
+      updatedStepData.checklist = updatedChecklist;
+      newData[stepIndex] = updatedStepData;
+
+      console.log("newData:", newData);
+      return newData;
+    });
+
+    if (onAddItem) {
+      // Update the respective items state based on the inputId
+      if (inputId.includes("newObjectInput")) {
+        setObjectItems((prevItems) => [...prevItems, newItem]);
+      } else if (inputId.includes("newActionInput")) {
+        setActionItems((prevItems) => [...prevItems, newItem]);
+      }
+    }
+  } catch (error) {
+    console.error("Error adding new items:", error);
+    alert("Error adding new items. Please try again.");
+  }
+};
+
+console.log("jsonData:", jsonData);
+
   return (
     <div>
-    {Array.isArray(jsonData) && jsonData.map((timestampData, index) => {
-      const currentStep = step + index; // Calculate the current step value
+    {/* {Array.isArray(jsonData) && jsonData.map((timestampData, index) => { */}
+      {jsonData.map((step, stepIndex) => {
+        console.log("step:", step); 
+      // const currentStep = step + index; // Calculate the current step value
+      // const currentStep = stepIndex + 1; 
       return (
-        <div key={index}>
-          <h1 className={styles.checklist}>Step {currentStep}: </h1>
-          <h2 className={styles.timestamp}> {timestampData.timestamp}</h2>
+        <div key={stepIndex+1}>
+          <h1 className={styles.checklist}>Step {stepIndex+1}: </h1>
+          <h2 className={styles.timestamp}> {step.timestamp}</h2>
           <div>
             <h2 className={styles.header}>Objects</h2>
             <ul className="mt-1" id="objectList">
-              {Object.keys(timestampData.checklist.objects).map((object, objIndex) => (
-                <li key={objIndex + 1} className="flex items-center space-x-2">
+              {/* {Object.keys(timestampData.checklist.objects).map((object, objIndex) => ( */}
+              {step.checklist.objects && Object.keys(step.checklist.objects).map((object, objIndex) => (
+                <li key={objIndex} className="flex items-center space-x-2">
                   <span className={styles.options}>{objIndex + 1}.</span>{" "}
                   <span className={styles.options}>{object}</span>
                   <input
                     type="checkbox"
-                    defaultChecked={timestampData.checklist.objects[object]}
+                    // defaultChecked={timestampData.checklist.objects[object]}
+                    defaultChecked={step.checklist.objects[object]}
                   />
                   <button
                     className={styles.removeButton}
-                    onClick={() => removeNewItem("objectList", object)}
+                    onClick={() => removeNewItem("objectList", object, stepIndex)}
                   ></button>
                 </li>
               ))}
@@ -311,12 +402,17 @@ const resetChecklist = () => {
                   <input
                     type="text"
                     className="mb-2 p-1 shadow-inner border text-center rounded w-full sm:w-auto sm:p-2 focus:outline-none focus:ring-5 focus:ring-slate-500"
-                    id="newObjectInput"
-                    placeholder="Add new object"
+                    // id="newObjectInput"
+                    // id={`newObjectInput${index}`} // Unique ID for each step
+                    // placeholder="Add new object"
+                    id={`newObjectInput${stepIndex}`} // Dynamically generate the ID based on the step index
+                    placeholder={`Add new object for Step ${stepIndex + 1}`}
                   />
                   <button
                     className={styles.addButton}
-                    onClick={() => addNewItem("objectList", "newObjectInput")}
+                    // onClick={() => addNewItem("objectList", "newObjectInput")}
+                    // onClick={() => addNewItem("objectList", `newObjectInput${index}`)}
+                    onClick={() => addItemToStep("objectList", `newObjectInput${stepIndex}`, stepIndex)}
                   ></button>
                 </div>
               </li>
@@ -325,17 +421,19 @@ const resetChecklist = () => {
           <div>
             <h2 className={styles.header}>Actions</h2>
             <ul className="mt-1" id="actionList">
-              {Object.keys(timestampData.checklist.actions).map((action, actIndex) => (
-                <li key={actIndex + 1} className="flex items-center space-x-2">
+              {/* {Object.keys(timestampData.checklist.actions).map((action, actIndex) => ( */}
+              {step.checklist.actions && Object.keys(step.checklist.actions).map((action, actIndex) => (
+                <li key={actIndex} className="flex items-center space-x-2">
                   <span className={styles.options}>{actIndex + 1}.</span>{" "}
                   <span className={styles.options}>{action}</span>
                   <input
                     type="checkbox"
-                    defaultChecked={timestampData.checklist.actions[action]}
+                    // defaultChecked={timestampData.checklist.actions[action]}
+                    defaultChecked={step.checklist.actions[action]}
                   />
                   <button
                     className={styles.removeButton}
-                    onClick={() => removeNewItem("actionList", action)}
+                    onClick={() => removeNewItem("actionList", action, stepIndex)}
                   ></button>
                 </li>
               ))}
@@ -344,12 +442,17 @@ const resetChecklist = () => {
                   <input
                     type="text"
                     className="mb-2 p-1 shadow-inner border text-center rounded w-full sm:w-auto sm:p-2 focus:outline-none focus:ring-5 focus:ring-slate-500"
-                    id="newActionInput"
-                    placeholder="Add new action"
+                    // id="newActionInput"
+                    // id={`newActionInput${index}`} // Unique ID for each step
+                    // placeholder="Add new action"
+                    id={`newActionInput${stepIndex}`} // Dynamically generate the ID based on the step index
+                    placeholder={`Add new action for Step ${stepIndex + 1}`}
                   />
                   <button
                     className={styles.addButton}
-                    onClick={() => addNewItem("actionList", "newActionInput")}
+                    // onClick={() => addNewItem("actionList", "newActionInput")}
+                    // onClick={() => addNewItem("actionList", `newActionInput${index}`)}
+                    onClick={() => addItemToStep("actionList", `newActionInput${stepIndex}`, stepIndex)}
                   ></button>
                 </div>
               </li>

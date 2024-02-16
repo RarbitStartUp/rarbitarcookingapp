@@ -45,16 +45,16 @@ export async function uploadVideoGS(formData) {
 
     const videoStream = ytdl(inputLink, { filter: "audioandvideo" });
 
-    // videoStream.on("progress", (_, totalBytes, totalBytesExpected) => {
-    //   totalBytesTransferred = totalBytes;
-    //   totalFileSize = totalBytesExpected;
+    videoStream.on("progress", (_, totalBytes, totalBytesExpected) => {
+      totalBytesTransferred = totalBytes;
+      totalFileSize = totalBytesExpected;
 
-    //   const progress = (totalBytesTransferred / totalFileSize) * 100;
-    //   console.log("Progress:", progress.toFixed(2) + "%");
+      const progress = (totalBytesTransferred / totalFileSize) * 100;
+      console.log("Progress:", progress.toFixed(2) + "%");
 
-    //   // Pass progress to the API endpoint
-    //   // sendProgressToEndpoint(progress);
-    // });
+      // Pass progress to the API endpoint
+      // sendProgressToEndpoint(progress);
+    });
 
     videoStream.pipe(writeStream);
 

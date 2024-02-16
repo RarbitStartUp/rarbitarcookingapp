@@ -103,7 +103,7 @@ export async function startCapture(socket, isCapturingRef, framesRef, videoRef) 
     await captureAndCallback();
 
     // Add a delay (e.g., 1000 milliseconds) between frame captures, 1 second
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 3000));
   } catch (error) {
     console.error('Error starting capture:', error);
   }

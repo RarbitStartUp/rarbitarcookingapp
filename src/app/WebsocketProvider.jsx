@@ -6,18 +6,23 @@ import { createContext, useContext, useState, useEffect } from 'react';
 const WebSocketContext = createContext();
 
 const getWebSocketURL = () => {
-  const isDevelopment = process.env.NODE_ENV === 'development';
+  // const isDevelopment = process.env.NODE_ENV === 'development';
 
-  if (isDevelopment) {
-    return "ws://18.222.93.182:3001";
-  }
+  // if (isDevelopment) {
+  //   // return "ws://18.222.93.182:3001";
+  //   return "ws://localhost:3001";
+  // }
 
   if (typeof window !== 'undefined') {
-    const isLocalhost = window.location.hostname === 'localhost';
-    if (isLocalhost) {
-      return "ws://18.222.93.182:3001";
+    // const isLocalhost = window.location.hostname === 'localhost';
+    if (window.location.hostname === 'localhost') {
+      return "ws://localhost:3001";
     }
 
+    if (window.location.hostname === '18.222.93.182') {
+      return "ws://18.222.93.182.3001";
+    }
+  
     if (window.location.hostname === 'rarbit.com') {
       return "wss://rarbit.tech";
     }

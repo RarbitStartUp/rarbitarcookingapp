@@ -1,0 +1,45 @@
+"use client";
+import { useEffect, useState } from "react";
+import styles from "./checkedList.module.css";
+
+export function DisplayCheckedList({ aiResult }) {
+  const [jsonData, setJsonData] = useState(null);
+
+  useEffect(() => {
+    setJsonData(aiResult);
+  }, [aiResult]);
+
+  const renderChecklistItems = (checklistItems, checkboxStates) => {
+    return Object.keys(checklistItems).map((item, index) => (
+      <li className={styles.options} key={index + 1}>
+        {index + 1}. {item} - {checkboxStates[item] ? "✔" : null}
+      </li>
+    ));
+  };
+
+  if (!jsonData) {
+    return <div className="text-white font-bold">Loading...</div>;
+  }
+
+  return (
+    <div>
+      {jsonData.map((timestampData, index) => (
+        <div key={index}>
+          <h1 className={styles.checklist}>Step {index + 1}: {timestampData.timestamp}</h1>
+          <div>
+            <h2 className={styles.header}>Objects</h2>
+            <ul>
+              {renderChecklistItems(timestampData.checklist.objects, timestampData.checklist.objects)}
+            </ul>
+          </div>
+          <div>
+            <h2 className={styles.header}>Actions</h2>
+            <ul>
+              {renderChecklistItems(timestampData.checklist.actions, timestampData.checklist.actions)}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}

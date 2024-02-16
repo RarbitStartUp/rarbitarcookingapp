@@ -10,7 +10,7 @@ export default function Livestream() {
   const [aiResult, setAiResult] = useState(null);
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  // const [isWebSocketOpen, setIsWebSocketOpen] = useState(null);
+  const [isWebSocketOpen, setIsWebSocketOpen] = useState(null);
   const isCapturingRef = useRef(false);
   const framesRef = useRef([]);
   const videoRef = useRef();
@@ -45,7 +45,6 @@ export default function Livestream() {
         }
         return true;
       });
-      init();
       console.log('WebSocket connection opened successfully in livestream page');
     });
 

@@ -23,7 +23,7 @@ export async function checkboxAI(fileUri) {
         private_key
       }
     }
-    console.log("credentials:", authOptions);
+    // console.log("credentials:", authOptions);
 
     // const googleAuth = new GoogleAuth({
     //   // credentials : credential,
@@ -59,29 +59,31 @@ export async function checkboxAI(fileUri) {
     const prompt = `
     You are an action detection AI, 
     detect the objects and actions in the video,
-    and give me the timestamp of each step ONLY when the action changes,
+    only start the detection when the cooking process begins,
+    and give me the timestamp of each step when the action changes,
     reply in the following JSON format as text,
     in the language of English
     
     JSON format :
     [
       {
-        "timestamp": "00:00:01",
+        "timestamp": "00:00:00",
         "checklist": {
           "objects": {
-            "apple": true
+            "objects": true 
           },
           "actions": {
-            "wash the apple in the bowl": true,
-            "slice the apple": true
+            "actions": true 
           }
         }
       },
       // Additional timestamps if needed
-    ]    
+    ]  
+
+    Examples of "actions" format : washing the orange, slicing the apple, etc
     `;
 
-
+    console.log("prompt:",prompt);
  // Assuming fileUri is the path to the video file
 
 // const bucketName = "users_uploads";
