@@ -7,7 +7,7 @@ import { initCamera, startCapture, stopCapture } from '@/components/camera/Camer
 import styles from './livestream.module.css';
 
 export default function Livestream() {
-  const [aiResult, setAiResult] = useState(null);
+  const [fullChecklistString, setFullChecklistString] = useState(null);
   const [isCameraInitialized, setIsCameraInitialized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isWebSocketOpen, setIsWebSocketOpen] = useState(null);
@@ -50,9 +50,9 @@ export default function Livestream() {
 
     socket.addEventListener('message', (event) => {
       try {
-        const aiResult = JSON.parse(event.data);
-        console.log('Received parsed aiResult on client side ws :', aiResult);
-        setAiResult(aiResult);
+        const fullChecklistString = JSON.parse(event.data);
+        console.log('Received parsed fullChecklistString on client side ws :', fullChecklistString);
+        setFullChecklistString(fullChecklistString);
       } catch (error) {
         console.log('Received WebSocket message:', event.data);
         console.error('Error processing WebSocket message:', error);
@@ -89,7 +89,7 @@ export default function Livestream() {
       // }
 
   async function handleStopCapture() {
-    await stopCapture(isCapturingRef, framesRef);
+    await stopCapture(socket,isCapturingRef, framesRef);
   }
 
   return (
@@ -118,7 +118,7 @@ export default function Livestream() {
         </div>
       </div>
       <div className="pt-5 mt-5" />    
-      { aiResult && <DisplayCheckedList aiResult={aiResult} />}
+      { fullChecklistString && <DisplayCheckedList fullChecklistString={fullChecklistString} />}
     </div>
   );
 }

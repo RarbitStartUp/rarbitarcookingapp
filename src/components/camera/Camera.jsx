@@ -83,6 +83,8 @@ export async function startCapture(socket, isCapturingRef, framesRef, videoRef) 
 
     const captureAndCallback = async () => {
       while (isCapturingRef.current) {
+        // Wait for a short delay before capturing the next frame
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Adjust the delay as needed (e.g., 1000 milliseconds for 1 frame per second)
         await new Promise((resolve) => {
           const checkDimensions = () => {
             video = videoRef.current;
@@ -102,16 +104,25 @@ export async function startCapture(socket, isCapturingRef, framesRef, videoRef) 
 
     await captureAndCallback();
 
-    // Add a delay (e.g., 1000 milliseconds) between frame captures, 1 second
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    // capture a frame every 3 seconds (1000 milliseconds) continuously until you clear the interval
+    await new Promise(resolve => setInterval(resolve, 1000));
   } catch (error) {
     console.error('Error starting capture:', error);
   }
 }
 
-export function stopCapture(isCapturingRef, framesRef) {
+export function stopCapture(socket,isCapturingRef, framesRef) {
   return new Promise((resolve) => {
     isCapturingRef.current = false;
+
+    // Send the flag to stop retrying via WebSocket
+    if (socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({ type: 'stopRetryFrames' }));
+        console.log('Sent stopRetryFrames message to the server.');
+    } else {
+        console.warn('WebSocket not open. Stop retry frames message not sent.');
+    }
+
     resolve();
 
     framesRef.current = [];
